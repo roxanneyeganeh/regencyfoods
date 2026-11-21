@@ -1,0 +1,448 @@
+---
+products:
+    new:
+        limit: {{theme_settings.product_new_count}}
+    featured:
+        limit: {{theme_settings.product_featured_count}}
+    top_sellers:
+        limit: {{theme_settings.product_top_count}}
+carousel: {{theme_settings.homepage_show_carousel}}
+blog:
+    recent_posts:
+        limit: {{theme_settings.homepage_blog_posts_count}}
+shop_by_brand:
+    limit: {{theme_settings.sidebar_shop_by_brand}}
+---
+{{#partial "hero"}}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap">
+<style>
+.rf{--green:#1a3429;--green-2:#234536;--cream:#faf9f5;--oat:#f5f2df;--mint:#ddf6d8;--salmon:#f39684;--orange:#d54415;--mustard:#dcb357;--leaf:#45a94f;--ink:#111511;--ink-soft:#3d463f;--line:rgba(17,21,17,.14);--on-dark:#faf9f5;--on-dark-soft:rgba(250,249,245,.72);
+--display:"Jost","Futura","Century Gothic","Avenir Next",sans-serif;--body:"Helvetica Neue",Helvetica,Arial,sans-serif;
+--t-hero:clamp(2.1rem,1.05rem + 2.95vw,4.1rem);--t-h2:clamp(1.65rem,1.1rem + 1.65vw,2.65rem);--t-h3:clamp(1.25rem,1.1rem + .7vw,1.75rem);--t-lead:clamp(1.0625rem,1rem + .35vw,1.3125rem);
+--r-lg:28px;--r-md:18px;--r-pill:999px;--wrap:1320px;--section:clamp(56px,5vw + 32px,110px);
+font-family:var(--body);color:var(--ink);background:var(--cream);line-height:1.55;-webkit-font-smoothing:antialiased}
+.rf *,.rf *::before,.rf *::after{box-sizing:border-box}
+.rf img{display:block;max-width:100%}
+.rf h1,.rf h2,.rf h3,.rf h4{font-family:var(--display);font-weight:700;letter-spacing:-.02em;line-height:1.04;margin:0;text-wrap:balance}
+.rf p{margin:0}
+.rf a{color:inherit;text-decoration:none}
+.rf ul,.rf ol{margin:0;padding:0;list-style:none}
+.rf .wrap{width:100%;max-width:var(--wrap);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.rf .section{padding-block:var(--section)}
+.rf .eyebrow{font-family:var(--display);font-weight:600;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;display:block}
+.rf .section-head{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;margin-bottom:28px}
+.rf .section-head h2{font-size:var(--t-h2)}
+.rf .section-head p{max-width:52ch;color:var(--ink-soft)}
+.rf .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:1rem;border-radius:var(--r-pill);padding:15px 26px;border:1.5px solid transparent;cursor:pointer;transition:transform .2s,background .2s,color .2s}
+.rf .btn:hover{transform:translateY(-2px)}
+.rf .btn-light{background:var(--green);color:var(--on-dark)}
+.rf .btn-outline-light{border-color:var(--green);color:var(--green)}
+.rf .btn-outline-light:hover{background:var(--green);color:var(--on-dark)}
+.rf .btn-dark{background:var(--green);color:var(--on-dark)}
+.rf .btn-orange{background:var(--orange);color:var(--on-dark)}
+
+/* ---------- HERO ---------- */
+.rf .hero{background:var(--green);padding-top:clamp(24px,3vw,44px);padding-bottom:0}
+.rf .hero-grid{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:900px){.rf .hero-grid{grid-template-columns:1.02fr .98fr;align-items:stretch}}
+.rf .hero-copy{background:var(--cream);border-radius:var(--r-lg);padding:clamp(26px,3.4vw,52px);display:flex;flex-direction:column;justify-content:center;gap:22px}
+.rf .hero-copy .eyebrow{color:var(--orange)}
+.rf .hero-copy h1{font-size:var(--t-hero)}
+.rf .hero-copy h1 em{font-style:normal;color:var(--orange)}
+.rf .hero-lead{font-size:var(--t-lead);color:var(--ink-soft);max-width:46ch}
+.rf .hero-ctas{display:flex;flex-wrap:wrap;gap:12px}
+.rf .hero-facts{display:flex;flex-wrap:wrap;gap:clamp(20px,3vw,46px);margin:4px 0 0;padding-top:22px;border-top:1px solid var(--line)}
+.rf .hero-facts dt{font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,1.2rem + 1vw,2.25rem);line-height:1}
+.rf .hero-facts dd{margin:6px 0 0;font-size:.8125rem;color:var(--ink-soft);max-width:14ch}
+.rf .hero-visual{position:relative;background:var(--mint);border-radius:var(--r-lg);overflow:hidden;min-height:420px;display:grid;place-items:center;padding:clamp(18px,3vw,40px)}
+.rf .crate{position:relative;width:min(100%,620px);aspect-ratio:2913/2247;overflow:hidden;mix-blend-mode:multiply}
+.rf .crate img{position:absolute;width:237.3%;max-width:none;left:-135.6%;top:-17.8%}
+.rf .badge-spin{position:absolute;top:clamp(14px,3vw,30px);right:clamp(14px,3vw,30px);width:clamp(96px,9vw,132px);aspect-ratio:1;border-radius:50%;background:var(--orange);color:var(--on-dark);display:grid;place-items:center}
+.rf .badge-spin svg{position:absolute;inset:0;width:100%;height:100%;animation:rfspin 16s linear infinite}
+.rf .badge-spin text{font-family:var(--display);font-size:9.1px;font-weight:600;letter-spacing:.11em;fill:currentColor}
+@keyframes rfspin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.rf .badge-spin svg{animation:none}}
+.rf .badge-spin .core{font-family:var(--display);font-weight:700;font-size:.9rem;line-height:1.05;text-align:center}
+.rf .hero-chip{position:absolute;left:clamp(14px,3vw,26px);bottom:clamp(14px,3vw,26px);display:flex;align-items:center;gap:12px;background:var(--cream);border-radius:var(--r-pill);padding:8px 18px 8px 8px;box-shadow:0 10px 30px -12px rgba(26,52,41,.35);font-size:.875rem}
+.rf .van-dot{width:38px;height:38px;border-radius:50%;background:var(--mustard);display:grid;place-items:center;flex:none}
+.rf .van-dot svg{width:21px;height:21px}
+.rf .hero-chip strong{display:block;font-family:var(--display);font-weight:600;font-size:.875rem}
+.rf .hero-chip span.sub{display:block;font-size:.75rem;color:var(--ink-soft)}
+.rf .marquee{margin-top:16px;background:var(--orange);color:var(--on-dark);overflow:hidden;white-space:nowrap}
+.rf .marquee-track{display:inline-flex;gap:46px;padding:13px 23px;font-family:var(--display);font-weight:600;font-size:.8125rem;letter-spacing:.16em;text-transform:uppercase;animation:rfmar 34s linear infinite}
+.rf .marquee-track span::after{content:"·";margin-left:46px;opacity:.6}
+@keyframes rfmar{to{transform:translateX(-50%)}}
+
+/* ---------- BENTO ---------- */
+.rf .bento{display:grid;gap:16px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:900px){.rf .bento{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:218px}
+.rf .tile.big{grid-column:span 2;grid-row:span 2}
+.rf .tile.wide{grid-column:span 2}}
+.rf .tile{position:relative;display:flex;flex-direction:column;justify-content:flex-end;border-radius:var(--r-md);overflow:hidden;min-height:218px;isolation:isolate;background:var(--oat);padding:16px}
+.rf .tile .ph{position:absolute;inset:8% 10% 18%;display:grid;place-items:center}
+.rf .tile .ph img{max-height:100%;width:auto;mix-blend-mode:multiply;transition:transform .5s cubic-bezier(.2,.7,.3,1)}
+.rf .tile:hover .ph img{transform:scale(1.05)}
+.rf .tile.c1{background:var(--salmon)}.rf .tile.c2{background:var(--mint)}.rf .tile.c3{background:var(--oat)}
+.rf .tile.c4{background:var(--mustard)}.rf .tile.c5{background:var(--mint)}.rf .tile.c6{background:var(--salmon)}
+.rf .tile-label{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;font-family:var(--display);font-weight:600;font-size:1.0625rem}
+.rf .tile-count{display:block;font-weight:400;font-size:.8125rem;opacity:.72;margin-top:3px}
+.rf .tile .go{width:34px;height:34px;border-radius:50%;background:var(--green);color:var(--on-dark);display:grid;place-items:center;flex:none;transition:transform .3s}
+.rf .tile:hover .go{transform:translateX(4px)}
+
+/* ---------- PRODUCTS ---------- */
+.rf .products-bg{background:var(--oat)}
+.rf .product-row{display:grid;gap:16px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:900px){.rf .product-row{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.rf .card{background:var(--cream);border-radius:var(--r-md);padding:14px;display:flex;flex-direction:column;gap:12px;transition:transform .25s}
+.rf .card:hover{transform:translateY(-4px)}
+.rf .card-media{background:#fff;border-radius:12px;aspect-ratio:1;display:grid;place-items:center;overflow:hidden;padding:10px}
+.rf .card-media img{max-height:100%;width:auto}
+.rf .card h3{font-size:.9375rem;font-weight:600;line-height:1.3;font-family:var(--display)}
+.rf .card .price{font-family:var(--display);font-weight:700;font-size:1.125rem;margin-top:auto}
+.rf .card .add{border:1.5px solid var(--green);border-radius:var(--r-pill);padding:10px 16px;font-family:var(--display);font-weight:600;font-size:.875rem;text-align:center;transition:background .2s,color .2s}
+.rf .card .add:hover{background:var(--green);color:var(--on-dark)}
+.rf .card:nth-of-type(n+9){display:none}
+
+/* ---------- SPOTLIGHT ---------- */
+.rf .spotlight{display:grid;gap:16px;grid-template-columns:1fr;background:var(--mint);border-radius:var(--r-lg);overflow:hidden}
+@media(min-width:900px){.rf .spotlight{grid-template-columns:1fr 1fr}}
+.rf .spot-media{display:grid;place-items:center;padding:clamp(28px,4vw,60px);min-height:380px}
+.rf .spot-media img{max-height:420px;width:auto;mix-blend-mode:multiply}
+.rf .spot-copy{background:var(--cream);padding:clamp(26px,3.4vw,52px);display:grid;gap:16px;align-content:center}
+.rf .spot-copy h2{font-size:var(--t-h2)}
+.rf .tag{background:var(--mustard);border-radius:var(--r-pill);padding:7px 15px;font-family:var(--display);font-weight:600;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;justify-self:start}
+.rf .spot-copy .price{font-family:var(--display);font-weight:700;font-size:1.75rem}
+.rf .spot-copy ul{display:grid;gap:9px;color:var(--ink-soft);font-size:.9375rem}
+.rf .spot-copy ul li{padding-left:22px;position:relative}
+.rf .spot-copy ul li::before{content:"";position:absolute;left:0;top:.52em;width:9px;height:9px;border-radius:50%;background:var(--leaf)}
+
+/* ---------- DELIVERY ---------- */
+.rf .delivery{background:var(--salmon);border-radius:var(--r-lg);padding:clamp(26px,3.4vw,56px)}
+.rf .delivery-grid{display:grid;gap:26px;grid-template-columns:1fr}
+@media(min-width:900px){.rf .delivery-grid{grid-template-columns:1.1fr .9fr;align-items:center}}
+.rf .delivery h2{font-size:var(--t-h2);margin-bottom:26px}
+.rf .steps{display:grid;gap:20px;counter-reset:s}
+.rf .steps li{display:flex;gap:16px;align-items:flex-start}
+.rf .steps li::before{counter-increment:s;content:counter(s);width:38px;height:38px;flex:none;border-radius:50%;background:var(--green);color:var(--on-dark);display:grid;place-items:center;font-family:var(--display);font-weight:700}
+.rf .steps h3{font-size:1.0625rem;margin-bottom:4px}
+.rf .steps p{font-size:.9375rem;color:#5a3b35}
+.rf .delivery-visual{background:var(--cream);border-radius:var(--r-md);display:grid;place-items:center;padding:28px;min-height:260px}
+
+/* ---------- PAIRS / STORY ---------- */
+.rf .pair{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:900px){.rf .pair{grid-template-columns:1fr 1fr;align-items:stretch}
+.rf .pair.flip .pair-media{order:2}}
+.rf .pair-media{border-radius:var(--r-lg);overflow:hidden;min-height:320px;display:grid;place-items:center;padding:30px}
+.rf .pair-media.m1{background:var(--mint)}.rf .pair-media.m2{background:var(--oat)}
+.rf .pair-media img{max-height:320px;width:auto;mix-blend-mode:multiply}
+.rf .pair-copy{background:var(--green);color:var(--on-dark);border-radius:var(--r-lg);padding:clamp(26px,3.4vw,52px);display:grid;gap:16px;align-content:center}
+.rf .pair-copy .eyebrow{color:var(--mustard)}
+.rf .pair-copy h2{font-size:var(--t-h2)}
+.rf .pair-copy p{color:var(--on-dark-soft)}
+.rf .link-arrow{font-family:var(--display);font-weight:600;border-bottom:1.5px solid currentColor;padding-bottom:3px;justify-self:start}
+.rf .story{position:relative;border-radius:var(--r-lg);overflow:hidden;background:var(--mint);min-height:420px;display:grid;align-items:end}
+.rf .story .crate{width:100%;max-width:none;opacity:.95}
+.rf .story-inner{position:relative;z-index:2;background:var(--cream);margin:clamp(14px,2vw,26px);border-radius:var(--r-md);padding:clamp(24px,3vw,44px);display:grid;gap:16px;max-width:620px}
+.rf .story-inner h2{font-size:var(--t-h2)}
+.rf .story-inner p{color:var(--ink-soft)}
+
+/* ---------- TRUST ---------- */
+.rf .trust{text-align:center}
+.rf .trust-line{font-family:var(--display);font-weight:600;font-size:clamp(1.0625rem,1rem + .5vw,1.375rem);max-width:44ch;margin-inline:auto}
+.rf .clients{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(22px,4vw,56px);margin-top:28px;font-family:var(--display);font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.875rem;opacity:.62}
+.rf .rating{display:inline-flex;align-items:center;gap:10px;margin-top:26px;background:var(--mint);border-radius:var(--r-pill);padding:10px 20px;font-size:.875rem}
+.rf .stars{display:inline-flex;gap:2px}
+.rf .stars svg{width:17px;height:17px;fill:#00b67a}
+
+/* ---------- TRADE ---------- */
+.rf .trade{background:var(--mint);border-radius:var(--r-lg);padding:clamp(26px,3.4vw,56px)}
+.rf .trade-grid{display:grid;gap:28px;grid-template-columns:1fr}
+@media(min-width:900px){.rf .trade-grid{grid-template-columns:1fr 1fr;align-items:center}}
+.rf .trade h2{font-size:var(--t-h2)}
+.rf .trade ul{display:grid;gap:13px;margin-top:22px}
+.rf .trade li{display:flex;gap:11px;align-items:flex-start;font-size:.9375rem}
+.rf .trade li svg{width:21px;height:21px;flex:none;margin-top:1px}
+.rf .trade-form{background:var(--cream);border-radius:var(--r-md);padding:clamp(20px,2.4vw,32px);display:grid;gap:14px}
+.rf .form-row{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+.rf .field{display:grid;gap:6px}
+.rf .field label{font-size:.75rem;font-family:var(--display);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.rf .field input,.rf .field select{border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;font:inherit;font-size:.9375rem;background:#fff;min-height:50px}
+.rf .form-note{font-size:.75rem;color:var(--ink-soft)}
+
+/* ---------- NEWSLETTER ---------- */
+.rf .newsletter{background:var(--orange);color:var(--on-dark);padding-block:var(--section)}
+.rf .newsletter .wrap{display:grid;gap:26px;align-items:center}
+@media(min-width:900px){.rf .newsletter .wrap{grid-template-columns:1fr 1fr}}
+.rf .newsletter h2{font-size:var(--t-h2)}
+.rf .newsletter p{color:var(--on-dark-soft);max-width:46ch;margin-top:12px}
+.rf .nl-form{display:flex;gap:10px;background:var(--cream);border-radius:var(--r-pill);padding:7px 7px 7px 20px}
+.rf .nl-form input{flex:1;min-width:0;border:0;background:transparent;font:inherit;color:var(--ink);min-height:48px;outline:none}
+.rf .nl-form button{width:50px;height:50px;border:0;border-radius:50%;background:var(--green);color:var(--on-dark);display:grid;place-items:center;cursor:pointer;flex:none}
+
+/* ---------- specificity fixes over theme CSS ---------- */
+.rf h1,.rf h2,.rf h3,.rf h4{font-family:var(--display)!important;letter-spacing:-.02em!important}
+.rf .hero-copy h1{font-size:var(--t-hero)!important;line-height:1.02!important;font-weight:700!important;margin:0!important}
+.rf .section-head h2,.rf .spot-copy h2,.rf .pair-copy h2,.rf .story-inner h2,.rf .delivery h2,.rf .trade h2,.rf .newsletter h2{font-size:var(--t-h2)!important;line-height:1.05!important;font-weight:700!important}
+.rf .steps h3{font-size:1.0625rem!important}
+.rf .card h3{font-size:.9375rem!important;line-height:1.3!important}
+.rf .trust-line{font-size:clamp(1.0625rem,1rem + .5vw,1.375rem)!important}
+.rf .hero-facts dt{font-size:clamp(1.5rem,1.2rem + 1vw,2.25rem)!important}
+.rf .spot-copy .price{font-size:1.75rem!important}
+.rf .hero-lead{font-size:var(--t-lead)!important}
+.rf .tile{display:grid!important;grid-template-rows:minmax(0,1fr) auto;gap:8px}
+.rf .tile .ph{position:relative!important;inset:auto!important;min-height:0;overflow:hidden;display:grid;place-items:center;padding:4px}
+.rf .tile .ph img{max-height:100%;max-width:84%;width:auto;height:auto;object-fit:contain}
+.rf .spot-media img{max-height:380px}
+.rf .story{min-height:460px}
+
+/* ---------- theme chrome to match ---------- */
+body.supermarket-page--pages-home .body,body.supermarket-page--pages-home .container{padding:0!important;max-width:none!important;background:var(--cream,#faf9f5)}
+body.supermarket-page--pages-home .header{border-bottom:0}
+body.supermarket-page--pages-home .footer{background:#1a3429}
+</style>
+
+<div class="rf">
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Wholesale &amp; catering supplier · London</span>
+        <h1>Premium goods, at your kitchen door <em>by tomorrow.</em></h1>
+        <p class="hero-lead">From everyday essentials to premium ingredients, we stock what restaurants, hotels, pubs and home cooks need, and deliver it next day across the UK.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-light" href="/shop-all/">Shop now <span aria-hidden="true">→</span></a>
+          <a class="btn btn-outline-light" href="/contact-us/">Open a trade account</a>
+        </div>
+        <dl class="hero-facts">
+          <div><dt>1995</dt><dd>Supplying kitchens since</dd></div>
+          <div><dt>1,000+</dt><dd>Venues trust us</dd></div>
+          <div><dt>4.9</dt><dd>Rated Excellent</dd></div>
+        </dl>
+      </div>
+      <div class="hero-visual">
+        <div class="crate"><img src="https://cdn11.bigcommerce.com/s-0evtp/images/stencil/1280w/carousel/585/banner.jpg?c=2" alt="A deep green Regency Foods crate packed with sourdough, champagne, cavolo nero, cheese and honey"></div>
+        <div class="badge-spin" aria-hidden="true">
+          <svg viewBox="0 0 120 120"><defs><path id="rfcirc" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs><text><textPath href="#rfcirc">ORDER TODAY • DELIVERED TOMORROW • </textPath></text></svg>
+          <span class="core">Next<br>day</span>
+        </div>
+        <div class="hero-chip">
+          <span class="van-dot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#111511" stroke-width="1.6" stroke-linejoin="round"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3v3h-7z"/><circle cx="6.5" cy="17" r="1.8" fill="#dcb357"/><circle cx="17" cy="17" r="1.8" fill="#dcb357"/></svg></span>
+          <div><strong>Dispatched from North London</strong><span class="sub">Delivered nationwide, next day</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Meat &amp; Fish</span><span>Frozen Foods</span><span>Soft Drinks</span><span>Cheese &amp; Dairy</span><span>Alcohol &amp; Spirits</span><span>Store Cupboard</span><span>Crisps &amp; Snacks</span>
+      <span>Meat &amp; Fish</span><span>Frozen Foods</span><span>Soft Drinks</span><span>Cheese &amp; Dairy</span><span>Alcohol &amp; Spirits</span><span>Store Cupboard</span><span>Crisps &amp; Snacks</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="rf-categories">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Shop by category</h2>
+      <p>One supplier for the whole kitchen. Browse the shelves, or tell us what your menu needs and we will stock it.</p>
+    </div>
+    <div class="bento">
+      <a class="tile big c1" href="/meat-fish/">
+        <span class="ph"><img src="https://cdn11.bigcommerce.com/s-0evtp/images/stencil/640w/products/1688/6454/Slice-Scottish-Smoked-Salmon__52868.1547192408.jpg?c=2" alt="Scottish smoked salmon, D-cut sliced" loading="lazy"></span>
+        <span class="tile-label"><span>Meat &amp; Fish<span class="tile-count">Fresh and frozen cuts</span></span><span class="go" aria-hidden="true">→</span></span>
+      </a>
+      <a class="tile c2" href="/frozen-potato/">
+        <span class="ph"><img src="https://cdn11.bigcommerce.com/s-0evtp/images/stencil/640w/products/1273/5877/McCain-Beefeater-Chips__86263.1501921729.jpg?c=2" alt="McCain Beefeater chips" loading="lazy"></span>
+        <span class="tile-label"><span>Frozen Foods</span><span class="go" aria-hidden="true">→</span></span>
+      </a>
+      <a class="tile c3" href="/soft-drinks/">
+        <span class="ph"><img src="https://cdn11.bigcommerce.com/s-0evtp/images/stencil/640w/products/459/10163/HILDON__16107.1767944246.png?c=2" alt="Hildon sparkling water in glass bottles" loading="lazy"></span>
+        <span class="tile-label"><span>Soft Drinks</span><span class="go" aria-hidden="true">→</span></span>
+      </a>
+      <a class="tile c4" href="/nuts/">
+        <span class="ph"><img src="https://cdn11.bigcommerce.com/s-0evtp/images/stencil/640w/products/369/8662/walnut_1__28335.1618858902.jpg?c=2" alt="Walnut kernels" loading="lazy"></span>
+        <span class="tile-label"><span>Nuts &amp; Seeds</span><span class="go" aria-hidden="true">→</span></span>
+      </a>
+      <a class="tile c5" href="/spirits-vermouths/">
+        <span class="ph"><img src="https://cdn11.bigcommerce.com/s-0evtp/images/stencil/640w/products/230/9644/Smirnoff_Vodka__10222.1778240191.jpg?c=2" alt="Spirits and vermouths" loading="lazy"></span>
+        <span class="tile-label"><span>Alcohol &amp; Spirits</span><span class="go" aria-hidden="true">→</span></span>
+      </a>
+      <a class="tile wide c6" href="/crisps-snacks/">
+        <span class="ph"><img src="https://cdn11.bigcommerce.com/s-0evtp/images/stencil/640w/products/911/8868/tortilla_chips__46744.1778267202.jpg?c=2" alt="Tortilla chips and snacks" loading="lazy"></span>
+        <span class="tile-label"><span>Snacks, Sweets &amp; Store Cupboard<span class="tile-count">The everyday range</span></span><span class="go" aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section products-bg" id="rf-bestsellers">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow" style="color:var(--orange)">This week</span>
+        <h2>Bestselling lines, by the case</h2>
+      </div>
+      <a class="btn btn-outline-light" href="/shop-all/">View all products</a>
+    </div>
+    <div class="product-row">
+      {{#each products.featured}}
+      <a class="card" href="{{url}}">
+        <span class="card-media"><img src="{{getImage this.image "500x500"}}" alt="{{name}}" loading="lazy"></span>
+        <h3>{{name}}</h3>
+        <span class="price">{{this.price.without_tax.formatted}}</span>
+        <span class="add">View product</span>
+      </a>
+      {{/each}}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="rf-spotlight">
+  <div class="wrap">
+    <div class="spotlight">
+      <div class="spot-media">
+        <img src="https://cdn11.bigcommerce.com/s-0evtp/images/stencil/1280w/products/2148/9783/Callebaut_Dark_70_Callets__23130.1779169526.jpg?c=2" alt="Callebaut Finest Belgian Chocolate 70% extra bitter callets, 2.5kg" loading="lazy">
+      </div>
+      <div class="spot-copy">
+        <span class="tag">Premium quality</span>
+        <h2>Callebaut 70% Dark Callets 2.5kg</h2>
+        <p class="price">£34.90</p>
+        <p>Finest Belgian couverture with an intense cocoa body and a clean snap. The pastry-kitchen standard for ganache, tempering, mousse and glazing, in callets that melt evenly every time.</p>
+        <ul>
+          <li>70% cocoa, extra bitter</li>
+          <li>Consistent fluidity for tempering</li>
+          <li>Ships in 2.5kg catering bags</li>
+          <li>Trusted by pastry kitchens across London</li>
+        </ul>
+        <a class="btn btn-dark" href="/callebaut-finest-belgian-chocolate-70-extra-bitter-callets-2-5kg/" style="justify-self:start">View product <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0" id="rf-delivery">
+  <div class="wrap">
+    <div class="delivery">
+      <div class="delivery-grid">
+        <div class="delivery-copy">
+          <h2>Need it tomorrow? Consider it done.</h2>
+          <ol class="steps">
+            <li><div><h3>Order today</h3><p>Shop online or through your trade account, from a case of drinks to a full weekly restock.</p></div></li>
+            <li><div><h3>Packed in North London</h3><p>Your order is picked and checked at our London hub the same day.</p></div></li>
+            <li><div><h3>On your doorstep tomorrow</h3><p>Fast, next-day delivery nationwide, so you are never left waiting.</p></div></li>
+          </ol>
+        </div>
+        <div class="delivery-visual">
+          <svg viewBox="0 0 220 130" width="100%" style="max-width:300px" fill="none" stroke="#1a3429" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
+            <rect x="8" y="26" width="118" height="68" rx="7" fill="#dcb357"/>
+            <path d="M126 48h38l26 26v20h-64z" fill="#faf9f5"/>
+            <path d="M8 94h204" stroke-width="4"/>
+            <circle cx="52" cy="98" r="14" fill="#1a3429" stroke="none"/><circle cx="52" cy="98" r="5" fill="#faf9f5" stroke="none"/>
+            <circle cx="164" cy="98" r="14" fill="#1a3429" stroke="none"/><circle cx="164" cy="98" r="5" fill="#faf9f5" stroke="none"/>
+            <path d="M30 48h40M30 62h62" stroke="#1a3429" stroke-width="4"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="wrap" style="display:grid;gap:16px">
+    <div class="pair">
+      <div class="pair-media m1"><img src="https://cdn11.bigcommerce.com/s-0evtp/images/stencil/1280w/products/453/8834/Penne__88625.1657530826.jpg?c=2" alt="De Cecco penne rigate" loading="lazy"></div>
+      <div class="pair-copy">
+        <span class="eyebrow">Our quality promise</span>
+        <h2>Only the highest-quality products. On time, every time.</h2>
+        <p>From everyday essentials to premium ingredients, every line we stock is chosen to perform in a professional kitchen. Trusted by chefs and kitchens across the UK since 1995.</p>
+      </div>
+    </div>
+    <div class="pair flip">
+      <div class="pair-media m2"><img src="https://cdn11.bigcommerce.com/s-0evtp/images/stencil/1280w/products/911/8868/tortilla_chips__46744.1778267202.jpg?c=2" alt="Snacks and store-cupboard lines" loading="lazy"></div>
+      <div class="pair-copy">
+        <span class="eyebrow">More choice, better value</span>
+        <h2>Stock what your kitchen needs without stretching the budget.</h2>
+        <p>An ever-growing product range at competitive prices. If it is not on the shelf yet, ask us. We keep expanding our range to meet what customers need.</p>
+        <a class="link-arrow" href="/category/">Browse the range <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0" id="rf-story">
+  <div class="wrap">
+    <div class="story">
+      <div class="crate" style="position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto"><img src="https://cdn11.bigcommerce.com/s-0evtp/images/stencil/1280w/carousel/585/banner.jpg?c=2" alt="" style="width:150%;left:-38%;top:-6%"></div>
+      <div class="story-inner">
+        <h2>Supplying kitchens since 1995</h2>
+        <p>Regency Foods was founded by a former restaurateur, so we understand the importance of quality, efficiency and reliability in every kitchen.</p>
+        <p>Today we are a trusted wholesale catering and food supplier delivering across the UK to restaurants, hotels, pubs and more, with high-quality products at competitive prices.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section trust" style="padding-top:0">
+  <div class="wrap">
+    <p class="trust-line">Trusted by 1,000+ leading venues, restaurants and caterers across the UK</p>
+    <ul class="clients"><li>BALANS</li><li>Park Chinois</li><li>Meta</li><li>LUSH</li><li>Smoky Boys</li></ul>
+    <div class="rating">
+      <span class="stars" aria-hidden="true"><i><svg viewBox="0 0 24 24"><path d="m12 2.8 2.8 6 6.4.6-4.8 4.3 1.4 6.4L12 16.8l-5.8 3.3 1.4-6.4-4.8-4.3 6.4-.6z"/></svg></i><i><svg viewBox="0 0 24 24"><path d="m12 2.8 2.8 6 6.4.6-4.8 4.3 1.4 6.4L12 16.8l-5.8 3.3 1.4-6.4-4.8-4.3 6.4-.6z"/></svg></i><i><svg viewBox="0 0 24 24"><path d="m12 2.8 2.8 6 6.4.6-4.8 4.3 1.4 6.4L12 16.8l-5.8 3.3 1.4-6.4-4.8-4.3 6.4-.6z"/></svg></i><i><svg viewBox="0 0 24 24"><path d="m12 2.8 2.8 6 6.4.6-4.8 4.3 1.4 6.4L12 16.8l-5.8 3.3 1.4-6.4-4.8-4.3 6.4-.6z"/></svg></i><i><svg viewBox="0 0 24 24"><path d="m12 2.8 2.8 6 6.4.6-4.8 4.3 1.4 6.4L12 16.8l-5.8 3.3 1.4-6.4-4.8-4.3 6.4-.6z"/></svg></i></span>
+      <span><b>4.9</b> · Excellent on Trustpilot</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0" id="rf-trade">
+  <div class="wrap">
+    <div class="trade">
+      <div class="trade-grid">
+        <div>
+          <span class="eyebrow" style="color:var(--green)">For restaurants, hotels &amp; pubs</span>
+          <h2 style="margin-top:12px">Designed for busy kitchens. Open a trade account.</h2>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#1a3429" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Competitive wholesale pricing across the range</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#1a3429" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Next-day delivery from our North London hub</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#1a3429" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Multi-temperature fleet, chilled and frozen</li>
+          </ul>
+        </div>
+        <div class="trade-form">
+          <div class="form-row">
+            <div class="field"><label>Your name</label><input autocomplete="name"></div>
+            <div class="field"><label>Business name</label><input autocomplete="organization"></div>
+          </div>
+          <div class="field"><label>Work email</label><input type="email" autocomplete="email"></div>
+          <div class="field"><label>Type of venue</label><select><option>Restaurant</option><option>Hotel</option><option>Pub or bar</option><option>Caterer</option><option>Café</option><option>Other</option></select></div>
+          <a class="btn btn-dark" href="/contact-us/" style="border-radius:12px;min-height:52px;justify-content:center">Request a trade account <span aria-hidden="true">→</span></a>
+          <p class="form-note">We will be in touch to set up your account and pricing.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter" id="rf-contact">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Get the latest</span>
+      <h2 style="margin-top:10px">Subscribe now</h2>
+      <p>Sign up to discover the finest selection of quality foods, stay up to date with our newest arrivals, and enjoy exclusive offers.</p>
+    </div>
+    <div>
+      <form class="nl-form" action="/subscribe.php" method="post">
+        <input type="email" name="nl_email" placeholder="Email address" autocomplete="email" aria-label="Email address">
+        <button type="submit" aria-label="Subscribe"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+  <div class="wrap">{{{region name="home_below_section5"}}}</div>
+</div>
+{{/partial}}
+{{#and theme_settings.instantload is_ajax}}
+    {{> layout/instantload-base}}
+{{else}}
+    {{> layout/base}}
+{{/and}}
