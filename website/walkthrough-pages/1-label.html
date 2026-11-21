@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Regency Foods · Typical Values</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Concept: the site is written in the language of a food label — a nutrition
+   panel for the business, categories as an ingredients list (nuts in bold, as
+   allergens are), "Directions" for delivery, and a back-of-pack footer. */
+@font-face { font-family: "Caviar Dreams"; src: url("assets/fonts/CaviarDreams-Bold.woff") format("woff"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Helvetica Neue RF"; src: url("assets/fonts/HelveticaNeue-Roman.woff") format("woff"); font-weight: 400; font-display: swap; }
+:root {
+  color-scheme: light;
+  --paper: #faf9f5; --card: #ffffff; --ink: #111511; --soft: #565e58; --rule: #111511; --hair: rgba(17,21,17,.16);
+  --green: #1a3429; --orange: #d54415; --mint: #def7d9; --salmon: #f39684; --mustard: #dcb357;
+  --display: "Caviar Dreams", Futura, "Century Gothic", sans-serif;
+  --body: "Helvetica Neue RF", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --gl: max(16px, env(safe-area-inset-left, 0px)); --gr: max(16px, env(safe-area-inset-right, 0px));
+}
+*,*::before,*::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--paper); z-index: 70; }
+img { max-width: 100%; display: block; }
+[hidden] { display: none !important; }
+h1,h2,h3 { font-family: var(--display); font-weight: 700; margin: 0; line-height: 1.04; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+.wrap { max-width: 1240px; margin-inline: auto; padding-left: var(--gl); padding-right: var(--gr); }
+@media (min-width: 760px) { .wrap { padding-left: max(40px, env(safe-area-inset-left,0px)); padding-right: max(40px, env(safe-area-inset-right,0px)); } }
+.small { font-size: .8rem; }
+.caps { text-transform: uppercase; letter-spacing: .12em; font-size: .72rem; }
+.wm { font-family: var(--display); font-weight: 700; display: inline-flex; align-items: center; white-space: nowrap; letter-spacing: .02em; text-decoration: none; }
+.wm .oo { flex: none; display: inline-block; width: 1.18em; height: .66em; border: .13em solid currentColor; border-radius: .4em; margin: 0 .02em; }
+
+/* Header */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; background: var(--paper); border-bottom: 1px solid var(--rule); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 64px; }
+.top .wm { font-size: 1.25rem; }
+.top nav { display: none; gap: 28px; font-size: .92rem; }
+.top nav a { text-decoration: none; }
+.top nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+@media (min-width: 900px) { .top nav { display: flex; } }
+.bag-btn { border: 1px solid var(--rule); background: none; border-radius: 999px; padding: 7px 14px; font-size: .9rem; display: inline-flex; gap: 8px; align-items: center; }
+.bag-btn [data-count] { font-variant-numeric: tabular-nums; }
+
+/* Hero */
+.hero { padding-block: clamp(40px, 6vw, 88px); border-bottom: 1px solid var(--rule); }
+.hero .wrap { display: grid; gap: 48px; align-items: center; }
+@media (min-width: 960px) { .hero .wrap { grid-template-columns: 1.1fr .9fr; gap: 72px; } }
+.hero h1 { font-size: clamp(2.6rem, 1.4rem + 4.4vw, 5.4rem); }
+.hero h1 span { color: var(--soft); }
+.hero .lead { margin-top: 24px; font-size: 1.15rem; color: var(--soft); max-width: 40ch; }
+.btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 999px; border: 1px solid var(--ink); background: none; text-decoration: none; font-size: .98rem; transition: background .2s, color .2s; }
+.btn:hover { background: var(--ink); color: var(--paper); }
+.btn.solid { background: var(--green); border-color: var(--green); color: var(--paper); }
+.btn.solid:hover { background: var(--ink); border-color: var(--ink); }
+
+/* The label */
+.facts { border: 2px solid var(--rule); background: var(--card); padding: 14px 18px 16px; max-width: 460px; width: 100%; justify-self: center; font-variant-numeric: tabular-nums; }
+.facts h2 { font-size: 2rem; border-bottom: 1px solid var(--rule); padding-bottom: 6px; }
+.facts .per { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 8px solid var(--rule); font-size: .9rem; }
+.facts dl { margin: 0; }
+.facts .r { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--hair); }
+.facts .r dt { display: flex; gap: 6px; }
+.facts .r dd { margin: 0; text-align: right; }
+.facts .r.indent dt { padding-left: 16px; color: var(--soft); }
+.facts .r.big dt, .facts .r.big dd { font-family: var(--display); font-size: 1.35rem; }
+.facts .r.thick { border-bottom: 4px solid var(--rule); }
+.facts .note { margin-top: 10px; font-size: .78rem; color: var(--soft); }
+
+/* Ingredients */
+.ingredients { padding-block: clamp(48px, 6vw, 88px) 24px; }
+.ingredients p.list { font-size: clamp(1.4rem, 1rem + 1.6vw, 2.4rem); line-height: 1.35; max-width: 34ch; font-family: var(--display); }
+.ingredients p.list .k { font-family: var(--body); font-size: .4em; letter-spacing: .12em; text-transform: uppercase; vertical-align: middle; margin-right: 10px; color: var(--soft); }
+.ingredients a { text-decoration: none; background-image: linear-gradient(currentColor, currentColor); background-size: 0 1.5px; background-repeat: no-repeat; background-position: 0 92%; transition: background-size .3s; }
+.ingredients a:hover { background-size: 100% 1.5px; }
+.ingredients a.allergen { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+.ingredients .foot { margin-top: 14px; color: var(--soft); }
+
+.cats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); margin-top: 40px; }
+@media (min-width: 900px) { .cats { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.cat { border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); text-decoration: none; display: grid; grid-template-rows: auto 1fr; background: var(--card); }
+.cat .ph { aspect-ratio: 4/3; overflow: hidden; max-width: 100%; }
+.cat .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+.cat:hover .ph img { transform: scale(1.04); }
+.cat .cap { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 14px 16px 16px; }
+.cat h3 { font-size: clamp(1.1rem, .95rem + .6vw, 1.5rem); }
+.cat .n { font-size: .8rem; color: var(--soft); font-variant-numeric: tabular-nums; }
+
+/* Products */
+.products { padding-block: clamp(56px, 7vw, 104px); }
+.sec-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px 40px; border-bottom: 1px solid var(--rule); padding-bottom: 16px; }
+.sec-head h2 { font-size: clamp(2rem, 1.3rem + 2.6vw, 3.4rem); }
+.sec-head p { max-width: 40ch; color: var(--soft); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); border-left: 1px solid var(--rule); }
+.prod { border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 18px; display: grid; gap: 12px; align-content: start; }
+.bagwrap { position: relative; width: 74%; margin: 6px auto 0; container-type: inline-size; }
+.bagwrap img { width: 100%; filter: drop-shadow(0 12px 10px rgba(17,21,17,.12)); }
+.bagwrap .lbl { position: absolute; left: 62.8%; top: 55.5%; transform: translate(-50%,-50%); font-family: var(--display); font-size: 9cqw; white-space: nowrap; color: #151515; pointer-events: none; }
+.bagwrap .lbl.dk { color: var(--paper); }
+.prod h3 { font-size: 1.4rem; }
+.spec { font-size: .82rem; border-top: 1px solid var(--rule); font-variant-numeric: tabular-nums; }
+.spec div { display: flex; justify-content: space-between; gap: 10px; padding: 5px 0; border-bottom: 1px solid var(--hair); }
+.spec div span:first-child { color: var(--soft); }
+.prod .buy { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 4px; }
+.prod .price { font-family: var(--display); font-size: 1.5rem; font-variant-numeric: tabular-nums; }
+.prod .price s { font-family: var(--body); font-size: .8rem; color: var(--soft); margin-left: 6px; }
+.add { border: 1px solid var(--ink); background: none; border-radius: 999px; padding: 9px 16px; font-size: .88rem; transition: background .2s, color .2s; }
+.add:hover { background: var(--green); border-color: var(--green); color: var(--paper); }
+.flag { justify-self: start; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; border: 1px solid var(--orange); color: var(--orange); padding: 2px 7px; }
+
+/* Directions */
+.directions { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); background: var(--card); }
+.directions .wrap { display: grid; gap: 40px; padding-block: clamp(56px, 6vw, 96px); align-items: center; }
+@media (min-width: 960px) { .directions .wrap { grid-template-columns: 1fr 1fr; gap: 72px; } }
+.directions h2 { font-size: clamp(2rem, 1.3rem + 2.6vw, 3.4rem); }
+.directions ol { list-style: none; counter-reset: s; padding: 0; margin: 28px 0 0; }
+.directions li { counter-increment: s; display: grid; grid-template-columns: 44px 1fr; gap: 14px; padding: 16px 0; border-top: 1px solid var(--hair); }
+.directions li::before { content: counter(s) "."; font-family: var(--display); font-size: 1.6rem; line-height: 1; }
+.directions li b { font-weight: 400; display: block; font-size: 1.05rem; }
+.directions li span { color: var(--soft); font-size: .95rem; }
+.directions .storage { margin-top: 18px; font-size: .85rem; color: var(--soft); border: 1px solid var(--hair); padding: 10px 12px; }
+.directions .photo { background: var(--salmon); }
+.directions .photo img { width: 100%; }
+
+/* Produced by */
+.produced { padding-block: clamp(56px, 7vw, 104px); }
+.produced .wrap { display: grid; gap: 40px; }
+@media (min-width: 960px) { .produced .wrap { grid-template-columns: 1.1fr .9fr; gap: 72px; align-items: start; } }
+.produced img { width: 100%; aspect-ratio: 1030/601; object-fit: cover; max-width: 100%; }
+.produced h2 { font-size: clamp(2rem, 1.3rem + 2.6vw, 3.4rem); }
+.produced p { margin-top: 18px; color: var(--soft); max-width: 46ch; }
+.addr { margin-top: 28px; border-top: 1px solid var(--rule); font-size: .92rem; }
+.addr div { display: grid; grid-template-columns: 11ch 1fr; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--hair); }
+.addr div span:first-child { color: var(--soft); }
+
+/* Trade + news */
+.panels { display: grid; gap: 0; border-top: 1px solid var(--rule); }
+@media (min-width: 960px) { .panels { grid-template-columns: 1fr 1fr; } }
+.panel { padding: clamp(32px, 4vw, 56px) var(--gr) clamp(32px, 4vw, 56px) var(--gl); display: grid; gap: 14px; align-content: start; }
+@media (min-width: 960px) { .panel { padding-inline: clamp(32px, 4vw, 56px); } .panel + .panel { border-left: 1px solid var(--rule); } }
+.panel.mint { background: var(--mint); }
+.panel h2 { font-size: clamp(1.8rem, 1.2rem + 2vw, 2.8rem); }
+.panel p { color: var(--soft); max-width: 44ch; }
+.panel form { display: grid; gap: 10px; margin-top: 8px; }
+.panel .row { display: grid; gap: 10px; }
+@media (min-width: 560px) { .panel .row { grid-template-columns: 1fr 1fr; } }
+.panel input { height: 48px; border: 1px solid var(--ink); background: var(--card); padding: 0 12px; font: inherit; color: var(--ink); width: 100%; border-radius: 0; }
+.panel input[aria-invalid="true"] { border-color: var(--orange); }
+.panel .msg { font-size: .85rem; min-height: 1.3em; }
+.panel .btn { justify-self: start; }
+
+/* Back of pack */
+.back { background: var(--green); color: var(--paper); }
+.back .wrap { padding-block: 48px calc(40px + env(safe-area-inset-bottom,0px)); display: grid; gap: 32px; }
+@media (min-width: 900px) { .back .wrap { grid-template-columns: 1.4fr 1fr 1fr auto; align-items: start; } }
+.back .wm { font-size: 1.5rem; }
+.back p, .back li { font-size: .88rem; color: rgba(250,249,245,.75); }
+.back ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.back a { text-decoration: none; }
+.back a:hover { color: var(--paper); text-decoration: underline; }
+.back .h { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mustard); margin-bottom: 10px; }
+.barcode { background: var(--paper); padding: 10px 12px 6px; display: inline-grid; gap: 4px; justify-items: center; color: var(--ink); font-size: .72rem; letter-spacing: .2em; font-variant-numeric: tabular-nums; }
+.barcode svg { width: 150px; height: 56px; display: block; }
+
+/* Basket drawer (from shop.js) */
+.rf-scrim { position: fixed; inset: 0; background: rgba(17,21,17,.35); z-index: 80; opacity: 0; transition: opacity .3s; }
+.rf-scrim.open { opacity: 1; }
+.rf-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 100%); background: var(--paper); z-index: 90; border-left: 2px solid var(--rule); display: flex; flex-direction: column; transform: translateX(100%); transition: transform .3s ease; padding: env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) 0; font-variant-numeric: tabular-nums; }
+.rf-drawer.open { transform: none; }
+.rf-head { display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; border-bottom: 8px solid var(--rule); }
+.rf-head h2 { font-size: 2rem; }
+.rf-close { background: none; border: 1px solid var(--ink); border-radius: 999px; padding: 6px 14px; font-size: .85rem; }
+.rf-body { flex: 1; overflow: auto; padding: 0 22px; }
+.rf-empty { padding: 28px 0; color: var(--soft); }
+.rf-line { display: grid; grid-template-columns: 56px 1fr auto; gap: 14px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--hair); }
+.rf-thumb { width: 56px; height: 64px; display: grid; place-items: end center; overflow: hidden; }
+.rf-thumb img { width: 80%; }
+.rf-info { display: grid; gap: 2px; }
+.rf-name { font-family: var(--display); font-size: 1.1rem; }
+.rf-meta { font-size: .8rem; color: var(--soft); }
+.rf-qty { display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; }
+.rf-qty button { width: 26px; height: 26px; border: 1px solid var(--ink); background: none; border-radius: 50%; line-height: 1; padding: 0; }
+.rf-foot { padding: 14px 22px 22px; border-top: 4px solid var(--rule); display: grid; gap: 6px; }
+.rf-foot:empty { display: none; }
+.rf-row { display: flex; justify-content: space-between; font-size: .92rem; }
+.rf-save { color: var(--green); }
+.rf-total { font-family: var(--display); font-size: 1.4rem; border-top: 1px solid var(--rule); padding-top: 8px; margin-top: 4px; }
+.rf-sub { display: flex; gap: 10px; align-items: center; font-size: .9rem; padding-bottom: 8px; }
+.rf-sub input { accent-color: var(--green); width: 18px; height: 18px; }
+.rf-checkout { margin-top: 10px; min-height: 50px; border: 0; background: var(--green); color: var(--paper); border-radius: 999px; }
+.rf-toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom,0px)); transform: translate(-50%, 12px); background: var(--ink); color: var(--paper); padding: 10px 16px; font-size: .88rem; opacity: 0; visibility: hidden; transition: all .25s; z-index: 95; max-width: calc(100% - 32px); }
+.rf-toast.show { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { transition: none !important; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body data-store="label">
+
+<header class="top">
+  <div class="wrap">
+    <a class="wm" href="#top" aria-label="Regency Foods home">REGENCY F<span class="oo" aria-hidden="true"></span>DS</a>
+    <nav aria-label="Main"><a href="#ingredients">Shop</a><a href="#products">Bestsellers</a><a href="#directions">Delivery</a><a href="#produced">About us</a><a href="#trade">Trade accounts</a></nav>
+    <button class="bag-btn" type="button" data-open-basket>Basket <span data-count>0</span></button>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="caps" style="color:var(--orange)">Wholesale &amp; catering supplier · London</p>
+      <h1 style="margin-top:16px">Everything a kitchen needs. <span>Nothing it doesn't.</span></h1>
+      <p class="lead">Premium ingredients and everyday essentials for restaurants, hotels, pubs and home cooks. Order today, delivered to your door tomorrow.</p>
+      <div class="btns"><a class="btn solid" href="#ingredients">Shop the range</a><a class="btn" href="#trade">Open a trade account</a></div>
+    </div>
+
+    <section class="facts" aria-labelledby="factsTitle">
+      <h2 id="factsTitle">Regency Foods</h2>
+      <div class="per"><span>Typical values</span><span>per order</span></div>
+      <dl>
+        <div class="r big thick"><dt>Delivery</dt><dd>Next day</dd></div>
+        <div class="r"><dt>Dispatched from</dt><dd>North London</dd></div>
+        <div class="r indent"><dt>of which nationwide</dt><dd>100%</dd></div>
+        <div class="r"><dt>Venues supplied</dt><dd>1,000+</dd></div>
+        <div class="r indent"><dt>of which restaurants, hotels, pubs</dt><dd>most</dd></div>
+        <div class="r"><dt>Supplying kitchens since</dt><dd>1995</dd></div>
+        <div class="r"><dt>Trustpilot rating</dt><dd>4.9 / 5</dd></div>
+        <div class="r thick"><dt>Subscribe &amp; save</dt><dd>10%</dd></div>
+      </dl>
+      <p class="note">Founded by a former restaurateur. Contains quality, efficiency and reliability.</p>
+    </section>
+  </div>
+</section>
+
+<section class="ingredients" id="ingredients">
+  <div class="wrap">
+    <p class="list"><span class="k">Ingredients:</span><a href="#cats">Meat &amp; Seafood</a>, <a href="#cats">Frozen Foods</a>, <a href="#cats">Soft Drinks</a>, <a href="#cats">Alcohol &amp; Spirits</a>, <a class="allergen" href="#products"><b>Nuts</b> &amp; Seeds</a>, <a href="#cats">Snacks</a>, <a href="#cats">Sweets</a>, <a href="#cats">Store Cupboard</a>.</p>
+    <p class="foot small">For allergens, see ingredients in <b>bold</b>. May contain everything your menu needs.</p>
+    <div class="cats" id="cats">
+      <a class="cat" href="#cats"><div class="ph"><img src="assets/img/cat-meat.jpg" alt="Grilled chicken, prawns and a burger on orange tiles"></div><div class="cap"><h3>Meat &amp; Seafood</h3><span class="n">Fresh &amp; frozen</span></div></a>
+      <a class="cat" href="#cats"><div class="ph"><img src="assets/img/cat-frozen.jpg" alt="Frozen pizza, waffles and ice cream"></div><div class="cap"><h3>Frozen Foods</h3><span class="n">−18°C</span></div></a>
+      <a class="cat" href="#cats"><div class="ph"><img src="assets/img/cat-drinks.jpg" alt="Juices, vinegar and canned soft drinks"></div><div class="cap"><h3>Soft Drinks</h3><span class="n">Juices &amp; sodas</span></div></a>
+      <a class="cat" href="#cats"><div class="ph"><img src="assets/img/cat-wine.jpg" alt="Bottles of white wine with a glass"></div><div class="cap"><h3>Alcohol &amp; Spirits</h3><span class="n">By the case</span></div></a>
+      <a class="cat" href="#products"><div class="ph"><img src="assets/img/pecan-hero.jpg" alt="Regency Foods pecan nuts bag" style="object-position:center 45%"></div><div class="cap"><h3>Nuts &amp; Seeds</h3><span class="n">1kg bags</span></div></a>
+      <a class="cat" href="#cats"><div class="ph"><img src="assets/img/choice.jpg" alt="Snacks, sweets, sodas and spreads"></div><div class="cap"><h3>Snacks &amp; Store Cupboard</h3><span class="n">Everyday range</span></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="products" id="products">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Bestsellers, per kilo</h2>
+      <p>Our own-bag nuts, mildly roasted or raw. Every bag lists its price per 100g, so comparing is easy.</p>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section class="directions" id="directions">
+  <div class="wrap">
+    <div>
+      <p class="caps" style="color:var(--orange)">Directions</p>
+      <h2 style="margin-top:12px">Order today. Use tomorrow.</h2>
+      <ol>
+        <li><div><b>Order online</b><span>From a single bag to a full weekly restock.</span></div></li>
+        <li><div><b>We pick and pack</b><span>Your order is checked at our North London hub.</span></div></li>
+        <li><div><b>Receive next day</b><span>Fast, next-day delivery nationwide, so you're never left waiting.</span></div></li>
+      </ol>
+      <p class="storage">Storage: keep in your kitchen. Best before you run out. Subscribe &amp; save 10% to make sure you never do.</p>
+    </div>
+    <div class="photo"><img src="assets/img/van.jpg" alt="Yellow Regency Foods delivery van"></div>
+  </div>
+</section>
+
+<section class="produced" id="produced">
+  <div class="wrap">
+    <img src="assets/img/kitchen.jpg" alt="Chefs at work in a busy restaurant kitchen">
+    <div>
+      <p class="caps" style="color:var(--orange)">Produced by</p>
+      <h2 style="margin-top:12px">A former restaurateur, for busy kitchens.</h2>
+      <p>Regency Foods is a trusted wholesale catering and food supplier delivering across the UK since 1995. We understand the importance of quality, efficiency and reliability in every kitchen, and our mission is to offer high-quality products at competitive prices.</p>
+      <div class="addr">
+        <div><span>Packed in</span><span>North London, UK</span></div>
+        <div><span>Packed for</span><span>Restaurants, hotels, pubs, caterers and home cooks</span></div>
+        <div><span>Trusted by</span><span>Balans, Park Chinois, Meta, Lush, Smoky Boys and 1,000+ more</span></div>
+        <div><span>Rated</span><span>4.9, Excellent on Trustpilot</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="panels" id="trade">
+  <section class="panel mint">
+    <p class="caps">Trade accounts</p>
+    <h2>Buying for a venue?</h2>
+    <p>Open a trade account for wholesale pricing and next-day delivery from our North London hub.</p>
+    <form data-form="trade" novalidate>
+      <div class="row"><input id="tName" placeholder="Your name" aria-label="Your name" autocomplete="name" required><input id="tBiz" placeholder="Business name" aria-label="Business name" autocomplete="organization" required></div>
+      <input id="tEmail" type="email" placeholder="Work email" aria-label="Work email" autocomplete="email" required>
+      <button class="btn solid" type="submit">Request an account</button>
+      <p class="msg" data-msg aria-live="polite"></p>
+    </form>
+  </section>
+  <section class="panel">
+    <p class="caps">Newsletter</p>
+    <h2>New arrivals, first.</h2>
+    <p>Sign up to discover the finest selection of quality foods, stay up to date with our newest arrivals, and enjoy exclusive offers.</p>
+    <form data-form="news" novalidate>
+      <input id="nEmail" type="email" placeholder="Email address" aria-label="Email address" autocomplete="email" required>
+      <button class="btn" type="submit">Subscribe</button>
+      <p class="msg" data-msg aria-live="polite"></p>
+    </form>
+  </section>
+</div>
+</main>
+
+<footer class="back">
+  <div class="wrap">
+    <div>
+      <span class="wm">REGENCY F<span class="oo" aria-hidden="true"></span>DS</span>
+      <p style="margin-top:12px;max-width:36ch">Wholesale catering and food supplier. Supplying kitchens across the UK for <span data-years>31</span> years.</p>
+    </div>
+    <div><p class="h">Shop</p><ul><li><a href="#cats">All categories</a></li><li><a href="#products">Bestsellers</a></li><li><a href="#products">Promotions</a></li></ul></div>
+    <div><p class="h">Help</p><ul><li><a href="#directions">Shipping &amp; returns</a></li><li><a href="#trade">Contact us</a></li><li><a href="#trade">FAQ</a></li><li><a href="#trade">Privacy &amp; terms</a></li></ul></div>
+    <a class="barcode" href="#top" aria-label="Back to top">
+      <svg viewBox="0 0 150 56" id="barcode" aria-hidden="true"></svg>
+      <span>EST · 1995 · <span data-year>2026</span></span>
+    </a>
+  </div>
+</footer>
+
+<script src="shop.js"></script>
+<script>
+(function () {
+  var P = window.RF_PRODUCTS, gbp = window.RF_GBP, esc = window.RF_ESC;
+  document.getElementById("grid").innerHTML = P.map(function (p) {
+    return '<article class="prod">' + (p.was ? '<span class="flag">Offer</span>' : (p.id === "pecans" ? '<span class="flag">Bestseller</span>' : '<span class="flag" style="visibility:hidden">—</span>')) +
+      '<div class="bagwrap"><img src="' + p.img + '" alt="Regency Foods ' + esc(p.name) + ' ' + p.size + ' bag"><span class="lbl' + (p.dark ? ' dk' : '') + '" aria-hidden="true">' + esc(p.label) + '</span></div>' +
+      '<h3>' + esc(p.name) + '</h3>' +
+      '<div class="spec"><div><span>Net weight</span><span>' + p.size + '</span></div><div><span>Style</span><span>' + esc(p.note) + '</span></div><div><span>Best for</span><span>' + esc(p.use) + '</span></div><div><span>Per 100g</span><span>' + gbp.format(p.price / 10) + '</span></div></div>' +
+      '<div class="buy"><span class="price">' + gbp.format(p.price) + (p.was ? '<s>' + gbp.format(p.was) + '</s>' : '') + '</span><button class="add" type="button" data-add="' + p.id + '" aria-label="Add ' + esc(p.name) + ' to basket">Add</button></div></article>';
+  }).join("");
+  // decorative barcode
+  var svg = document.getElementById("barcode"), x = 4, s = "", seq = [2,1,1,3,1,2,2,1,1,1,3,2,1,1,2,3,1,1,2,1,1,2,3,1,2,1,1,1,2,2,1,3,1,1,2,1,1,3,2,1,1,2,1,1];
+  seq.forEach(function (w, i) { if (i % 2 === 0) s += '<rect x="' + x + '" y="0" width="' + w * 1.6 + '" height="56" fill="#111511"/>'; x += w * 1.6 + .2; });
+  svg.innerHTML = s;
+})();
+</script>
+</body>
+</html>

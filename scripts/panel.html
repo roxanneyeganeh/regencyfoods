@@ -1,0 +1,25 @@
+
+<!-- ===== Mix & match panel (preview tool only, not part of the site) -->
+<button class="mx-fab" id="mxFab" type="button" aria-expanded="false" aria-controls="mxPanel">
+  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="2" fill="currentColor"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="3.75" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="3.75" fill="none" stroke="currentColor" stroke-width="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2" fill="currentColor"/></svg>
+  Mix &amp; match
+</button>
+<aside class="mx-panel" id="mxPanel" aria-labelledby="mxTitle" hidden>
+  <div class="mx-ph">
+    <h2 id="mxTitle">Mix &amp; match</h2>
+    <button class="mx-x" id="mxClose" type="button" aria-label="Close mix and match">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="mx-scroll">
+    <p class="mx-intro">Switch each part of the page between the versions you liked. The page jumps to whatever you change, and your choices are saved as you go.</p>
+    <div id="mxGroups"></div>
+  </div>
+  <div class="mx-foot">
+    <button class="mx-b mx-b--main" id="mxCopy" type="button">Copy my choices</button>
+    <button class="mx-b" id="mxShuffle" type="button">Shuffle</button>
+    <button class="mx-b" id="mxReset" type="button">Reset</button>
+    <p class="mx-msg" id="mxMsg" aria-live="polite"></p>
+    <textarea class="mx-out" id="mxOut" rows="7" readonly hidden aria-label="Your choices"></textarea>
+  </div>
+</aside>

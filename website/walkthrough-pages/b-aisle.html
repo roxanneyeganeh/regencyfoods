@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Regency Foods · The Aisle</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Concept: the shop floor. Hanging aisle signs are the navigation, products
+   stand on shelves with real shelf-edge labels, chiller doors fog over, and
+   you drag (or tap) stock into a Regency crate. */
+@font-face { font-family: "Caviar Dreams"; src: url("assets/fonts/CaviarDreams-Bold.woff") format("woff"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Helvetica Neue RF"; src: url("assets/fonts/HelveticaNeue-Roman.woff") format("woff"); font-weight: 400; font-display: swap; }
+:root {
+  color-scheme: light;
+  --green: #1a3429; --green-2: #24493a; --cream: #faf9f5; --oat: #f5f2df; --wall: #efeadb;
+  --mint: #def7d9; --salmon: #f39684; --orange: #d54415; --mustard: #dcb357; --leaf: #45a94f;
+  --ink: #111511; --ink-soft: #4a524c; --line: rgba(17,21,17,.14);
+  --display: "Caviar Dreams", Futura, "Century Gothic", sans-serif;
+  --body: "Helvetica Neue RF", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --gl: max(16px, env(safe-area-inset-left, 0px)); --gr: max(16px, env(safe-area-inset-right, 0px));
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+*,*::before,*::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--body); line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--cream); z-index: 70; }
+img { max-width: 100%; display: block; }
+[hidden] { display: none !important; }
+h1,h2,h3 { font-family: var(--display); font-weight: 700; margin: 0; line-height: 1.02; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2.5px solid var(--orange); outline-offset: 3px; }
+.wrap { max-width: 1380px; margin-inline: auto; padding-left: var(--gl); padding-right: var(--gr); }
+@media (min-width: 760px) { .wrap { padding-left: max(40px, env(safe-area-inset-left,0px)); padding-right: max(40px, env(safe-area-inset-right,0px)); } }
+.mono { text-transform: uppercase; letter-spacing: .14em; font-size: .72rem; }
+.wm { font-family: var(--display); font-weight: 700; display: inline-flex; align-items: center; white-space: nowrap; letter-spacing: .02em; }
+.wm .oo { flex: none; display: inline-block; width: 1.18em; height: .66em; border: .13em solid currentColor; border-radius: .4em; margin: 0 .02em; }
+
+/* ---------- Header ---------- */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; background: color-mix(in srgb, var(--cream) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 12px; }
+.top .wm { font-size: 1.3rem; text-decoration: none; }
+.top nav { display: none; gap: 6px; }
+.top nav a { text-decoration: none; display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px 7px 7px; border-radius: 999px; font-size: .9rem; }
+.top nav a:hover { background: var(--oat); }
+.top nav a b { font-weight: 400; background: var(--green); color: var(--cream); border-radius: 999px; padding: 3px 8px; font-size: .72rem; font-variant-numeric: tabular-nums; }
+@media (min-width: 1040px) { .top nav { display: flex; } }
+.top .hrs { font-size: .82rem; color: var(--ink-soft); }
+
+/* ---------- Hanging signs ---------- */
+.sign-hang { position: relative; display: inline-block; padding-top: 46px; }
+.sign-hang::before, .sign-hang::after { content: ""; position: absolute; top: 0; width: 2px; height: 50px; background: #9aa39c; }
+.sign-hang::before { left: 18%; } .sign-hang::after { right: 18%; }
+.sign {
+  position: relative; background: var(--green); color: var(--cream); border-radius: 14px;
+  padding: 18px 26px 20px; display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; align-items: center;
+  box-shadow: 0 22px 40px -22px rgba(26,52,41,.7); transform-origin: 50% -46px; transition: transform .8s var(--ease);
+}
+.sign .num { font-family: var(--display); font-size: clamp(3rem, 2rem + 4vw, 5.5rem); line-height: .8; color: var(--mustard); grid-row: span 2; font-variant-numeric: tabular-nums; }
+.sign .ttl { font-family: var(--display); font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.4rem); line-height: 1; }
+.sign .sub { font-size: .9rem; color: rgba(250,249,245,.75); }
+.sign-hang:hover .sign, .sign.swing { animation: swing 1.6s var(--ease); }
+@keyframes swing { 20% { transform: rotate(3deg); } 45% { transform: rotate(-2deg); } 70% { transform: rotate(1deg); } 100% { transform: rotate(0); } }
+
+/* ---------- Hero ---------- */
+.hero { padding-block: 24px clamp(48px, 6vw, 88px); background: linear-gradient(180deg, var(--cream), var(--wall)); }
+.hero-grid { display: grid; gap: 40px; align-items: end; }
+@media (min-width: 1000px) { .hero-grid { grid-template-columns: 1fr 1fr; } }
+.hero h1 { font-size: clamp(2.8rem, 1.4rem + 5vw, 6rem); margin-top: 28px; }
+.hero h1 em { font-style: normal; color: var(--orange); }
+.hero .lead { margin-top: 20px; font-size: clamp(1.05rem, 1rem + .35vw, 1.3rem); color: var(--ink-soft); max-width: 40ch; }
+.how { margin-top: 26px; display: inline-flex; align-items: center; gap: 12px; padding: 10px 16px 10px 10px; border-radius: 999px; background: var(--cream); border: 1.5px dashed var(--ink); font-size: .92rem; }
+.how .hand { width: 34px; height: 34px; border-radius: 50%; background: var(--mustard); display: grid; place-items: center; animation: nudge 2.2s var(--ease) infinite; }
+@keyframes nudge { 50% { transform: translate(6px, 4px); } }
+.directory { background: var(--ink); color: var(--cream); border-radius: 18px; padding: 22px; display: grid; gap: 2px; box-shadow: 0 30px 50px -30px rgba(0,0,0,.6); }
+.directory .head { display: flex; justify-content: space-between; padding: 0 8px 14px; color: var(--mustard); }
+.directory a { display: grid; grid-template-columns: 56px 1fr auto; gap: 14px; align-items: center; text-decoration: none; padding: 12px 8px; border-top: 1px solid rgba(250,249,245,.12); border-radius: 8px; transition: background .2s; }
+.directory a:hover { background: rgba(250,249,245,.06); }
+.directory .n { font-family: var(--display); font-size: 1.9rem; line-height: 1; color: var(--mustard); font-variant-numeric: tabular-nums; }
+.directory .t { font-family: var(--display); font-size: 1.3rem; line-height: 1.1; }
+.directory .t small { display: block; font-family: var(--body); font-size: .8rem; color: rgba(250,249,245,.6); margin-top: 3px; }
+.directory .arr { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(250,249,245,.3); display: grid; place-items: center; transition: transform .3s var(--ease), background .3s; }
+.directory a:hover .arr { background: var(--orange); border-color: var(--orange); transform: translateY(3px); }
+
+/* ---------- Aisles ---------- */
+.aisle { padding-block: clamp(32px, 4vw, 56px) clamp(56px, 6vw, 96px); background: var(--wall); scroll-margin-top: 60px; }
+.aisle:nth-of-type(even) { background: var(--oat); }
+.aisle-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px 40px; }
+.aisle-head p { max-width: 40ch; color: var(--ink-soft); padding-bottom: 6px; }
+
+.shelf { margin-top: 40px; position: relative; }
+.shelf-row { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: clamp(12px, 2vw, 32px); align-items: end; padding: 0 clamp(8px, 2vw, 28px); overflow-x: auto; scrollbar-width: none; padding-top: 30px; }
+.shelf-row::-webkit-scrollbar { display: none; }
+.plank { height: 22px; background: linear-gradient(180deg, var(--green-2), var(--green)); border-radius: 4px; box-shadow: 0 16px 24px -14px rgba(26,52,41,.7); position: relative; z-index: 1; }
+.labels { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: clamp(12px, 2vw, 32px); padding: 0 clamp(8px, 2vw, 28px); margin-top: -12px; position: relative; z-index: 2; overflow-x: auto; scrollbar-width: none; }
+.labels::-webkit-scrollbar { display: none; }
+.sel { background: #fff; border-radius: 3px; padding: 8px 10px 9px; box-shadow: 0 2px 0 rgba(0,0,0,.08); display: grid; grid-template-columns: 1fr auto; gap: 0 8px; align-items: end; font-variant-numeric: tabular-nums; border-top: 4px solid var(--mustard); }
+.sel.offer { border-top-color: var(--orange); }
+.sel .nm { font-size: .78rem; line-height: 1.2; grid-column: 1 / -1; }
+.sel .unit { font-size: .66rem; color: var(--ink-soft); }
+.sel .pr { font-family: var(--display); font-size: 1.45rem; line-height: 1; grid-row: 2 / span 2; grid-column: 2; }
+.sel s { font-size: .66rem; color: var(--ink-soft); }
+.sel .tag { grid-column: 1 / -1; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); margin-bottom: 3px; }
+.prod { position: relative; display: grid; justify-items: center; touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; background: none; border: 0; padding: 0; }
+.prod img { width: min(100%, 210px); filter: drop-shadow(0 14px 10px rgba(26,52,41,.25)); transition: transform .4s var(--ease); pointer-events: none; -webkit-user-drag: none; }
+.prod:hover img { transform: translateY(-10px) rotate(-2deg); }
+.prod .lbl { position: absolute; left: 50%; bottom: 0; width: min(100%, 210px); transform: translateX(-50%); aspect-ratio: 374/451; pointer-events: none; }
+.prod .lbl span { position: absolute; left: 62.8%; top: 55.5%; transform: translate(-50%,-50%); font-family: var(--display); font-size: clamp(11px, 1.05vw, 15px); white-space: nowrap; color: #151515; transition: transform .4s var(--ease); }
+.prod:hover .lbl span { transform: translate(-50%, calc(-50% - 10px)) rotate(-2deg); }
+.prod .lbl.dk span { color: var(--cream); }
+.prod .plus { position: absolute; top: 4px; right: 6%; width: 36px; height: 36px; border-radius: 50%; background: var(--ink); color: var(--cream); display: grid; place-items: center; font-size: 1.2rem; opacity: 0; transform: scale(.6); transition: all .3s var(--ease); }
+.prod:hover .plus, .prod:focus-visible .plus { opacity: 1; transform: scale(1); }
+@media (hover: none) { .prod .plus { opacity: 1; transform: scale(1); } }
+
+/* Chillers */
+.chillers { margin-top: 40px; display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.chiller { position: relative; border-radius: 14px; overflow: hidden; background: #cfe3e6; border: 10px solid #d9dedb; box-shadow: inset 0 0 0 2px #b9c1bc, 0 22px 40px -26px rgba(0,0,0,.5); aspect-ratio: 3/4; max-width: 100%; text-decoration: none; display: block; }
+.chiller img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.chiller canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.chiller .handle { position: absolute; right: 10px; top: 30%; width: 8px; height: 34%; border-radius: 4px; background: linear-gradient(90deg, #8e9791, #e5e9e6); box-shadow: 0 2px 6px rgba(0,0,0,.25); z-index: 2; }
+.chiller .cap { position: absolute; left: 12px; bottom: 12px; right: 30px; z-index: 2; background: var(--cream); border-radius: 999px; padding: 9px 16px; font-family: var(--display); font-size: 1.15rem; display: flex; justify-content: space-between; align-items: center; }
+.chiller .cap small { font-family: var(--body); font-size: .72rem; color: var(--ink-soft); }
+.chiller .temp { position: absolute; top: 12px; left: 12px; z-index: 2; background: rgba(17,21,17,.75); color: #9ff0b0; font-variant-numeric: tabular-nums; font-size: .78rem; padding: 4px 8px; border-radius: 4px; letter-spacing: .06em; }
+.hint { margin-top: 14px; font-size: .85rem; color: var(--ink-soft); }
+
+/* Endcap promo */
+.endcap { display: grid; gap: 16px; margin-top: 40px; }
+@media (min-width: 900px) { .endcap { grid-template-columns: 1.2fr .8fr; } }
+.endcap .ph { border-radius: 14px; overflow: hidden; min-height: 280px; }
+.endcap .ph img { width: 100%; height: 100%; object-fit: cover; }
+.endcap .card { background: var(--salmon); border-radius: 14px; padding: clamp(24px, 3vw, 44px); display: grid; gap: 16px; align-content: center; }
+.endcap h3 { font-size: clamp(1.8rem, 1.2rem + 2vw, 2.8rem); }
+.btn { display: inline-flex; align-items: center; gap: 10px; min-height: 50px; padding: 0 24px; border-radius: 999px; border: 1.5px solid var(--ink); background: transparent; text-decoration: none; transition: transform .25s var(--ease), background .25s; font-size: 1rem; justify-self: start; }
+.btn:hover { transform: translateY(-2px); }
+.btn-g { background: var(--green); border-color: var(--green); color: var(--cream); }
+
+/* ---------- Loading bay (delivery) ---------- */
+.bay { background: var(--green); color: var(--cream); overflow: hidden; }
+.bay .wrap { padding-block: clamp(56px, 6vw, 104px); display: grid; gap: 32px; align-items: center; }
+@media (min-width: 1000px) { .bay .wrap { grid-template-columns: 1fr 1fr; } }
+.bay h2 { font-size: clamp(2.4rem, 1.4rem + 3.6vw, 4.6rem); }
+.bay p { color: rgba(250,249,245,.78); margin-top: 18px; max-width: 44ch; }
+.bay .door { position: relative; background: var(--salmon); border-radius: 16px; overflow: hidden; aspect-ratio: 16/10; max-width: 100%; }
+.bay .door img { position: absolute; inset: 8% 6% 0; width: 88%; mix-blend-mode: multiply; }
+.bay .shutter { position: absolute; inset: 0; background: repeating-linear-gradient(180deg, #c9cfc9 0 14px, #aeb6b0 14px 16px); transform-origin: top; transition: transform 1.4s var(--ease); display: grid; place-items: center; }
+.bay .shutter span { background: var(--ink); color: var(--mustard); padding: 6px 12px; border-radius: 4px; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; }
+.bay .door.up .shutter { transform: scaleY(.06); }
+.bay ul { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 10px; }
+.bay li { display: flex; gap: 14px; align-items: baseline; }
+.bay li b { font-family: var(--display); color: var(--mustard); font-size: 1.3rem; min-width: 1.4ch; }
+
+/* ---------- Till (trade + newsletter) ---------- */
+.till { padding-block: clamp(56px, 6vw, 104px); }
+.till-grid { display: grid; gap: 16px; }
+@media (min-width: 1000px) { .till-grid { grid-template-columns: 1fr 1fr; } }
+.panel { border-radius: 18px; padding: clamp(24px, 3vw, 48px); display: grid; gap: 16px; align-content: start; }
+.panel.mint { background: var(--mint); }
+.panel.orange { background: var(--orange); color: var(--cream); }
+.panel h2 { font-size: clamp(2rem, 1.3rem + 2.6vw, 3.4rem); }
+.panel p { max-width: 44ch; }
+.panel form { display: grid; gap: 12px; margin-top: 8px; }
+.panel input, .panel select { height: 50px; border-radius: 10px; border: 1.5px solid var(--line); background: #fff; padding: 0 14px; font: inherit; color: var(--ink); width: 100%; }
+.panel .row { display: grid; gap: 12px; }
+@media (min-width: 560px) { .panel .row { grid-template-columns: 1fr 1fr; } }
+.panel .msg { font-size: .88rem; min-height: 1.3em; }
+.nl { display: flex; border-bottom: 2px solid var(--cream); }
+.nl input { background: transparent; border: 0; color: var(--cream); font-size: 1.15rem; border-radius: 0; padding: 0; }
+.nl input::placeholder { color: rgba(250,249,245,.7); }
+.nl button { width: 48px; height: 48px; border-radius: 50%; border: 0; background: var(--cream); color: var(--orange); font-size: 1.2rem; flex: none; }
+.trust { display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center; margin-top: 24px; font-family: var(--display); font-size: 1.15rem; color: var(--ink-soft); }
+.trust .mono { font-family: var(--body); }
+
+footer { background: var(--ink); color: rgba(250,249,245,.7); padding-bottom: 110px; }
+footer .wrap { padding-block: 40px; display: flex; flex-wrap: wrap; gap: 20px 40px; justify-content: space-between; align-items: center; font-size: .9rem; }
+footer .wm { color: var(--cream); font-size: 1.4rem; }
+footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
+footer a { text-decoration: none; }
+
+/* ---------- Crate ---------- */
+.crate {
+  position: fixed; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom,0px)); transform: translateX(-50%); z-index: 60;
+  width: min(420px, calc(100vw - 32px));
+}
+.crate-box {
+  position: relative; width: 100%; display: flex; align-items: center; gap: 14px; text-align: left;
+  background: var(--green); color: var(--cream); border: 0; border-radius: 14px; padding: 12px 16px;
+  box-shadow: 0 -2px 0 #2c5443 inset, 0 24px 40px -18px rgba(0,0,0,.55); transition: transform .3s var(--ease), box-shadow .3s;
+}
+.crate-box .wm { font-size: .95rem; color: var(--mustard); }
+.crate-box .stack { display: flex; margin-left: auto; }
+.crate-box .stack img { width: 30px; margin-left: -10px; filter: drop-shadow(0 3px 3px rgba(0,0,0,.4)); animation: drop .5s var(--ease); }
+@keyframes drop { from { transform: translateY(-30px); opacity: 0; } }
+.crate-box .n { background: var(--orange); border-radius: 999px; min-width: 28px; height: 28px; display: grid; place-items: center; font-variant-numeric: tabular-nums; font-size: .85rem; }
+.crate.hot .crate-box { transform: scale(1.05); box-shadow: 0 0 0 4px var(--mustard), 0 24px 40px -18px rgba(0,0,0,.55); }
+.crate.bump .crate-box { animation: cbump .45s var(--ease); }
+@keyframes cbump { 40% { transform: translateY(4px) scale(1.03); } }
+.crate-list { background: var(--cream); border-radius: 14px; padding: 18px; margin-bottom: 8px; box-shadow: 0 24px 40px -18px rgba(0,0,0,.45); max-height: 60vh; overflow: auto; font-variant-numeric: tabular-nums; }
+.crate-list .ln { display: grid; grid-template-columns: 36px 1fr auto auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.crate-list .ln img { width: 36px; }
+.crate-list .ln button { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); background: none; }
+.crate-list .tot { display: flex; justify-content: space-between; padding-top: 12px; font-family: var(--display); font-size: 1.3rem; }
+.crate-list .chk { width: 100%; justify-content: center; margin-top: 12px; border-radius: 10px; }
+.crate-list .sub { display: flex; gap: 10px; align-items: center; margin-top: 10px; font-size: .88rem; }
+.ghost { position: fixed; left: 0; top: 0; width: 120px; pointer-events: none; z-index: 90; transform: translate(-50%, -50%) rotate(-8deg); filter: drop-shadow(0 18px 18px rgba(0,0,0,.35)); }
+.ghost.fly { transition: transform .6s cubic-bezier(.5,-0.3,.6,1), opacity .6s; }
+.toast { position: fixed; left: 50%; top: calc(74px + env(safe-area-inset-top,0px)); transform: translate(-50%, -16px); opacity: 0; visibility: hidden; background: var(--ink); color: var(--cream); padding: 10px 18px; border-radius: 999px; font-size: .9rem; z-index: 80; transition: all .35s var(--ease); max-width: calc(100% - 32px); text-align: center; }
+.toast.show { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="wm" href="#top" aria-label="Regency Foods home">REGENCY F<span class="oo" aria-hidden="true"></span>DS</a>
+    <nav aria-label="Aisles">
+      <a href="#a1"><b>01</b>Nuts &amp; Seeds</a><a href="#a2"><b>02</b>Chilled &amp; Frozen</a><a href="#a3"><b>03</b>Snacks &amp; Store Cupboard</a><a href="#bay"><b>04</b>Loading Bay</a><a href="#till"><b>05</b>Trade Counter</a>
+    </nav>
+    <span class="hrs mono">Est. 1995</span>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="sign-hang"><div class="sign"><span class="num">00</span><span class="ttl">Shop floor</span><span class="sub">Supplying kitchens since 1995</span></div></div>
+      <h1>The whole wholesale, <em>one aisle away.</em></h1>
+      <p class="lead">Walk the shelves of a trusted UK catering supplier. Everything you put in the crate today is at your kitchen door tomorrow.</p>
+      <p class="how"><span class="hand" aria-hidden="true">✋</span>Drag anything off a shelf into the crate below, or tap it.</p>
+    </div>
+    <nav class="directory" aria-label="Store directory">
+      <div class="head mono"><span>Store directory</span><span>Aisle</span></div>
+      <a href="#a1"><span class="n">01</span><span class="t">Nuts &amp; Seeds<small>By the kilo, for baking and the bar</small></span><span class="arr" aria-hidden="true">↓</span></a>
+      <a href="#a2"><span class="n">02</span><span class="t">Chilled &amp; Frozen<small>Meat, seafood, frozen and drinks</small></span><span class="arr" aria-hidden="true">↓</span></a>
+      <a href="#a3"><span class="n">03</span><span class="t">Snacks &amp; Store Cupboard<small>The everyday range, better value</small></span><span class="arr" aria-hidden="true">↓</span></a>
+      <a href="#bay"><span class="n">04</span><span class="t">Loading Bay<small>Next-day delivery from North London</small></span><span class="arr" aria-hidden="true">↓</span></a>
+      <a href="#till"><span class="n">05</span><span class="t">Trade Counter<small>Wholesale accounts for venues</small></span><span class="arr" aria-hidden="true">↓</span></a>
+    </nav>
+  </div>
+</section>
+
+<section class="aisle" id="a1">
+  <div class="wrap">
+    <div class="aisle-head">
+      <div class="sign-hang"><div class="sign"><span class="num">01</span><span class="ttl">Nuts &amp; Seeds</span><span class="sub">Packed in our own bags, 1kg</span></div></div>
+      <p>Premium nuts, mildly roasted or raw, with a buttery texture and rich flavour. Perfect for baking or as a nutritious snack.</p>
+    </div>
+    <div class="shelf">
+      <div class="shelf-row" id="shelf"></div>
+      <div class="plank" aria-hidden="true"></div>
+      <div class="labels" id="labels"></div>
+    </div>
+  </div>
+</section>
+
+<section class="aisle" id="a2">
+  <div class="wrap">
+    <div class="aisle-head">
+      <div class="sign-hang"><div class="sign"><span class="num">02</span><span class="ttl">Chilled &amp; Frozen</span><span class="sub">Kept cold, door to door</span></div></div>
+      <p>Fresh and frozen cuts, seafood, frozen favourites and cold drinks. Wipe the glass to see inside.</p>
+    </div>
+    <div class="chillers">
+      <a class="chiller" href="#a2"><img src="assets/img/cat-meat.jpg" alt="Grilled chicken, prawns and a burger"><canvas aria-hidden="true"></canvas><span class="temp">+2.0°C</span><span class="handle"></span><span class="cap">Meat &amp; Seafood <small>Fresh</small></span></a>
+      <a class="chiller" href="#a2"><img src="assets/img/cat-frozen.jpg" alt="Frozen pizza, waffles and ice cream"><canvas aria-hidden="true"></canvas><span class="temp">−18.0°C</span><span class="handle"></span><span class="cap">Frozen Foods <small>Frozen</small></span></a>
+      <a class="chiller" href="#a2"><img src="assets/img/cat-drinks.jpg" alt="Juices and canned soft drinks"><canvas aria-hidden="true"></canvas><span class="temp">+4.0°C</span><span class="handle"></span><span class="cap">Soft Drinks <small>Chilled</small></span></a>
+      <a class="chiller" href="#a2"><img src="assets/img/cat-wine.jpg" alt="Bottles of white wine"><canvas aria-hidden="true"></canvas><span class="temp">+8.0°C</span><span class="handle"></span><span class="cap">Wine &amp; Spirits <small>Cellar</small></span></a>
+    </div>
+    <p class="hint">Move across the glass to clear the condensation.</p>
+  </div>
+</section>
+
+<section class="aisle" id="a3">
+  <div class="wrap">
+    <div class="aisle-head">
+      <div class="sign-hang"><div class="sign"><span class="num">03</span><span class="ttl">Snacks &amp; Store Cupboard</span><span class="sub">More choice, better value</span></div></div>
+      <p>With an ever-growing range and competitive pricing, we make it easy to stock what your kitchen needs without stretching your budget.</p>
+    </div>
+    <div class="endcap">
+      <div class="ph"><img src="assets/img/choice.jpg" alt="Snacks, sweets, sodas and spreads on salmon plinths"></div>
+      <div class="card">
+        <p class="mono">End of aisle</p>
+        <h3>Quality promise: on time, every time.</h3>
+        <p>From everyday essentials to premium ingredients, we deliver only the highest-quality products. Trusted by chefs and kitchens across the UK since 1995.</p>
+        <a class="btn btn-g" href="#till">Ask about a product →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bay" id="bay">
+  <div class="wrap">
+    <div>
+      <div class="sign-hang"><div class="sign" style="background:var(--mustard);color:var(--ink)"><span class="num" style="color:var(--green)">04</span><span class="ttl">Loading Bay</span><span class="sub" style="color:var(--ink-soft)">North London hub</span></div></div>
+      <h2 style="margin-top:28px">Your crate leaves here. It arrives tomorrow.</h2>
+      <p>Need it tomorrow? Consider it done. Our North London hub ensures fast, next-day delivery nationwide, so you are never left waiting.</p>
+      <ul><li><b>1</b>Fill your crate today</li><li><b>2</b>We pick and pack it in North London</li><li><b>3</b>It is at your door tomorrow</li></ul>
+    </div>
+    <div class="door" id="door"><img src="assets/img/van.jpg" alt="Yellow Regency Foods delivery van"><div class="shutter"><span>Bay 1 · Next day</span></div></div>
+  </div>
+</section>
+
+<section class="till" id="till">
+  <div class="wrap">
+    <div class="till-grid">
+      <div class="panel mint">
+        <div class="sign-hang" style="justify-self:start"><div class="sign"><span class="num">05</span><span class="ttl">Trade Counter</span><span class="sub">For restaurants, hotels &amp; pubs</span></div></div>
+        <h2>Designed for busy kitchens.</h2>
+        <p>Founded by a former restaurateur, we understand quality, efficiency and reliability. Open a trade account for wholesale pricing.</p>
+        <form id="trade" novalidate>
+          <div class="row"><input id="tName" placeholder="Your name" aria-label="Your name" autocomplete="name"><input id="tBiz" placeholder="Business name" aria-label="Business name" autocomplete="organization"></div>
+          <input id="tEmail" type="email" placeholder="Work email" aria-label="Work email" autocomplete="email">
+          <button class="btn btn-g" type="submit">Request a trade account →</button>
+          <p class="msg" id="tMsg" aria-live="polite"></p>
+        </form>
+      </div>
+      <div class="panel orange">
+        <p class="mono">Get the latest</p>
+        <h2>New on the shelves.</h2>
+        <p>Sign up to discover the finest selection of quality foods, stay up to date with our newest arrivals, and enjoy exclusive offers.</p>
+        <form class="nl" id="nl" novalidate><input id="nlEmail" type="email" placeholder="Email address" aria-label="Email address" autocomplete="email"><button type="submit" aria-label="Subscribe">→</button></form>
+        <p class="msg" id="nlMsg" aria-live="polite"></p>
+      </div>
+    </div>
+    <div class="trust"><span class="mono">Trusted by 1,000+ venues</span><span>Balans</span><span>Park Chinois</span><span>Meta</span><span>Lush</span><span>Smoky Boys</span><span class="mono">· 4.9 Excellent on Trustpilot</span></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="wm">REGENCY F<span class="oo" aria-hidden="true"></span>DS</span>
+    <nav aria-label="Footer"><a href="#bay">Shipping &amp; returns</a><a href="#till">Contact us</a><a href="#till">FAQ</a><a href="#till">Privacy</a><a href="#till">Terms</a></nav>
+    <span>© <span class="yr">2026</span> Regency Foods</span>
+  </div>
+</footer>
+
+<aside class="crate" id="crate" aria-label="Your crate">
+  <div class="crate-list" id="crateList" hidden></div>
+  <button class="crate-box" id="crateBox" type="button" aria-expanded="false" aria-controls="crateList">
+    <span><span class="wm">REGENCY F<span class="oo"></span>DS</span><br><span style="font-size:.85rem">Your crate</span></span>
+    <span class="stack" id="stack"></span>
+    <span class="n" id="n">0</span>
+  </button>
+</aside>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function () {
+  var P = [
+    { id: "pecans", name: "Pecan Nuts", label: "Pecan nuts", note: "Mildly roasted", price: 16.45, img: "assets/img/cut-pecan.png", tag: "Bestseller" },
+    { id: "almonds", name: "Almonds", label: "Almonds", note: "Whole, natural", price: 12.95, img: "assets/img/cut-yellow.png" },
+    { id: "pistachios", name: "Pistachios", label: "Pistachios", note: "Roasted & salted", price: 19.50, was: 21.50, img: "assets/img/cut-green.png", tag: "Offer" },
+    { id: "cashews", name: "Cashew Nuts", label: "Cashews", note: "Whole, raw", price: 15.20, img: "assets/img/cut-salmon.png" },
+    { id: "walnuts", name: "Walnut Halves", label: "Walnuts", note: "Light halves", price: 13.75, was: 14.95, img: "assets/img/cut-forest.png", tag: "Offer", dark: true }
+  ];
+  var by = {}; P.forEach(function (p) { by[p.id] = p; });
+  var gbp = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" });
+  var $ = function (s) { return document.querySelector(s); };
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  document.querySelectorAll(".yr").forEach(function (e) { e.textContent = new Date().getFullYear(); });
+
+  /* Shelf + shelf-edge labels (unit price per 100g, as on a real shelf) */
+  $("#shelf").innerHTML = P.map(function (p) {
+    return '<button class="prod" type="button" data-id="' + p.id + '" aria-label="Add ' + esc(p.name) + ' 1kg to crate"><img src="' + p.img + '" alt="" draggable="false"><span class="lbl' + (p.dark ? ' dk' : '') + '" aria-hidden="true"><span>' + esc(p.label) + '</span></span><span class="plus" aria-hidden="true">+</span></button>';
+  }).join("");
+  $("#labels").innerHTML = P.map(function (p) {
+    return '<div class="sel' + (p.was ? ' offer' : '') + '">' + (p.tag ? '<span class="tag">' + p.tag + '</span>' : '') + '<span class="nm">' + esc(p.name) + ' 1kg</span><span class="unit">' + esc(p.note) + '</span><span class="unit">' + gbp.format(p.price / 10) + ' per 100g' + (p.was ? ' · was <s>' + gbp.format(p.was) + '</s>' : '') + '</span><span class="pr">' + gbp.format(p.price) + '</span></div>';
+  }).join("");
+  // keep shelf and labels scrolled together on narrow screens
+  var sh = $("#shelf"), lb = $("#labels");
+  sh.addEventListener("scroll", function () { lb.scrollLeft = sh.scrollLeft; });
+  lb.addEventListener("scroll", function () { sh.scrollLeft = lb.scrollLeft; });
+
+  /* Crate */
+  var crate = $("#crate"), box = $("#crateBox"), list = $("#crateList"), basket = {}, sub = false;
+  try { basket = JSON.parse(localStorage.getItem("rf-crate") || "{}"); } catch (e) {}
+  Object.keys(basket).forEach(function (k) { if (!by[k]) delete basket[k]; });
+  function save() { try { localStorage.setItem("rf-crate", JSON.stringify(basket)); } catch (e) {} }
+  function render() {
+    var ids = Object.keys(basket), n = 0, total = 0;
+    ids.forEach(function (k) { n += basket[k]; total += basket[k] * by[k].price; });
+    $("#n").textContent = n;
+    $("#stack").innerHTML = ids.slice(-5).map(function (k) { return '<img src="' + by[k].img + '" alt="">'; }).join("");
+    box.setAttribute("aria-label", "Your crate, " + n + " items");
+    var off = sub ? total * .1 : 0;
+    list.innerHTML = ids.length ? ids.map(function (k) {
+      var p = by[k];
+      return '<div class="ln"><img src="' + p.img + '" alt=""><span>' + esc(p.name) + '<br><small>' + gbp.format(p.price) + '</small></span><span style="display:flex;gap:6px;align-items:center"><button type="button" data-dec="' + k + '" aria-label="Remove one">−</button>' + basket[k] + '<button type="button" data-inc="' + k + '" aria-label="Add one">+</button></span><span>' + gbp.format(p.price * basket[k]) + '</span></div>';
+    }).join("") + '<label class="sub"><input type="checkbox" id="sub"' + (sub ? ' checked' : '') + '> Subscribe &amp; save 10%' + (sub ? ' (−' + gbp.format(off) + ')' : '') + '</label><div class="tot"><span>Total</span><span>' + gbp.format(total - off) + '</span></div><button class="btn btn-g chk" type="button" id="chk">Checkout · delivered tomorrow</button>'
+      : '<p style="color:var(--ink-soft)">Your crate is empty. Drag something off a shelf.</p>';
+  }
+  function add(id) {
+    basket[id] = (basket[id] || 0) + 1; save(); render();
+    crate.classList.remove("bump"); void crate.offsetWidth; crate.classList.add("bump");
+    toast(by[id].name + " is in your crate");
+  }
+  box.onclick = function () { var o = list.hidden; list.hidden = !o; box.setAttribute("aria-expanded", String(o)); };
+  list.addEventListener("click", function (e) {
+    var i = e.target.closest("[data-inc]"), d = e.target.closest("[data-dec]");
+    if (i) { basket[i.dataset.inc]++; save(); render(); }
+    if (d) { var k = d.dataset.dec; if (--basket[k] <= 0) delete basket[k]; save(); render(); }
+    if (e.target.id === "chk") toast("Checkout is not connected yet.");
+  });
+  list.addEventListener("change", function (e) { if (e.target.id === "sub") { sub = e.target.checked; render(); } });
+  render();
+
+  /* Drag to crate, or tap with a fly-in */
+  var drag = null;
+  function overCrate(x, y) { var r = box.getBoundingClientRect(); return x > r.left - 30 && x < r.right + 30 && y > r.top - 40 && y < r.bottom + 20; }
+  function fly(img, id, x, y) {
+    var g = document.createElement("img"); g.src = img; g.className = "ghost"; g.alt = ""; document.body.appendChild(g);
+    g.style.transform = "translate(" + (x - 60) + "px," + (y - 70) + "px) rotate(-8deg)";
+    var r = box.getBoundingClientRect();
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      g.classList.add("fly"); g.style.transform = "translate(" + (r.left + r.width / 2 - 60) + "px," + (r.top - 40) + "px) rotate(10deg) scale(.25)"; g.style.opacity = ".2";
+    }); });
+    setTimeout(function () { g.remove(); add(id); }, 600);
+  }
+  sh.addEventListener("pointerdown", function (e) {
+    var b = e.target.closest(".prod"); if (!b) return;
+    drag = { b: b, id: b.dataset.id, x: e.clientX, y: e.clientY, g: null, moved: false, pid: e.pointerId };
+  });
+  window.addEventListener("pointermove", function (e) {
+    if (!drag) return;
+    var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (!drag.moved && Math.hypot(dx, dy) > 8) {
+      if (e.pointerType !== "mouse" && Math.abs(dx) > Math.abs(dy)) { drag = null; return; } // let touch scroll the shelf
+      drag.moved = true; drag.g = document.createElement("img"); drag.g.src = by[drag.id].img; drag.g.className = "ghost"; drag.g.alt = ""; document.body.appendChild(drag.g);
+      drag.b.style.opacity = ".35";
+    }
+    if (drag.moved) { e.preventDefault(); drag.g.style.transform = "translate(" + (e.clientX - 60) + "px," + (e.clientY - 70) + "px) rotate(" + Math.max(-20, Math.min(20, dx / 12)) + "deg)"; crate.classList.toggle("hot", overCrate(e.clientX, e.clientY)); }
+  }, { passive: false });
+  window.addEventListener("pointerup", function (e) {
+    if (!drag) return;
+    var d = drag; drag = null; crate.classList.remove("hot");
+    if (!d.moved) { fly(by[d.id].img, d.id, e.clientX, e.clientY); return; }
+    d.b.style.opacity = "";
+    if (overCrate(e.clientX, e.clientY)) { d.g.remove(); add(d.id); }
+    else { d.g.classList.add("fly"); var r = d.b.getBoundingClientRect(); d.g.style.transform = "translate(" + (r.left + r.width / 2 - 60) + "px," + (r.top + r.height / 2 - 70) + "px)"; setTimeout(function () { d.g.remove(); }, 600); }
+  });
+  sh.addEventListener("keydown", function (e) { var b = e.target.closest(".prod"); if (b && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); var r = b.getBoundingClientRect(); fly(by[b.dataset.id].img, b.dataset.id, r.left + r.width / 2, r.top + r.height / 2); } });
+
+  /* Chiller condensation: wipe to clear, slowly fogs back */
+  document.querySelectorAll(".chiller").forEach(function (ch) {
+    var c = ch.querySelector("canvas"), ctx = c.getContext("2d"), w, h, dpr = Math.min(2, window.devicePixelRatio || 1);
+    function fog(alpha) { ctx.globalCompositeOperation = "source-over"; ctx.fillStyle = "rgba(236,242,240," + alpha + ")"; ctx.fillRect(0, 0, w, h); }
+    function size() { var r = ch.getBoundingClientRect(); w = c.width = Math.round(r.width * dpr); h = c.height = Math.round(r.height * dpr); fog(.82);
+      for (var i = 0; i < 140; i++) { ctx.fillStyle = "rgba(255,255,255," + (Math.random() * .5) + ")"; ctx.beginPath(); ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 3 * dpr, 0, 7); ctx.fill(); } }
+    size(); window.addEventListener("resize", size);
+    function wipe(e) { var r = c.getBoundingClientRect(), x = (e.clientX - r.left) * dpr, y = (e.clientY - r.top) * dpr;
+      ctx.globalCompositeOperation = "destination-out"; var g = ctx.createRadialGradient(x, y, 0, x, y, 46 * dpr); g.addColorStop(0, "rgba(0,0,0,1)"); g.addColorStop(1, "rgba(0,0,0,0)"); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 46 * dpr, 0, 7); ctx.fill(); }
+    ch.addEventListener("pointermove", wipe);
+    setInterval(function () { fog(.025); }, 120);
+  });
+
+  /* Loading bay shutter rolls up when it comes into view; signs swing on arrival */
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) $("#door").classList.add("up"); }); }, { threshold: .5 }).observe($("#door"));
+    var so = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("swing"); so.unobserve(en.target); } }); }, { threshold: 1 });
+    document.querySelectorAll(".aisle .sign, .bay .sign").forEach(function (s) { so.observe(s); });
+  } else $("#door").classList.add("up");
+
+  var tt; function toast(m) { var t = $("#toast"); t.textContent = m; t.classList.add("show"); clearTimeout(tt); tt = setTimeout(function () { t.classList.remove("show"); }, 2200); }
+  $("#trade").addEventListener("submit", function (e) { e.preventDefault(); var ok = $("#tName").value.trim() && $("#tBiz").value.trim() && /^\S+@\S+\.\S+$/.test($("#tEmail").value); $("#tMsg").textContent = ok ? "Thanks. We will be in touch to set up your trade account." : "Add your name, business and a valid work email."; if (ok) this.reset(); });
+  $("#nl").addEventListener("submit", function (e) { e.preventDefault(); var ok = /^\S+@\S+\.\S+$/.test($("#nlEmail").value); $("#nlMsg").textContent = ok ? "You are on the list." : "Enter a valid email address."; if (ok) this.reset(); });
+})();
+</script>
+</body>
+</html>

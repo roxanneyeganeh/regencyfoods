@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Regency Foods · Overnight</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Concept: scroll is time. The page runs from this afternoon to tomorrow
+   morning; a clock keeps time, the sky turns from day to night to dawn,
+   and the van drives the route while you read. */
+@font-face { font-family: "Caviar Dreams"; src: url("assets/fonts/CaviarDreams-Bold.woff") format("woff"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Helvetica Neue RF"; src: url("assets/fonts/HelveticaNeue-Roman.woff") format("woff"); font-weight: 400; font-display: swap; }
+:root {
+  color-scheme: light;
+  --green: #1a3429; --green-2: #24493a; --night: #10231b; --cream: #faf9f5; --oat: #f5f2df;
+  --mint: #def7d9; --salmon: #f39684; --orange: #d54415; --mustard: #dcb357; --leaf: #45a94f;
+  --ink: #111511; --ink-soft: #4a524c;
+  --sky: #faf9f5; --fg: #111511; --fg-soft: #4a524c; --rule: rgba(17,21,17,.15);
+  --display: "Caviar Dreams", Futura, "Century Gothic", sans-serif;
+  --body: "Helvetica Neue RF", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --gl: max(16px, env(safe-area-inset-left, 0px)); --gr: max(16px, env(safe-area-inset-right, 0px));
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+*,*::before,*::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--sky); color: var(--fg); font-family: var(--body); line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; transition: color .6s; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--sky); z-index: 70; }
+img { max-width: 100%; display: block; }
+[hidden] { display: none !important; }
+h1,h2,h3 { font-family: var(--display); font-weight: 700; margin: 0; line-height: 1; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2.5px solid var(--orange); outline-offset: 3px; }
+.wrap { max-width: 1320px; margin-inline: auto; padding-left: var(--gl); padding-right: var(--gr); }
+@media (min-width: 760px) { .wrap { padding-left: max(48px, env(safe-area-inset-left,0px)); padding-right: max(48px, env(safe-area-inset-right,0px)); } }
+.mono { text-transform: uppercase; letter-spacing: .16em; font-size: .72rem; }
+.wm { font-family: var(--display); font-weight: 700; display: inline-flex; align-items: center; white-space: nowrap; letter-spacing: .02em; }
+.wm .oo { flex: none; display: inline-block; width: 1.18em; height: .66em; border: .13em solid currentColor; border-radius: .4em; margin: 0 .02em; }
+#stars { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0; transition: opacity .4s; }
+main, header, footer { position: relative; z-index: 1; }
+
+/* ---------- Header ---------- */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; }
+.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 16px; }
+.top .wm { font-size: 1.3rem; text-decoration: none; }
+.top nav { display: none; gap: 22px; font-size: .92rem; }
+.top nav a { text-decoration: none; opacity: .8; }
+.top nav a:hover { opacity: 1; }
+@media (min-width: 980px) { .top nav { display: flex; } }
+.order-pill { display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; padding: 9px 10px 9px 16px; border: 1.5px solid currentColor; background: transparent; font-size: .9rem; font-variant-numeric: tabular-nums; }
+.order-pill .n { background: var(--orange); color: var(--cream); border-radius: 999px; min-width: 24px; height: 24px; display: grid; place-items: center; font-size: .78rem; }
+.order-pill.bump { animation: bump .45s var(--ease); }
+@keyframes bump { 40% { transform: scale(1.08); } }
+
+/* ---------- Clock ---------- */
+.clock {
+  position: fixed; z-index: 50; left: max(16px, env(safe-area-inset-left,0px)); bottom: calc(16px + env(safe-area-inset-bottom,0px));
+  display: flex; align-items: center; gap: 12px; padding: 8px 16px 8px 8px; border-radius: 999px;
+  background: var(--cream); color: var(--ink); box-shadow: 0 16px 34px -16px rgba(0,0,0,.45);
+}
+.clock svg { width: 52px; height: 52px; }
+.clock .hand { transform-origin: 30px 30px; }
+.clock .t { font-family: var(--display); font-size: 1.5rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.clock .d { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); }
+.timeline { position: fixed; right: max(14px, env(safe-area-inset-right,0px)); top: 50%; transform: translateY(-50%); z-index: 45; display: none; gap: 14px; }
+@media (min-width: 900px) { .timeline { display: grid; } }
+.timeline a { display: flex; align-items: center; gap: 10px; justify-content: flex-end; text-decoration: none; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; opacity: .45; transition: opacity .3s; }
+.timeline a::after { content: ""; width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid currentColor; }
+.timeline a.on { opacity: 1; }
+.timeline a.on::after { background: currentColor; }
+
+/* ---------- Chapters ---------- */
+.ch { min-height: 60vh; padding-block: clamp(72px, 9vw, 150px); scroll-margin-top: 40px; }
+.stamp { display: inline-flex; align-items: baseline; gap: 14px; }
+.stamp .hh { font-family: var(--display); font-size: clamp(1.1rem, 1rem + .4vw, 1.4rem); color: var(--orange); font-variant-numeric: tabular-nums; }
+.stamp .mono { opacity: .7; }
+
+/* Hero */
+.hero { padding-block: clamp(32px, 5vw, 72px) clamp(56px, 6vw, 96px); }
+.hero-grid { display: grid; gap: 32px; align-items: center; }
+@media (min-width: 980px) { .hero-grid { grid-template-columns: 1.15fr .85fr; } }
+.hero h1 { font-size: clamp(3.4rem, 1.6rem + 7vw, 8.6rem); line-height: .9; margin-top: 18px; letter-spacing: -.005em; }
+.hero h1 .l2 { display: block; color: var(--green); }
+.hero h1 .l2 span { color: var(--orange); }
+.hero .lead { margin-top: 26px; font-size: clamp(1.05rem, 1rem + .4vw, 1.3rem); max-width: 40ch; color: var(--fg-soft); }
+.scrollcue { margin-top: 30px; display: inline-flex; align-items: center; gap: 12px; font-size: .9rem; }
+.scrollcue i { width: 26px; height: 40px; border: 1.5px solid currentColor; border-radius: 14px; position: relative; }
+.scrollcue i::after { content: ""; position: absolute; left: 50%; top: 8px; width: 4px; height: 8px; border-radius: 2px; background: currentColor; transform: translateX(-50%); animation: cue 1.8s infinite; }
+@keyframes cue { 60% { transform: translate(-50%, 12px); opacity: 0; } }
+.hero-art { position: relative; aspect-ratio: 1; max-width: 560px; width: 100%; justify-self: center; }
+.sun { position: absolute; inset: 6%; border-radius: 50%; background: var(--mint); }
+.hero-art img { position: absolute; inset: 10% 6% 4%; width: 88%; mix-blend-mode: multiply; border-radius: 50%; }
+
+/* Today: shop */
+.today-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 20px 40px; margin-bottom: 44px; }
+.today-head h2 { font-size: clamp(2.4rem, 1.4rem + 3.8vw, 5rem); margin-top: 14px; max-width: 13ch; }
+.today-head p { max-width: 40ch; color: var(--fg-soft); }
+.goods { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); }
+.good { position: relative; border-radius: 22px; padding: 20px 18px 18px; display: grid; gap: 8px; background: var(--oat); overflow: hidden; }
+.good .disc { position: relative; aspect-ratio: 1; max-width: 100%; border-radius: 50%; display: grid; place-items: end center; overflow: hidden; container-type: inline-size; }
+.good .disc img { width: 74%; transform: translateY(8%); transition: transform .5s var(--ease); filter: drop-shadow(0 12px 10px rgba(0,0,0,.18)); }
+.good:hover .disc img { transform: translateY(2%) rotate(-3deg); }
+.good .disc .lbl { position: absolute; left: 50%; bottom: 0; width: 74%; aspect-ratio: 374/451; transform: translate(-50%, -8%); pointer-events: none; transition: transform .5s var(--ease); }
+.good:hover .disc .lbl { transform: translate(-50%, -14%) rotate(-3deg); }
+.good .disc .lbl span { position: absolute; left: 62.8%; top: 55.5%; transform: translate(-50%,-50%); font-family: var(--display); font-size: 4.6cqw; color: #151515; white-space: nowrap; }
+.good .disc .lbl.dk span { color: var(--cream); }
+.good h3 { font-size: 1.4rem; margin-top: 8px; }
+.good .meta { font-size: .85rem; color: var(--ink-soft); }
+.good .row { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-variant-numeric: tabular-nums; color: var(--ink); }
+.good .row s { font-size: .8rem; color: var(--ink-soft); margin-left: 6px; }
+.good .add { min-height: 42px; padding: 0 16px; border-radius: 999px; border: 0; background: var(--green); color: var(--cream); font-size: .88rem; transition: background .2s; }
+.good .add:hover { background: var(--orange); }
+.good { color: var(--ink); }
+.cats { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
+.cats a { text-decoration: none; border: 1.5px solid currentColor; border-radius: 999px; padding: 9px 16px; font-size: .9rem; display: inline-flex; gap: 10px; align-items: center; }
+.cats a img { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; }
+
+/* Tonight: pack */
+.split { display: grid; gap: 32px; align-items: center; }
+@media (min-width: 980px) { .split { grid-template-columns: 1fr 1fr; gap: 72px; } }
+.split h2 { font-size: clamp(2.4rem, 1.4rem + 3.8vw, 5rem); margin-top: 14px; }
+.split p { margin-top: 20px; max-width: 44ch; color: var(--fg-soft); font-size: 1.05rem; }
+.photo { border-radius: 28px; overflow: hidden; }
+.photo img { width: 100%; height: 100%; object-fit: cover; }
+.checks { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 10px; }
+.checks li { display: flex; gap: 12px; align-items: center; }
+.checks li::before { content: "✓"; width: 26px; height: 26px; border-radius: 50%; background: var(--green); color: var(--cream); display: grid; place-items: center; font-size: .8rem; flex: none; }
+
+/* Overnight: route */
+.route-wrap { display: grid; gap: 40px; align-items: center; }
+@media (min-width: 980px) { .route-wrap { grid-template-columns: .8fr 1.2fr; } }
+.route-wrap h2 { font-size: clamp(2.4rem, 1.4rem + 3.8vw, 5rem); margin-top: 14px; }
+.route-wrap p { margin-top: 20px; max-width: 40ch; color: var(--fg-soft); }
+.route { position: relative; width: 100%; }
+.route svg { width: 100%; height: auto; overflow: visible; }
+.route .base { fill: none; stroke: rgba(250,249,245,.14); stroke-width: 3; stroke-dasharray: 2 10; stroke-linecap: round; }
+.route .drive { fill: none; stroke: var(--mustard); stroke-width: 4; stroke-linecap: round; }
+.route .stop circle { fill: var(--night); stroke: rgba(250,249,245,.5); stroke-width: 2.5; transition: fill .3s, stroke .3s; }
+.route .stop.lit circle { fill: var(--mustard); stroke: var(--mustard); }
+.route .stop text { fill: rgba(250,249,245,.55); font-family: var(--body); font-size: 15px; transition: fill .3s; }
+.route .stop.lit text { fill: var(--cream); }
+.route .hub circle { fill: var(--orange); stroke: var(--orange); }
+.route .hub text { fill: var(--cream); font-family: var(--display); font-size: 18px; }
+.route .van rect { fill: var(--mustard); }
+.miles { margin-top: 20px; display: flex; gap: 28px; flex-wrap: wrap; }
+.miles div b { display: block; font-family: var(--display); font-size: 2.2rem; line-height: 1; color: var(--mustard); font-variant-numeric: tabular-nums; }
+.miles div span { font-size: .85rem; color: var(--fg-soft); }
+
+/* Dawn */
+.dawn h2 { font-size: clamp(2.8rem, 1.4rem + 5.4vw, 6.8rem); max-width: 14ch; margin-top: 14px; }
+.dawn .van { margin-top: 40px; width: min(900px, 100%); mix-blend-mode: multiply; transform: translateX(var(--vx, 0)); }
+.dawn p { margin-top: 20px; max-width: 46ch; font-size: 1.1rem; color: var(--fg-soft); }
+
+/* Tomorrow */
+.tomorrow .story { position: relative; border-radius: 28px; overflow: hidden; color: var(--cream); min-height: 520px; display: flex; align-items: flex-end; isolation: isolate; }
+.tomorrow .story img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.tomorrow .story::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, transparent 25%, rgba(16,35,27,.92)); }
+.tomorrow .story .in { padding: clamp(24px, 4vw, 56px); display: grid; gap: 18px; max-width: 760px; }
+.tomorrow .story h2 { font-size: clamp(2.4rem, 1.4rem + 3.8vw, 5rem); }
+.tomorrow .story p { color: rgba(250,249,245,.85); max-width: 52ch; }
+.regs { display: flex; flex-wrap: wrap; gap: 10px 30px; align-items: center; margin-top: 44px; font-family: var(--display); font-size: clamp(1.2rem, 1rem + .8vw, 1.7rem); }
+.regs .mono { font-family: var(--body); color: var(--ink-soft); }
+.end { display: grid; gap: 16px; margin-top: 44px; }
+@media (min-width: 980px) { .end { grid-template-columns: 1fr 1fr; } }
+.box { border-radius: 24px; padding: clamp(24px, 3vw, 44px); display: grid; gap: 14px; align-content: start; }
+.box.mint { background: var(--mint); color: var(--ink); }
+.box.or { background: var(--orange); color: var(--cream); }
+.box h3 { font-size: clamp(1.9rem, 1.3rem + 2vw, 3rem); }
+.box form { display: grid; gap: 10px; }
+.box input { height: 50px; border-radius: 12px; border: 1.5px solid rgba(17,21,17,.15); background: #fff; padding: 0 14px; font: inherit; color: var(--ink); width: 100%; }
+.box .r { display: grid; gap: 10px; }
+@media (min-width: 560px) { .box .r { grid-template-columns: 1fr 1fr; } }
+.box .msg { font-size: .88rem; min-height: 1.3em; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; padding: 0 24px; border-radius: 999px; border: 0; text-decoration: none; font-size: 1rem; transition: transform .25s var(--ease); }
+.btn:hover { transform: translateY(-2px); }
+.btn-g { background: var(--green); color: var(--cream); }
+.btn-c { background: var(--cream); color: var(--orange); }
+footer .wrap { padding-block: 40px calc(110px + env(safe-area-inset-bottom,0px)); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px 40px; align-items: center; font-size: .9rem; color: var(--fg-soft); border-top: 1px solid var(--rule); }
+footer .wm { color: var(--fg); font-size: 1.3rem; }
+footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
+footer a { text-decoration: none; }
+
+/* Order sheet */
+.sheet { position: fixed; z-index: 60; right: max(16px, env(safe-area-inset-right,0px)); top: calc(76px + env(safe-area-inset-top,0px)); width: min(360px, calc(100vw - 32px)); background: var(--cream); color: var(--ink); border-radius: 18px; padding: 20px; box-shadow: 0 30px 60px -24px rgba(0,0,0,.5); font-variant-numeric: tabular-nums; max-height: 70vh; overflow: auto; }
+.sheet h3 { font-size: 1.5rem; }
+.sheet .eta { font-size: .85rem; color: var(--green); background: var(--mint); border-radius: 8px; padding: 8px 10px; margin: 10px 0 6px; }
+.sheet .ln { display: grid; grid-template-columns: 34px 1fr auto auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(17,21,17,.1); font-size: .92rem; }
+.sheet .ln img { width: 34px; }
+.sheet .ln button { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(17,21,17,.2); background: none; }
+.sheet .tot { display: flex; justify-content: space-between; font-family: var(--display); font-size: 1.3rem; padding-top: 12px; }
+.sheet .sub { display: flex; gap: 10px; align-items: center; font-size: .88rem; margin-top: 10px; }
+.toast { position: fixed; left: 50%; bottom: calc(90px + env(safe-area-inset-bottom,0px)); transform: translate(-50%, 16px); opacity: 0; visibility: hidden; background: var(--ink); color: var(--cream); padding: 10px 18px; border-radius: 999px; font-size: .9rem; z-index: 80; transition: all .35s var(--ease); max-width: calc(100% - 32px); text-align: center; }
+.toast.show { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<header class="top">
+  <div class="wrap">
+    <a class="wm" href="#top" aria-label="Regency Foods home">REGENCY F<span class="oo" aria-hidden="true"></span>DS</a>
+    <nav aria-label="Main"><a href="#today">Shop</a><a href="#tonight">Quality</a><a href="#overnight">Delivery</a><a href="#tomorrow">About us</a><a href="#trade">Trade</a></nav>
+    <button class="order-pill" id="pill" type="button" aria-expanded="false" aria-controls="sheet">Your order <span class="n" id="n">0</span></button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" data-at="0">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="stamp"><span class="hh">15:00</span><span class="mono">Today</span></span>
+        <h1>Order today.<span class="l2">Cook it <span>tomorrow.</span></span></h1>
+        <p class="lead">Regency Foods has supplied UK kitchens since 1995. Scroll through one night in the life of your order, from basket to back door.</p>
+        <p class="scrollcue"><i aria-hidden="true"></i>Scroll to move the clock forward</p>
+      </div>
+      <div class="hero-art"><div class="sun" id="sun"></div><img src="assets/img/hero-stack.jpg" alt="A Regency Foods box stacked with pantry staples, sauces and drinks"></div>
+    </div>
+  </section>
+
+  <section class="ch" id="today" data-at="1">
+    <div class="wrap">
+      <div class="today-head">
+        <div><span class="stamp"><span class="hh">16:30</span><span class="mono">Today · the order</span></span><h2>Fill the order while it is still light.</h2></div>
+        <p>Premium ingredients and everyday essentials. This week: our nuts, packed by the kilo for the pastry section and the bar.</p>
+      </div>
+      <div class="goods" id="goods"></div>
+      <div class="cats">
+        <a href="#today"><img src="assets/img/cat-meat.jpg" alt="">Meat &amp; Seafood</a>
+        <a href="#today"><img src="assets/img/cat-frozen.jpg" alt="">Frozen Foods</a>
+        <a href="#today"><img src="assets/img/cat-drinks.jpg" alt="">Soft Drinks</a>
+        <a href="#today"><img src="assets/img/cat-wine.jpg" alt="">Alcohol &amp; Spirits</a>
+        <a href="#today"><img src="assets/img/choice.jpg" alt="">Snacks &amp; Store Cupboard</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch" id="tonight" data-at="2">
+    <div class="wrap split">
+      <div class="photo"><img src="assets/img/quality.jpg" alt="Roasted vegetables, greens and radish in a bowl beside fresh peaches"></div>
+      <div>
+        <span class="stamp"><span class="hh">21:00</span><span class="mono">Tonight · picked &amp; packed</span></span>
+        <h2>While you close up, we check every line.</h2>
+        <p>From everyday essentials to premium ingredients, we deliver only the highest-quality products. Your order is picked and packed at our North London hub.</p>
+        <ul class="checks"><li>Quality checked</li><li>Packed for the journey</li><li>Loaded for the morning run</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch" id="overnight" data-at="3">
+    <div class="wrap route-wrap">
+      <div>
+        <span class="stamp"><span class="hh">02:00</span><span class="mono">Overnight · on the road</span></span>
+        <h2>The country sleeps. Your order doesn't.</h2>
+        <p>From our North London hub, fast next-day delivery reaches kitchens nationwide, so you are never left waiting.</p>
+        <div class="miles"><div><b id="stopsLit">0</b><span>stops reached</span></div><div><b>1,000+</b><span>venues supplied</span></div></div>
+      </div>
+      <div class="route" id="route">
+        <svg viewBox="0 0 600 520" role="img" aria-label="Illustrative delivery route from North London to cities across the UK">
+          <path id="rpath" class="base" d="M420,430 C380,420 330,410 300,380 C270,350 230,350 200,400 C180,440 140,450 110,420 C80,390 120,330 190,300 C250,275 270,240 260,200 C250,160 300,150 330,170 C360,190 390,150 370,110 C350,70 300,60 260,40"/>
+          <path id="rdrive" class="drive" d="M420,430 C380,420 330,410 300,380 C270,350 230,350 200,400 C180,440 140,450 110,420 C80,390 120,330 190,300 C250,275 270,240 260,200 C250,160 300,150 330,170 C360,190 390,150 370,110 C350,70 300,60 260,40"/>
+          <g class="stop hub"><circle cx="420" cy="430" r="11"/><text x="436" y="436">North London hub</text></g>
+          <g class="stop" data-t=".17"><circle cx="300" cy="380" r="8"/><text x="314" y="372">Oxford</text></g>
+          <g class="stop" data-t=".3"><circle cx="200" cy="400" r="8"/><text x="214" y="420">Bristol</text></g>
+          <g class="stop" data-t=".42"><circle cx="110" cy="420" r="8"/><text x="40" y="452">Cardiff</text></g>
+          <g class="stop" data-t=".56"><circle cx="190" cy="300" r="8"/><text x="96" y="292">Birmingham</text></g>
+          <g class="stop" data-t=".68"><circle cx="260" cy="200" r="8"/><text x="164" y="196">Manchester</text></g>
+          <g class="stop" data-t=".77"><circle cx="330" cy="170" r="8"/><text x="344" y="176">Leeds</text></g>
+          <g class="stop" data-t=".88"><circle cx="370" cy="110" r="8"/><text x="384" y="112">Newcastle</text></g>
+          <g class="stop" data-t="1"><circle cx="260" cy="40" r="8"/><text x="276" y="36">Edinburgh</text></g>
+          <g class="van" id="van"><rect x="-16" y="-9" width="32" height="18" rx="5"/><rect x="8" y="-9" width="8" height="18" rx="3" fill="#111511" opacity=".55"/></g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch dawn" id="dawn" data-at="4">
+    <div class="wrap">
+      <span class="stamp"><span class="hh">06:30</span><span class="mono">Tomorrow · first light</span></span>
+      <h2>Your kitchen opens. We're already at the door.</h2>
+      <p>Need it tomorrow? Consider it done. Order today, delivered to your doorstep tomorrow, every time.</p>
+      <img class="van" id="dawnVan" src="assets/img/van.jpg" alt="Yellow Regency Foods delivery van">
+    </div>
+  </section>
+
+  <section class="ch tomorrow" id="tomorrow" data-at="5">
+    <div class="wrap">
+      <div class="story">
+        <img src="assets/img/kitchen.jpg" alt="Chefs at work in a busy restaurant kitchen">
+        <div class="in">
+          <span class="stamp"><span class="hh" style="color:var(--mustard)">07:00</span><span class="mono">Tomorrow · service</span></span>
+          <h2>Designed for busy kitchens, since 1995.</h2>
+          <p>Regency Foods was founded by a former restaurateur. We understand the importance of quality, efficiency and reliability in every kitchen, and deliver high-quality products at competitive prices to restaurants, hotels, pubs and more.</p>
+        </div>
+      </div>
+      <div class="regs"><span class="mono">Trusted by 1,000+ venues</span><span>Balans</span><span>Park Chinois</span><span>Meta</span><span>Lush</span><span>Smoky Boys</span><span class="mono">4.9 · Excellent on Trustpilot</span></div>
+      <div class="end" id="trade">
+        <div class="box mint">
+          <p class="mono">Trade accounts</p>
+          <h3>Make tomorrow a standing order.</h3>
+          <p>Wholesale pricing for restaurants, hotels, pubs and caterers, plus 10% off when you subscribe to a repeat order.</p>
+          <form id="tf" novalidate><div class="r"><input id="tName" placeholder="Your name" aria-label="Your name" autocomplete="name"><input id="tBiz" placeholder="Business name" aria-label="Business name" autocomplete="organization"></div><input id="tEmail" type="email" placeholder="Work email" aria-label="Work email" autocomplete="email"><button class="btn btn-g" type="submit">Request a trade account →</button><p class="msg" id="tMsg" aria-live="polite"></p></form>
+        </div>
+        <div class="box or">
+          <p class="mono">Get the latest</p>
+          <h3>Subscribe now.</h3>
+          <p>Discover the finest selection of quality foods, stay up to date with our newest arrivals, and enjoy exclusive offers.</p>
+          <form id="nl" novalidate><input id="nlE" type="email" placeholder="Email address" aria-label="Email address" autocomplete="email"><button class="btn btn-c" type="submit">Subscribe</button><p class="msg" id="nlMsg" aria-live="polite"></p></form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="wm">REGENCY F<span class="oo" aria-hidden="true"></span>DS</span>
+    <nav aria-label="Footer"><a href="#overnight">Shipping &amp; returns</a><a href="#trade">Contact us</a><a href="#trade">FAQ</a><a href="#trade">Privacy</a><a href="#trade">Terms</a></nav>
+    <span>© <span class="yr">2026</span> Regency Foods</span>
+  </div>
+</footer>
+
+<nav class="timeline" id="timeline" aria-label="Chapters">
+  <a href="#top">Today</a><a href="#today">The order</a><a href="#tonight">Tonight</a><a href="#overnight">Overnight</a><a href="#dawn">Dawn</a><a href="#tomorrow">Tomorrow</a>
+</nav>
+
+<div class="clock" aria-hidden="true">
+  <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="none" stroke="#111511" stroke-width="2"/>
+    <g stroke="#111511" stroke-width="2" stroke-linecap="round"><path d="M30 5v4M30 51v4M5 30h4M51 30h4"/></g>
+    <line class="hand" id="hh" x1="30" y1="30" x2="30" y2="16" stroke="#111511" stroke-width="3.2" stroke-linecap="round"/>
+    <line class="hand" id="mh" x1="30" y1="30" x2="30" y2="9" stroke="#d54415" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="30" cy="30" r="2.6" fill="#111511"/></svg>
+  <div><div class="t" id="ct">15:00</div><div class="d" id="cd">Today</div></div>
+</div>
+
+<div class="sheet" id="sheet" hidden></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function () {
+  var $ = function (s) { return document.querySelector(s); };
+  var gbp = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" });
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  document.querySelectorAll(".yr").forEach(function (e) { e.textContent = new Date().getFullYear(); });
+
+  /* Products */
+  var P = [
+    { id: "pecans", name: "Pecan Nuts", label: "Pecan nuts", note: "Mildly roasted · 1kg", price: 16.45, img: "assets/img/cut-pecan.png", bg: "#f6c9b4" },
+    { id: "almonds", name: "Almonds", label: "Almonds", note: "Whole, natural · 1kg", price: 12.95, img: "assets/img/cut-yellow.png", bg: "#f3e2b1" },
+    { id: "pistachios", name: "Pistachios", label: "Pistachios", note: "Roasted & salted · 1kg", price: 19.50, was: 21.50, img: "assets/img/cut-green.png", bg: "#cbe9c4" },
+    { id: "cashews", name: "Cashew Nuts", label: "Cashews", note: "Whole, raw · 1kg", price: 15.20, img: "assets/img/cut-salmon.png", bg: "#fbd9d1" },
+    { id: "walnuts", name: "Walnut Halves", label: "Walnuts", note: "Light halves · 1kg", price: 13.75, was: 14.95, img: "assets/img/cut-forest.png", bg: "#b9cfc3", dark: true }
+  ];
+  var by = {}; P.forEach(function (p) { by[p.id] = p; });
+  $("#goods").innerHTML = P.map(function (p) {
+    return '<article class="good"><div class="disc" style="background:' + p.bg + '"><img src="' + p.img + '" alt="Regency Foods ' + esc(p.name) + ' bag"><span class="lbl' + (p.dark ? ' dk' : '') + '" aria-hidden="true"><span>' + esc(p.label) + '</span></span></div><h3>' + esc(p.name) + '</h3><p class="meta">' + esc(p.note) + '</p><div class="row"><span>' + gbp.format(p.price) + (p.was ? '<s>' + gbp.format(p.was) + '</s>' : '') + '</span><button class="add" type="button" data-add="' + p.id + '" aria-label="Add ' + esc(p.name) + ' to order">Add +</button></div></article>';
+  }).join("");
+
+  /* Sky: each chapter has a colour; blend between them as you scroll */
+  var stops = [
+    { c: [250, 249, 245], fg: "dark" },   // hero — afternoon
+    { c: [245, 242, 223], fg: "dark" },   // the order — late afternoon
+    { c: [222, 247, 217], fg: "dark" },   // tonight — mint
+    { c: [16, 35, 27],   fg: "light" },   // overnight — night
+    { c: [243, 150, 132], fg: "dark" },   // dawn — salmon
+    { c: [250, 249, 245], fg: "dark" }    // tomorrow — morning
+  ];
+  var secs = Array.prototype.slice.call(document.querySelectorAll("[data-at]"));
+  var tl = Array.prototype.slice.call(document.querySelectorAll("#timeline a"));
+  var root = document.documentElement, stars = $("#stars");
+  function mix(a, b, t) { return a.map(function (v, i) { return Math.round(v + (b[i] - v) * t); }); }
+  function lum(c) { return (c[0] * 299 + c[1] * 587 + c[2] * 114) / 1000; }
+
+  /* Route geometry */
+  var rp = $("#rpath"), rd = $("#rdrive"), van = $("#van"), L = rp.getTotalLength();
+  rd.style.strokeDasharray = L; rd.style.strokeDashoffset = L;
+  var stopEls = Array.prototype.slice.call(document.querySelectorAll(".route .stop[data-t]"));
+
+  function frame() {
+    var vh = innerHeight, mid = vh * .5, idx = 0, t = 0;
+    for (var i = 0; i < secs.length; i++) {
+      var r = secs[i].getBoundingClientRect();
+      if (r.top <= mid) { idx = i; t = Math.min(1, Math.max(0, (mid - r.top) / Math.max(1, r.height))); }
+    }
+    // blend only in the last 35% of a chapter so text stays readable
+    var nxt = Math.min(stops.length - 1, idx + 1), k = Math.max(0, (t - .65) / .35);
+    var c = mix(stops[idx].c, stops[nxt].c, k);
+    root.style.setProperty("--sky", "rgb(" + c + ")");
+    var light = lum(c) < 120;
+    root.style.setProperty("--fg", light ? "#faf9f5" : "#111511");
+    root.style.setProperty("--fg-soft", light ? "rgba(250,249,245,.72)" : "#4a524c");
+    root.style.setProperty("--rule", light ? "rgba(250,249,245,.18)" : "rgba(17,21,17,.15)");
+    stars.style.opacity = idx === 3 ? (1 - k) : (idx === 2 ? k : 0);
+    tl.forEach(function (a, j) { a.classList.toggle("on", j === idx); });
+
+    // clock: 15:00 today → 07:00 tomorrow over the whole page
+    var max = document.documentElement.scrollHeight - vh, p = max > 0 ? Math.min(1, scrollY / max) : 0;
+    var mins = 15 * 60 + p * 16 * 60, hh = Math.floor(mins / 60) % 24, mm = Math.floor(mins % 60);
+    $("#ct").textContent = String(hh).padStart(2, "0") + ":" + String(mm).padStart(2, "0");
+    $("#cd").textContent = mins >= 24 * 60 ? "Tomorrow" : (hh >= 19 ? "Tonight" : "Today");
+    $("#hh").style.transform = "rotate(" + (mins / 60 % 12) * 30 + "deg)";
+    $("#mh").style.transform = "rotate(" + (mins % 60) * 6 + "deg)";
+
+    // the route draws while the overnight chapter crosses the screen
+    var rr = $("#route").getBoundingClientRect(), rt = Math.min(1, Math.max(0, (vh * .85 - rr.top) / (rr.height + vh * .2)));
+    rd.style.strokeDashoffset = L * (1 - rt);
+    var pt = rp.getPointAtLength(L * rt), pt2 = rp.getPointAtLength(Math.min(L, L * rt + 1));
+    var ang = Math.atan2(pt2.y - pt.y, pt2.x - pt.x) * 180 / Math.PI;
+    van.setAttribute("transform", "translate(" + pt.x + "," + pt.y + ") rotate(" + ang + ")");
+    var lit = 0; stopEls.forEach(function (s) { var on = rt >= +s.dataset.t - .01; s.classList.toggle("lit", on); if (on) lit++; });
+    $("#stopsLit").textContent = lit;
+
+    // dawn van rolls in; sun sinks on the hero
+    var dv = $("#dawnVan").getBoundingClientRect(); root.style.setProperty("--vx", Math.max(0, Math.min(60, (dv.top - vh * .4) / 6)) + "vw");
+    $("#dawnVan").style.transform = "translateX(" + Math.max(0, Math.min(60, (dv.top - vh * .45) / 6)) + "vw)";
+    $("#sun").style.transform = "translateY(" + Math.min(120, scrollY * .15) + "px)";
+  }
+  var raf = 0; function onScroll() { if (!raf) raf = requestAnimationFrame(function () { raf = 0; frame(); }); }
+  addEventListener("scroll", onScroll, { passive: true }); addEventListener("resize", onScroll); frame();
+
+  /* Night sky */
+  var cx = stars.getContext("2d"), pts = [];
+  function sizeStars() { var d = Math.min(2, devicePixelRatio || 1); stars.width = innerWidth * d; stars.height = innerHeight * d; pts = []; for (var i = 0; i < 160; i++) pts.push([Math.random() * stars.width, Math.random() * stars.height, Math.random() * 1.6 * d + .3, Math.random() * 6]); }
+  sizeStars(); addEventListener("resize", sizeStars);
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  (function tw(ts) { if (+stars.style.opacity > 0) { cx.clearRect(0, 0, stars.width, stars.height); pts.forEach(function (s) { cx.globalAlpha = .35 + .65 * Math.abs(Math.sin((ts || 0) / 900 + s[3])); cx.fillStyle = "#faf9f5"; cx.beginPath(); cx.arc(s[0], s[1], s[2], 0, 7); cx.fill(); }); } if (!reduce) requestAnimationFrame(tw); })();
+
+  /* Order sheet */
+  var basket = {}, sub = false, sheet = $("#sheet"), pill = $("#pill");
+  try { basket = JSON.parse(localStorage.getItem("rf-night") || "{}"); } catch (e) {}
+  Object.keys(basket).forEach(function (k) { if (!by[k]) delete basket[k]; });
+  function save() { try { localStorage.setItem("rf-night", JSON.stringify(basket)); } catch (e) {} }
+  function eta() { var d = new Date(); d.setDate(d.getDate() + 1); return d.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" }); }
+  function render() {
+    var ids = Object.keys(basket), n = 0, tot = 0; ids.forEach(function (k) { n += basket[k]; tot += basket[k] * by[k].price; });
+    $("#n").textContent = n; pill.setAttribute("aria-label", "Your order, " + n + " items");
+    var off = sub ? tot * .1 : 0;
+    sheet.innerHTML = '<h3>Your order</h3><p class="eta">Arrives ' + eta() + '</p>' + (ids.length ? ids.map(function (k) { var p = by[k]; return '<div class="ln"><img src="' + p.img + '" alt=""><span>' + esc(p.name) + '</span><span style="display:flex;gap:6px;align-items:center"><button type="button" data-dec="' + k + '" aria-label="Remove one">−</button>' + basket[k] + '<button type="button" data-add="' + k + '" aria-label="Add one">+</button></span><span>' + gbp.format(p.price * basket[k]) + '</span></div>'; }).join("") +
+      '<label class="sub"><input type="checkbox" id="sub"' + (sub ? ' checked' : '') + '> Subscribe &amp; save 10%' + (sub ? ' (−' + gbp.format(off) + ')' : '') + '</label><div class="tot"><span>Total</span><span>' + gbp.format(tot - off) + '</span></div><button class="btn btn-g" type="button" id="chk" style="width:100%;margin-top:12px;border-radius:12px">Checkout</button>'
+      : '<p style="color:var(--ink-soft);margin-top:8px">Nothing yet. Add something before tonight.</p>');
+  }
+  pill.onclick = function () { var o = sheet.hidden; sheet.hidden = !o; pill.setAttribute("aria-expanded", String(o)); };
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest("[data-add]"), d = e.target.closest("[data-dec]");
+    if (a) { var id = a.dataset.add; basket[id] = (basket[id] || 0) + 1; save(); render(); pill.classList.remove("bump"); void pill.offsetWidth; pill.classList.add("bump"); if (!sheet.contains(a)) toast(by[id].name + " added. Arrives tomorrow."); }
+    if (d) { var k = d.dataset.dec; if (--basket[k] <= 0) delete basket[k]; save(); render(); }
+    if (e.target.id === "chk") toast("Checkout is not connected yet.");
+  });
+  sheet.addEventListener("change", function (e) { if (e.target.id === "sub") { sub = e.target.checked; render(); } });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { sheet.hidden = true; pill.setAttribute("aria-expanded", "false"); } });
+  render();
+
+  var tt; function toast(m) { var t = $("#toast"); t.textContent = m; t.classList.add("show"); clearTimeout(tt); tt = setTimeout(function () { t.classList.remove("show"); }, 2400); }
+  $("#tf").addEventListener("submit", function (e) { e.preventDefault(); var ok = $("#tName").value.trim() && $("#tBiz").value.trim() && /^\S+@\S+\.\S+$/.test($("#tEmail").value); $("#tMsg").textContent = ok ? "Thanks. We will be in touch to set up your trade account." : "Add your name, business and a valid work email."; if (ok) this.reset(); });
+  $("#nl").addEventListener("submit", function (e) { e.preventDefault(); var ok = /^\S+@\S+\.\S+$/.test($("#nlE").value); $("#nlMsg").textContent = ok ? "You are on the list." : "Enter a valid email address."; if (ok) this.reset(); });
+})();
+</script>
+</body>
+</html>

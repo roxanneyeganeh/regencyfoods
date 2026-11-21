@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Regency Foods · Issue No. 31</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Concept: the homepage is this season's issue of a food magazine. The issue
+   number is the company's age, the cover sells the hero product, the contents
+   page is the navigation, and the newsletter is "subscribe to the next issue". */
+@font-face { font-family: "Caviar Dreams"; src: url("assets/fonts/CaviarDreams-Bold.woff") format("woff"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Helvetica Neue RF"; src: url("assets/fonts/HelveticaNeue-Roman.woff") format("woff"); font-weight: 400; font-display: swap; }
+:root {
+  color-scheme: dark;
+  --bg: #1a3429; --bg-2: #213f32; --paper: #faf9f5; --cream: #f5f2df; --ink: #111511; --soft-ink: #4f5751;
+  --text: #faf9f5; --muted: rgba(250,249,245,.68); --hair: rgba(250,249,245,.2);
+  --mustard: #dcb357; --orange: #d54415; --salmon: #f39684; --mint: #def7d9;
+  --display: "Caviar Dreams", Futura, "Century Gothic", sans-serif;
+  --body: "Helvetica Neue RF", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --gl: max(16px, env(safe-area-inset-left, 0px)); --gr: max(16px, env(safe-area-inset-right, 0px));
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+*,*::before,*::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--body); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--bg); z-index: 70; }
+img { max-width: 100%; display: block; }
+[hidden] { display: none !important; }
+h1,h2,h3 { font-family: var(--display); font-weight: 700; margin: 0; line-height: 1.02; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--mustard); outline-offset: 3px; }
+.wrap { max-width: 1280px; margin-inline: auto; padding-left: var(--gl); padding-right: var(--gr); }
+@media (min-width: 760px) { .wrap { padding-left: max(44px, env(safe-area-inset-left,0px)); padding-right: max(44px, env(safe-area-inset-right,0px)); } }
+.caps { text-transform: uppercase; letter-spacing: .14em; font-size: .72rem; }
+.wm { font-family: var(--display); font-weight: 700; display: inline-flex; align-items: center; white-space: nowrap; letter-spacing: .02em; text-decoration: none; }
+.wm .oo { flex: none; display: inline-block; width: 1.18em; height: .66em; border: .13em solid currentColor; border-radius: .4em; margin: 0 .02em; }
+
+/* Masthead strip */
+.strip { border-bottom: 1px solid var(--hair); }
+.strip .wrap { display: flex; justify-content: space-between; gap: 16px; padding-block: 10px; font-size: .78rem; color: var(--muted); }
+.strip .hide { display: none; }
+@media (min-width: 760px) { .strip .hide { display: inline; } }
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; background: var(--bg); border-bottom: 1px solid var(--hair); }
+.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 20px; height: 62px; }
+.top .wm { font-size: 1.2rem; }
+.top nav { display: none; gap: 26px; font-size: .9rem; }
+.top nav a { text-decoration: none; color: var(--muted); }
+.top nav a:hover { color: var(--text); }
+@media (min-width: 960px) { .top nav { display: flex; } }
+.bag-btn { background: none; border: 1px solid var(--hair); border-radius: 999px; padding: 7px 14px; font-size: .88rem; display: inline-flex; gap: 8px; }
+.bag-btn [data-count] { color: var(--mustard); font-variant-numeric: tabular-nums; }
+
+/* Cover + contents */
+.front { padding-block: clamp(32px, 5vw, 72px); }
+.front .wrap { display: grid; gap: 48px; align-items: start; }
+@media (min-width: 980px) { .front .wrap { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 72px; } }
+.cover { position: relative; aspect-ratio: 3/4; max-width: 100%; width: 100%; overflow: hidden; background: #f1e9de; color: var(--bg); box-shadow: 0 40px 60px -40px rgba(0,0,0,.7), 0 0 0 1px rgba(0,0,0,.2); container-type: inline-size; }
+.cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+.cover .mast { position: absolute; left: 0; right: 0; top: 3.5cqw; text-align: center; font-family: var(--display); font-size: 12.4cqw; line-height: 1; display: flex; justify-content: center; align-items: center; letter-spacing: .01em; }
+.cover .mast .oo { flex: none; display: inline-block; width: 1.18em; height: .66em; border: .13em solid currentColor; border-radius: .4em; margin: 0 .02em; }
+.cover .dateline { position: absolute; left: 5cqw; right: 5cqw; top: 18cqw; display: flex; justify-content: space-between; font-size: 2.2cqw; letter-spacing: .14em; text-transform: uppercase; border-top: 1px solid currentColor; padding-top: 1.2cqw; }
+.cover .line { position: absolute; font-family: var(--display); line-height: 1; }
+.cover .l1 { left: 5cqw; top: 27cqw; width: 34cqw; font-size: 6.6cqw; }
+.cover .l1 small { display: block; font-family: var(--body); font-size: 2.4cqw; line-height: 1.35; margin-top: 2cqw; color: var(--soft-ink); }
+.cover .l2 { right: 5cqw; top: 31cqw; width: 26cqw; text-align: right; font-size: 3.6cqw; }
+.cover .l2 small, .cover .l3 small { display: block; font-family: var(--body); font-size: 2.2cqw; line-height: 1.35; margin-top: 1.2cqw; color: var(--soft-ink); }
+.cover .l3 { left: 5cqw; bottom: 6cqw; width: 30cqw; font-size: 3.6cqw; }
+.cover .price { position: absolute; right: 5cqw; bottom: 6cqw; width: 18cqw; height: 18cqw; border-radius: 50%; background: var(--orange); color: var(--paper); display: grid; place-items: center; text-align: center; font-family: var(--display); font-size: 3.6cqw; line-height: 1.05; transform: rotate(-8deg); }
+.cover .price small { display: block; font-family: var(--body); font-size: 1.8cqw; letter-spacing: .1em; text-transform: uppercase; }
+.cover .barcode { position: absolute; right: 26cqw; bottom: 6cqw; width: 12cqw; height: 7cqw; background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 4px, var(--ink) 4px 5px, transparent 5px 8px); opacity: .85; }
+
+.contents h1 { font-size: clamp(2.6rem, 1.4rem + 4vw, 5rem); }
+.contents .intro { margin-top: 18px; color: var(--muted); max-width: 42ch; font-size: 1.05rem; }
+.toc { list-style: none; padding: 0; margin: 36px 0 0; border-top: 1px solid var(--hair); }
+.toc a { display: grid; grid-template-columns: 3.4ch 1fr auto; gap: 18px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--hair); text-decoration: none; transition: padding .3s var(--ease); }
+.toc a:hover { padding-left: 8px; }
+.toc .pg { font-family: var(--display); color: var(--mustard); font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+.toc .t { font-family: var(--display); font-size: clamp(1.25rem, 1rem + .9vw, 1.75rem); line-height: 1.1; }
+.toc .t small { display: block; font-family: var(--body); font-size: .85rem; color: var(--muted); margin-top: 4px; letter-spacing: 0; }
+.toc .arr { color: var(--muted); }
+.contents .cta { margin-top: 28px; display: flex; gap: 10px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 24px; border-radius: 999px; border: 1px solid var(--text); background: none; text-decoration: none; font-size: .98rem; transition: background .2s, color .2s; }
+.btn:hover { background: var(--text); color: var(--bg); }
+.btn.fill { background: var(--mustard); border-color: var(--mustard); color: var(--ink); }
+.btn.fill:hover { background: var(--paper); border-color: var(--paper); }
+
+/* Folio (running head) */
+.folio { display: flex; justify-content: space-between; gap: 16px; border-top: 1px solid var(--hair); padding-top: 12px; margin-bottom: clamp(32px, 4vw, 56px); font-size: .75rem; color: var(--muted); letter-spacing: .14em; text-transform: uppercase; }
+.folio b { font-weight: 400; color: var(--mustard); }
+.sec { padding-block: clamp(56px, 7vw, 112px) 0; scroll-margin-top: 62px; }
+
+/* Shop the issue */
+.shop-head { display: grid; gap: 16px 60px; margin-bottom: 36px; }
+@media (min-width: 900px) { .shop-head { grid-template-columns: 1fr 1fr; align-items: end; } }
+.shop-head h2 { font-size: clamp(2.4rem, 1.4rem + 3.6vw, 4.6rem); }
+.shop-head p { color: var(--muted); max-width: 44ch; }
+.items { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); }
+.item { background: var(--paper); color: var(--ink); display: grid; grid-template-rows: auto 1fr; }
+.item .ph { aspect-ratio: 1; display: grid; place-items: end center; overflow: hidden; max-width: 100%; }
+.item .bag { position: relative; width: 66%; transform: translateY(8%); container-type: inline-size; transition: transform .5s var(--ease); }
+.item:hover .bag { transform: translateY(3%); }
+.item .bag img { width: 100%; filter: drop-shadow(0 14px 12px rgba(0,0,0,.18)); }
+.item .bag .lbl { position: absolute; left: 62.8%; top: 55.5%; transform: translate(-50%,-50%); font-family: var(--display); font-size: 9cqw; white-space: nowrap; color: #151515; }
+.item .bag .lbl.dk { color: var(--paper); }
+.item .bd { padding: 16px 16px 18px; display: grid; gap: 4px; align-content: start; }
+.item .no { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--soft-ink); }
+.item h3 { font-size: 1.4rem; }
+.item .note { font-size: .85rem; color: var(--soft-ink); }
+.item .buy { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-variant-numeric: tabular-nums; }
+.item .buy s { font-size: .8rem; color: var(--soft-ink); margin-left: 6px; }
+.item .add { border: 1px solid var(--ink); background: none; border-radius: 999px; padding: 8px 16px; font-size: .85rem; transition: background .2s, color .2s; }
+.item .add:hover { background: var(--bg); color: var(--paper); border-color: var(--bg); }
+.more { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: baseline; color: var(--muted); }
+.more a { font-family: var(--display); font-size: 1.25rem; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--hair); }
+.more a:hover { border-bottom-color: var(--mustard); }
+
+/* Feature */
+.feature h2 { font-size: clamp(2.8rem, 1.4rem + 5vw, 6.4rem); max-width: 12ch; }
+.feature .standfirst { margin-top: 22px; font-size: clamp(1.15rem, 1rem + .5vw, 1.45rem); color: var(--muted); max-width: 46ch; }
+.spread { display: grid; gap: 40px; margin-top: clamp(32px, 4vw, 56px); }
+@media (min-width: 980px) { .spread { grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; } }
+.spread figure { margin: 0; }
+.spread figure img { width: 100%; }
+.spread figcaption { margin-top: 10px; font-size: .8rem; color: var(--muted); }
+.cols { columns: 1; column-gap: 32px; color: rgba(250,249,245,.86); }
+@media (min-width: 680px) { .cols { columns: 2; } }
+.cols p + p { margin-top: 1em; }
+.cols p:first-child::first-letter { float: left; font-family: var(--display); font-size: 4.2em; line-height: .82; padding: 6px 10px 0 0; color: var(--mustard); }
+.pull { margin: 32px 0; padding: 24px 0; border-top: 1px solid var(--mustard); border-bottom: 1px solid var(--mustard); font-family: var(--display); font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.2rem); line-height: 1.15; color: var(--mustard); }
+.box { background: var(--bg-2); padding: 20px; display: grid; gap: 14px; margin-top: 28px; }
+.box table { width: 100%; border-collapse: collapse; font-size: .88rem; font-variant-numeric: tabular-nums; }
+.box td { padding: 6px 0; border-bottom: 1px solid var(--hair); }
+.box td:last-child { text-align: right; }
+.box .buy { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.box .pr { font-family: var(--display); font-size: 1.8rem; }
+
+/* Delivery spread */
+.deliv { display: grid; gap: 40px; align-items: center; }
+@media (min-width: 980px) { .deliv { grid-template-columns: 1.1fr .9fr; gap: 64px; } }
+.deliv .photo { background: var(--salmon); }
+.deliv .photo img { width: 100%; }
+.deliv h2 { font-size: clamp(2.4rem, 1.4rem + 3.6vw, 4.6rem); }
+.deliv p { margin-top: 18px; color: rgba(250,249,245,.86); max-width: 44ch; }
+.timeline { list-style: none; padding: 0; margin: 26px 0 0; display: grid; }
+.timeline li { display: grid; grid-template-columns: 9ch 1fr; gap: 16px; padding: 14px 0; border-top: 1px solid var(--hair); }
+.timeline .when { color: var(--mustard); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; padding-top: 3px; }
+
+/* Profile */
+.profile figure { margin: 0; position: relative; }
+.profile figure img { width: 100%; aspect-ratio: 16/8; object-fit: cover; max-width: 100%; }
+.profile figcaption { margin-top: 10px; font-size: .8rem; color: var(--muted); }
+.profile .q { margin-top: clamp(32px, 4vw, 56px); display: grid; gap: 28px; }
+@media (min-width: 980px) { .profile .q { grid-template-columns: 1.3fr .7fr; gap: 64px; align-items: end; } }
+.profile blockquote { margin: 0; font-family: var(--display); font-size: clamp(1.9rem, 1.2rem + 2.8vw, 3.6rem); line-height: 1.08; }
+.profile blockquote::before { content: "“"; color: var(--mustard); }
+.profile blockquote::after { content: "”"; color: var(--mustard); }
+.profile .side { color: var(--muted); display: grid; gap: 14px; }
+.profile .names { color: var(--text); font-family: var(--display); font-size: 1.15rem; line-height: 1.5; }
+
+/* Subscribe */
+.subs { display: grid; gap: 16px; padding-bottom: clamp(56px, 7vw, 112px); }
+@media (min-width: 980px) { .subs { grid-template-columns: 1fr 1fr; } }
+.sub-card { padding: clamp(28px, 4vw, 52px); display: grid; gap: 14px; align-content: start; }
+.sub-card.orange { background: var(--orange); }
+.sub-card.paper { background: var(--paper); color: var(--ink); }
+.sub-card h2 { font-size: clamp(2rem, 1.3rem + 2.6vw, 3.4rem); }
+.sub-card p { max-width: 44ch; }
+.sub-card form { display: grid; gap: 10px; margin-top: 6px; }
+.sub-card .row { display: grid; gap: 10px; }
+@media (min-width: 560px) { .sub-card .row { grid-template-columns: 1fr 1fr; } }
+.sub-card input { height: 50px; border: 0; border-bottom: 1.5px solid currentColor; background: transparent; padding: 0 2px; font: inherit; font-size: 1.05rem; color: inherit; width: 100%; border-radius: 0; }
+.sub-card input::placeholder { color: inherit; opacity: .65; }
+.sub-card input:focus { outline: none; border-bottom-width: 3px; }
+.sub-card input[aria-invalid="true"] { border-bottom-color: var(--mustard); }
+.sub-card.paper input[aria-invalid="true"] { border-bottom-color: var(--orange); }
+.sub-card .msg { font-size: .88rem; min-height: 1.3em; }
+.sub-card .btn { justify-self: start; }
+.sub-card.orange .btn { border-color: var(--paper); }
+.sub-card.orange .btn:hover { background: var(--paper); color: var(--orange); }
+.sub-card.paper .btn { border-color: var(--ink); }
+.sub-card.paper .btn:hover { background: var(--bg); color: var(--paper); border-color: var(--bg); }
+
+/* Colophon */
+.colophon { border-top: 1px solid var(--hair); }
+.colophon .wrap { padding-block: 40px calc(36px + env(safe-area-inset-bottom,0px)); display: grid; gap: 28px; }
+@media (min-width: 900px) { .colophon .wrap { grid-template-columns: 1.3fr 1fr 1fr; } }
+.colophon .wm { font-size: 1.5rem; }
+.colophon p, .colophon li { font-size: .85rem; color: var(--muted); }
+.colophon ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.colophon a { text-decoration: none; }
+.colophon a:hover { color: var(--text); }
+.colophon .h { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mustard); margin-bottom: 10px; }
+
+/* Basket drawer */
+.rf-scrim { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 80; opacity: 0; transition: opacity .3s; }
+.rf-scrim.open { opacity: 1; }
+.rf-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 100%); background: var(--paper); color: var(--ink); z-index: 90; display: flex; flex-direction: column; transform: translateX(100%); transition: transform .35s var(--ease); padding: env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) 0; font-variant-numeric: tabular-nums; color-scheme: light; }
+.rf-drawer.open { transform: none; }
+.rf-head { display: flex; justify-content: space-between; align-items: center; padding: 20px 22px; border-bottom: 1px solid rgba(17,21,17,.15); }
+.rf-head h2 { font-size: 2rem; }
+.rf-close { background: none; border: 1px solid var(--ink); border-radius: 999px; padding: 6px 14px; font-size: .85rem; }
+.rf-body { flex: 1; overflow: auto; padding: 0 22px; }
+.rf-empty { padding: 24px 0; color: var(--soft-ink); }
+.rf-line { display: grid; grid-template-columns: 56px 1fr auto; gap: 14px; align-items: center; padding: 14px 0; border-bottom: 1px solid rgba(17,21,17,.1); }
+.rf-thumb { width: 56px; height: 56px; display: grid; place-items: end center; overflow: hidden; }
+.rf-thumb img { width: 70%; transform: translateY(6%); }
+.rf-info { display: grid; gap: 2px; }
+.rf-name { font-family: var(--display); font-size: 1.1rem; }
+.rf-meta { font-size: .8rem; color: var(--soft-ink); }
+.rf-qty { display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; }
+.rf-qty button { width: 26px; height: 26px; border: 1px solid rgba(17,21,17,.3); background: none; border-radius: 50%; line-height: 1; padding: 0; }
+.rf-foot { padding: 16px 22px 22px; border-top: 1px solid rgba(17,21,17,.15); display: grid; gap: 6px; }
+.rf-foot:empty { display: none; }
+.rf-row { display: flex; justify-content: space-between; font-size: .92rem; }
+.rf-save { color: #2f7d39; }
+.rf-total { font-family: var(--display); font-size: 1.4rem; padding-top: 6px; }
+.rf-sub { display: flex; gap: 10px; align-items: center; font-size: .9rem; padding-bottom: 6px; }
+.rf-sub input { accent-color: var(--bg); width: 18px; height: 18px; }
+.rf-checkout { margin-top: 10px; min-height: 52px; border: 0; background: var(--bg); color: var(--paper); border-radius: 999px; }
+.rf-toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom,0px)); transform: translate(-50%, 12px); background: var(--mustard); color: var(--ink); padding: 10px 18px; border-radius: 999px; font-size: .88rem; opacity: 0; visibility: hidden; transition: all .25s; z-index: 95; max-width: calc(100% - 32px); }
+.rf-toast.show { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { transition: none !important; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body data-store="issue">
+
+<div class="strip"><div class="wrap"><span>Issue No. <span data-years>31</span> · <span id="season">Autumn</span> <span data-year>2026</span></span><span class="hide">Order today, delivered tomorrow · Subscribe &amp; save 10%</span></div></div>
+<header class="top">
+  <div class="wrap">
+    <a class="wm" href="#top" aria-label="Regency Foods home">REGENCY F<span class="oo" aria-hidden="true"></span>DS</a>
+    <nav aria-label="Main"><a href="#shop">Shop the issue</a><a href="#pecan">The pecan</a><a href="#delivery">Delivery</a><a href="#profile">About us</a><a href="#subscribe">Trade</a></nav>
+    <button class="bag-btn" type="button" data-open-basket>Basket <span data-count>0</span></button>
+  </div>
+</header>
+
+<main id="top">
+<section class="front">
+  <div class="wrap">
+    <div class="cover" aria-label="This issue's cover">
+      <img src="assets/img/pecan-hero.jpg" alt="Regency Foods mildly roasted pecan nuts, 1kg bag">
+      <div class="mast" aria-hidden="true">REGENCY F<span class="oo"></span>DS</div>
+      <div class="dateline"><span>No. <span data-years>31</span></span><span>Supplying kitchens since 1995</span><span class="season-short">Autumn</span></div>
+      <p class="line l1">The pecan, properly roasted<small>Why the buttery one belongs in every pastry section</small></p>
+      <p class="line l2">Next day, every day<small>Inside our North London hub</small></p>
+      <p class="line l3">1,000+ kitchens<small>and why they keep reordering</small></p>
+      <span class="barcode" aria-hidden="true"></span>
+      <span class="price"><span>£16.45<small>1kg</small></span></span>
+    </div>
+
+    <div class="contents">
+      <p class="caps" style="color:var(--mustard)">In this issue</p>
+      <h1 style="margin-top:14px">Good food, delivered tomorrow.</h1>
+      <p class="intro">Regency Foods is a wholesale catering and food supplier delivering across the UK since 1995. Read the issue, or skip straight to the shop.</p>
+      <ol class="toc">
+        <li><a href="#shop"><span class="pg">04</span><span class="t">Shop the issue<small>This season's nuts, by the kilo</small></span><span class="arr" aria-hidden="true">→</span></a></li>
+        <li><a href="#pecan"><span class="pg">12</span><span class="t">The pecan, properly roasted<small>A feature on our bestseller</small></span><span class="arr" aria-hidden="true">→</span></a></li>
+        <li><a href="#delivery"><span class="pg">18</span><span class="t">Next day, every day<small>How an order gets to your door</small></span><span class="arr" aria-hidden="true">→</span></a></li>
+        <li><a href="#profile"><span class="pg">24</span><span class="t">The restaurateur's supplier<small>Our story, since 1995</small></span><span class="arr" aria-hidden="true">→</span></a></li>
+        <li><a href="#subscribe"><span class="pg">30</span><span class="t">Subscribe<small>Trade accounts and the newsletter</small></span><span class="arr" aria-hidden="true">→</span></a></li>
+      </ol>
+      <div class="cta"><a class="btn fill" href="#shop">Shop the issue</a><a class="btn" href="#subscribe">Open a trade account</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="shop">
+  <div class="wrap">
+    <div class="folio"><span>Regency Foods · Shop</span><b>p. 04</b></div>
+    <div class="shop-head">
+      <h2>Shop the issue</h2>
+      <p>Five of our own-bag nuts, packed by the kilo for the pastry section, the bar and the store cupboard. Order today and they arrive tomorrow.</p>
+    </div>
+    <div class="items" id="items"></div>
+    <p class="more"><span class="caps">Also in store</span><a href="#shop">Meat &amp; Seafood</a><a href="#shop">Frozen Foods</a><a href="#shop">Soft Drinks</a><a href="#shop">Alcohol &amp; Spirits</a><a href="#shop">Snacks &amp; Store Cupboard</a></p>
+  </div>
+</section>
+
+<section class="sec feature" id="pecan">
+  <div class="wrap">
+    <div class="folio"><span>Feature · The pecan</span><b>p. 12</b></div>
+    <h2>The pecan, properly roasted.</h2>
+    <p class="standfirst">Mild roasting, a buttery texture and a rich flavour. Why our bestseller earns its place in the pastry section and the snack bowl.</p>
+    <div class="spread">
+      <figure><img src="assets/img/quality.jpg" alt="A bowl of roasted vegetables, greens and nuts beside fresh peaches"><figcaption>From everyday essentials to premium ingredients: only the highest-quality products.</figcaption></figure>
+      <div>
+        <div class="cols">
+          <p>Our premium pecans are mildly roasted, which keeps their buttery texture and brings out a rich, rounded flavour without bitterness. They are naturally high in healthy fats, and rich in vitamin E and essential minerals like manganese and copper.</p>
+          <p>In the kitchen they work twice: chopped into pies, brownies and granola, or served whole as a nutritious snack. They support heart and metabolic health and may help reduce inflammation, which makes them an easy addition to a menu.</p>
+          <p>We pack them in our own 1kg bags, sealed for freshness, and deliver them next day from our North London hub with the rest of your order.</p>
+        </div>
+        <p class="pull">Perfect for baking, or as a nutritious snack.</p>
+        <div class="box">
+          <p class="caps" style="color:var(--mustard)">Pecan Nuts · 1kg</p>
+          <table><tr><td>Typical values</td><td>per 100g</td></tr><tr><td>Energy</td><td>2,900 kJ / 691 kcal</td></tr><tr><td>Fat</td><td>72g</td></tr><tr><td>Carbohydrate</td><td>14g</td></tr><tr><td>Fibre</td><td>9.6g</td></tr><tr><td>Protein</td><td>9.2g</td></tr></table>
+          <div class="buy"><span class="pr">£16.45</span><button class="btn fill" type="button" data-add="pecans">Add to basket</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="delivery">
+  <div class="wrap">
+    <div class="folio"><span>Report · Delivery</span><b>p. 18</b></div>
+    <div class="deliv">
+      <div class="photo"><img src="assets/img/van.jpg" alt="Yellow Regency Foods delivery van"></div>
+      <div>
+        <h2>Next day, every day.</h2>
+        <p>Need it tomorrow? Consider it done. Our North London hub ensures fast, next-day delivery nationwide, so you're never left waiting.</p>
+        <ol class="timeline">
+          <li><span class="when">Today</span><span>You order online, from a single bag to a weekly restock.</span></li>
+          <li><span class="when">Tonight</span><span>Your order is picked and packed at our North London hub.</span></li>
+          <li><span class="when">Tomorrow</span><span>It arrives at your door, on time, every time.</span></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec profile" id="profile">
+  <div class="wrap">
+    <div class="folio"><span>Profile · Our story</span><b>p. 24</b></div>
+    <figure><img src="assets/img/kitchen.jpg" alt="Chefs at work in a busy restaurant kitchen"><figcaption>Designed for busy kitchens.</figcaption></figure>
+    <div class="q">
+      <blockquote>We understand the importance of quality, efficiency and reliability in every kitchen.</blockquote>
+      <div class="side">
+        <p>Regency Foods was founded in 1995 by a former restaurateur. Today we supply restaurants, hotels, pubs and more across the UK with high-quality products at competitive prices, and keep expanding our range to meet what customers need.</p>
+        <p class="caps" style="color:var(--mustard)">Trusted by 1,000+ venues, including</p>
+        <p class="names">Balans · Park Chinois · Meta · Lush · Smoky Boys</p>
+        <p>Rated 4.9, Excellent on Trustpilot.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="subscribe">
+  <div class="wrap">
+    <div class="folio"><span>Subscribe</span><b>p. 30</b></div>
+    <div class="subs">
+      <div class="sub-card orange">
+        <p class="caps">Newsletter</p>
+        <h2>Subscribe to the next issue.</h2>
+        <p>Discover the finest selection of quality foods, stay up to date with our newest arrivals, and enjoy exclusive offers.</p>
+        <form data-form="news" novalidate>
+          <input id="nEmail" type="email" placeholder="Email address" aria-label="Email address" autocomplete="email" required>
+          <button class="btn" type="submit">Subscribe</button>
+          <p class="msg" data-msg aria-live="polite"></p>
+        </form>
+      </div>
+      <div class="sub-card paper">
+        <p class="caps" style="color:var(--orange)">Trade edition</p>
+        <h2>For restaurants, hotels and pubs.</h2>
+        <p>Open a trade account for wholesale pricing and next-day delivery. Subscribe to repeat orders and save 10%.</p>
+        <form data-form="trade" novalidate>
+          <div class="row"><input id="tName" placeholder="Your name" aria-label="Your name" autocomplete="name" required><input id="tBiz" placeholder="Business name" aria-label="Business name" autocomplete="organization" required></div>
+          <input id="tEmail" type="email" placeholder="Work email" aria-label="Work email" autocomplete="email" required>
+          <button class="btn" type="submit">Request an account</button>
+          <p class="msg" data-msg aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="colophon">
+  <div class="wrap">
+    <div>
+      <span class="wm">REGENCY F<span class="oo" aria-hidden="true"></span>DS</span>
+      <p style="margin-top:12px;max-width:40ch">Colophon: Issue No. <span data-years>31</span>, published by Regency Foods, North London. Set in Caviar Dreams and Helvetica Neue. © <span data-year>2026</span>.</p>
+    </div>
+    <div><p class="h">Shop</p><ul><li><a href="#shop">All products</a></li><li><a href="#shop">Promotions</a></li><li><a href="#subscribe">Trade accounts</a></li></ul></div>
+    <div><p class="h">Help</p><ul><li><a href="#delivery">Shipping &amp; returns</a></li><li><a href="#subscribe">Contact us</a></li><li><a href="#subscribe">FAQ</a></li><li><a href="#subscribe">Privacy &amp; terms</a></li></ul></div>
+  </div>
+</footer>
+
+<script src="shop.js"></script>
+<script>
+(function () {
+  var P = window.RF_PRODUCTS, gbp = window.RF_GBP, esc = window.RF_ESC;
+  var m = new Date().getMonth(), season = m >= 2 && m <= 4 ? "Spring" : m >= 5 && m <= 7 ? "Summer" : m >= 8 && m <= 10 ? "Autumn" : "Winter";
+  document.getElementById("season").textContent = season;
+  document.querySelectorAll(".season-short").forEach(function (e) { e.textContent = season + " " + new Date().getFullYear(); });
+  document.getElementById("items").innerHTML = P.map(function (p, i) {
+    return '<article class="item"><div class="ph" style="background:' + p.tint + '"><div class="bag"><img src="' + p.img + '" alt="Regency Foods ' + esc(p.name) + ' ' + p.size + ' bag"><span class="lbl' + (p.dark ? ' dk' : '') + '" aria-hidden="true">' + esc(p.label) + '</span></div></div>' +
+      '<div class="bd"><span class="no">No. 0' + (i + 1) + (p.was ? ' · On offer' : '') + '</span><h3>' + esc(p.name) + '</h3><span class="note">' + esc(p.note) + ' · ' + p.size + '</span>' +
+      '<div class="buy"><span>' + gbp.format(p.price) + (p.was ? '<s>' + gbp.format(p.was) + '</s>' : '') + '</span><button class="add" type="button" data-add="' + p.id + '" aria-label="Add ' + esc(p.name) + ' to basket">Add</button></div></div></article>';
+  }).join("");
+})();
+</script>
+</body>
+</html>

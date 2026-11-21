@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Regency Foods · The Docket</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Concept: the kitchen pass. Categories hang as order tickets on a rail,
+   the specials are a menu board, and your basket prints like a docket. */
+@font-face { font-family: "Caviar Dreams"; src: url("assets/fonts/CaviarDreams-Bold.woff") format("woff"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Helvetica Neue RF"; src: url("assets/fonts/HelveticaNeue-Roman.woff") format("woff"); font-weight: 400; font-display: swap; }
+:root {
+  color-scheme: light;
+  --green: #1a3429; --green-2: #24493a; --cream: #faf9f5; --paper: #fffdf8; --oat: #f5f2df;
+  --mint: #def7d9; --salmon: #f39684; --orange: #d54415; --mustard: #dcb357; --leaf: #45a94f;
+  --ink: #111511; --ink-soft: #4a524c; --line: rgba(17,21,17,.14);
+  --display: "Caviar Dreams", Futura, "Century Gothic", sans-serif;
+  --body: "Helvetica Neue RF", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --gl: max(16px, env(safe-area-inset-left, 0px)); --gr: max(16px, env(safe-area-inset-right, 0px));
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+*,*::before,*::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--body); line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--green); z-index: 70; }
+img { max-width: 100%; display: block; }
+[hidden] { display: none !important; }
+h1,h2,h3 { font-family: var(--display); font-weight: 700; margin: 0; line-height: 1.02; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2.5px solid var(--orange); outline-offset: 3px; }
+.wrap { max-width: 1380px; margin-inline: auto; padding-left: var(--gl); padding-right: var(--gr); }
+@media (min-width: 760px) { .wrap { padding-left: max(40px, env(safe-area-inset-left,0px)); padding-right: max(40px, env(safe-area-inset-right,0px)); } }
+.mono { font-family: var(--body); text-transform: uppercase; letter-spacing: .14em; font-size: .72rem; }
+.wm { font-family: var(--display); font-weight: 700; display: inline-flex; align-items: center; white-space: nowrap; letter-spacing: .02em; }
+.wm .oo { flex: none; display: inline-block; width: 1.18em; height: .66em; border: .13em solid currentColor; border-radius: .4em; margin: 0 .02em; }
+
+/* ---------- Header: the pass ---------- */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; background: var(--green); color: var(--cream); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.top .wm { font-size: 1.3rem; text-decoration: none; }
+.top nav { display: none; gap: 4px; }
+.top nav a { text-decoration: none; padding: 8px 14px; border-radius: 999px; font-size: .92rem; color: rgba(250,249,245,.8); }
+.top nav a:hover { color: var(--cream); background: var(--green-2); }
+@media (min-width: 980px) { .top nav { display: flex; } }
+.top .call { font-size: .82rem; color: var(--mustard); }
+.rail {
+  height: 14px; background: linear-gradient(180deg, #c9cfc9 0%, #f4f6f3 35%, #9aa39c 70%, #6d766f 100%);
+  box-shadow: 0 2px 0 rgba(0,0,0,.15), 0 6px 14px -6px rgba(0,0,0,.35);
+  position: relative; z-index: 2;
+}
+
+/* ---------- Hero ---------- */
+.hero { padding-block: clamp(40px, 6vw, 88px) clamp(48px, 6vw, 96px); }
+.hero-grid { display: grid; gap: 48px; align-items: start; }
+@media (min-width: 980px) { .hero-grid { grid-template-columns: 1.25fr .75fr; } }
+.hero .kicker { color: var(--orange); display: flex; align-items: center; gap: 10px; }
+.live { width: 9px; height: 9px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 0 rgba(213,68,21,.6); animation: pulse 1.6s infinite; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 10px rgba(213,68,21,0); } 100% { box-shadow: 0 0 0 0 rgba(213,68,21,0); } }
+.hero h1 { font-size: clamp(2.2rem, 1.2rem + 3.4vw, 4.2rem); margin-top: 18px; }
+.clock { display: flex; align-items: flex-end; gap: clamp(6px, 1vw, 14px); margin-top: 18px; font-family: var(--display); color: var(--green); flex-wrap: wrap; }
+.clock .unit { display: grid; gap: 6px; }
+.clock .digits { display: flex; }
+.clock .d { display: inline-block; width: .62em; text-align: center; font-size: clamp(4.2rem, 2rem + 9vw, 10.5rem); line-height: .85; }
+.clock .colon { font-size: clamp(3rem, 1.6rem + 6vw, 7.5rem); line-height: .9; color: var(--orange); padding-bottom: .12em; }
+.clock .lab { font-family: var(--body); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); padding-left: 4px; }
+.hero .lead { font-size: clamp(1.05rem, 1rem + .4vw, 1.3rem); max-width: 40ch; margin-top: 26px; color: var(--ink-soft); }
+.ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; min-height: 50px; padding: 0 24px; border-radius: 999px; border: 1.5px solid var(--ink); background: transparent; text-decoration: none; transition: transform .25s var(--ease), background .25s; font-size: 1rem; }
+.btn:hover { transform: translateY(-2px); }
+.btn-g { background: var(--green); border-color: var(--green); color: var(--cream); }
+.btn-o { background: var(--orange); border-color: var(--orange); color: var(--cream); }
+
+/* Tickets */
+.ticket {
+  position: relative; background: var(--paper); color: var(--ink); padding: 34px 24px 30px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.05), 0 18px 34px -18px rgba(26,52,41,.45);
+  transform-origin: 50% -20px; transition: transform .5s var(--ease);
+  -webkit-mask: radial-gradient(circle 6px at 50% 100%, transparent 98%, #000) 0 0/16px 100% repeat-x;
+          mask: radial-gradient(circle 6px at 50% 100%, transparent 98%, #000) 0 0/16px 100% repeat-x;
+}
+.ticket::before { /* clip */
+  content: ""; position: absolute; top: -2px; left: 50%; width: 44px; height: 16px; transform: translateX(-50%);
+  background: linear-gradient(180deg, #8d968f, #d7dcd8); border-radius: 0 0 6px 6px;
+}
+.ticket .tno { display: flex; justify-content: space-between; border-bottom: 1.5px dashed var(--line); padding-bottom: 10px; margin-bottom: 14px; }
+.ticket h3 { font-size: 1.5rem; }
+.ticket ul { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 7px; font-size: .92rem; }
+.ticket li { display: flex; gap: 10px; }
+.ticket li b { font-weight: 400; color: var(--orange); min-width: 2.2ch; font-variant-numeric: tabular-nums; }
+.hero-ticket { transform: rotate(2deg); max-width: 420px; justify-self: center; width: 100%; margin-top: 10px; }
+.hero-ticket:hover { transform: rotate(-1deg); }
+.hero-ticket .big { font-family: var(--display); font-size: 2.1rem; line-height: 1; margin: 6px 0 4px; }
+.hero-ticket .stamp {
+  position: absolute; right: 18px; bottom: 26px; transform: rotate(-12deg);
+  border: 2.5px solid var(--orange); color: var(--orange); padding: 6px 10px; border-radius: 6px;
+  font-family: var(--display); font-size: 1.05rem; line-height: 1; opacity: .9;
+}
+.hero-ticket img { margin-top: 16px; mix-blend-mode: multiply; }
+
+/* ---------- The pass: category rail ---------- */
+.pass { background: var(--green); color: var(--cream); padding-block: 0 clamp(56px, 6vw, 96px); }
+.pass-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; padding-block: clamp(40px, 5vw, 72px) 28px; }
+.pass-head h2 { font-size: clamp(2.2rem, 1.4rem + 3vw, 4rem); max-width: 14ch; }
+.pass-head p { max-width: 38ch; color: rgba(250,249,245,.75); }
+.arrows { display: flex; gap: 8px; }
+.arrows button { width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid rgba(250,249,245,.4); background: transparent; color: var(--cream); font-size: 1.2rem; }
+.arrows button:hover { background: var(--cream); color: var(--green); }
+.rail-row { position: relative; }
+.rail-row .rail { position: absolute; left: 0; right: 0; top: 0; }
+.tickets {
+  display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 8px var(--gr) 30px var(--gl);
+  scrollbar-width: none; cursor: grab;
+}
+.tickets::-webkit-scrollbar { display: none; }
+.tickets.drag { cursor: grabbing; scroll-snap-type: none; }
+@media (min-width: 760px) { .tickets { padding-left: max(40px, env(safe-area-inset-left,0px)); } }
+.tickets .ticket { flex: none; width: min(300px, 78vw); scroll-snap-align: start; text-decoration: none; display: block; }
+.tickets .ticket:nth-child(odd) { transform: rotate(-1.4deg); }
+.tickets .ticket:nth-child(even) { transform: rotate(1.2deg); }
+.tickets .ticket:hover { transform: rotate(0) translateY(6px); }
+.tickets .ticket .ph { aspect-ratio: 4/3; overflow: hidden; margin: 2px 0 14px; max-width: 100%; }
+.tickets .ticket .ph img { width: 100%; height: 100%; object-fit: cover; filter: saturate(1.05); }
+.tickets .fire { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 12px; border-top: 1.5px dashed var(--line); font-family: var(--display); font-size: 1.1rem; }
+.tickets .fire span:last-child { color: var(--orange); }
+
+/* ---------- Specials board ---------- */
+.specials { padding-block: clamp(64px, 7vw, 120px); }
+.board-grid { display: grid; gap: 40px; }
+@media (min-width: 980px) { .board-grid { grid-template-columns: .8fr 1.2fr; gap: 64px; } }
+.board-intro h2 { font-size: clamp(2.2rem, 1.4rem + 3vw, 4rem); }
+.board-intro p { margin-top: 18px; color: var(--ink-soft); max-width: 40ch; }
+.board-intro .note { margin-top: 24px; display: inline-flex; gap: 10px; align-items: center; background: var(--mint); color: var(--green); padding: 10px 14px; border-radius: 8px; font-size: .9rem; }
+.menu { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
+.menu li { position: relative; display: grid; grid-template-columns: auto 1fr auto auto; align-items: baseline; gap: 14px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.menu .nm { font-family: var(--display); font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2.25rem); line-height: 1.05; }
+.menu .nm small { display: block; font-family: var(--body); font-size: .82rem; color: var(--ink-soft); margin-top: 4px; letter-spacing: 0; }
+.menu .lead-dots { border-bottom: 2px dotted rgba(17,21,17,.35); transform: translateY(-6px); min-width: 20px; }
+.menu .pr { font-variant-numeric: tabular-nums; font-size: 1.15rem; }
+.menu .pr s { font-size: .82rem; color: var(--ink-soft); margin-right: 6px; }
+.menu .add { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--ink); background: transparent; font-size: 1.3rem; line-height: 1; transition: background .2s, color .2s, transform .3s var(--ease); align-self: center; }
+.menu .add:hover { background: var(--orange); border-color: var(--orange); color: var(--cream); transform: rotate(90deg); }
+.menu .thumb { display: none; }
+.menu .flag { font-family: var(--body); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; background: var(--orange); color: var(--cream); padding: 3px 7px; border-radius: 4px; vertical-align: middle; margin-left: 8px; position: relative; top: -4px; }
+.floater { position: fixed; left: 0; top: 0; width: 210px; pointer-events: none; z-index: 30; opacity: 0; transform: translate(-50%, -60%) rotate(-6deg) scale(.8); transition: opacity .25s, transform .35s var(--ease); filter: drop-shadow(0 22px 22px rgba(26,52,41,.3)); }
+.floater.on { opacity: 1; transform: translate(-50%, -60%) rotate(-6deg) scale(1); }
+.floater .lbl { position: absolute; left: 62.8%; top: 55.5%; width: 37.5%; transform: translate(-50%,-50%); text-align: center; font-family: var(--display); font-size: 15px; line-height: 1; color: #151515; white-space: nowrap; }
+.floater .lbl.dk { color: var(--cream); }
+@media (hover: none), (max-width: 760px) {
+  .menu li { grid-template-columns: 64px 1fr auto; }
+  .menu .lead-dots { display: none; }
+  .menu .thumb { display: block; width: 64px; grid-row: span 2; align-self: center; }
+  .menu .pr { grid-column: 2; }
+  .menu .add { grid-column: 3; grid-row: 1 / span 2; }
+}
+
+/* ---------- Service: delivery ---------- */
+.service { background: var(--salmon); }
+.service .wrap { display: grid; gap: 32px; padding-block: clamp(56px, 6vw, 104px); align-items: center; }
+@media (min-width: 980px) { .service .wrap { grid-template-columns: 1fr 1fr; } }
+.service h2 { font-size: clamp(2.4rem, 1.4rem + 3.6vw, 4.6rem); }
+.calls { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 0; }
+.calls li { display: grid; grid-template-columns: 9ch 1fr; gap: 16px; padding: 16px 0; border-top: 1.5px solid rgba(17,21,17,.2); align-items: baseline; }
+.calls .mono { color: var(--green); }
+.calls b { font-family: var(--display); font-weight: 700; font-size: 1.35rem; display: block; }
+.calls span { font-size: .95rem; color: #2a2421; }
+.service img { mix-blend-mode: multiply; width: 100%; }
+
+/* ---------- Kitchen story ---------- */
+.story { padding-block: clamp(64px, 7vw, 120px); }
+.story-grid { display: grid; gap: 32px; align-items: center; }
+@media (min-width: 980px) { .story-grid { grid-template-columns: 1.1fr .9fr; gap: 64px; } }
+.story figure { margin: 0; position: relative; }
+.story figure img { border-radius: 4px; width: 100%; aspect-ratio: 1030/601; object-fit: cover; max-width: 100%; }
+.story figcaption { position: absolute; left: 16px; bottom: -18px; background: var(--paper); padding: 10px 14px; box-shadow: 0 10px 24px -14px rgba(0,0,0,.4); transform: rotate(-2deg); font-size: .85rem; }
+.story h2 { font-size: clamp(2.4rem, 1.4rem + 3.6vw, 4.6rem); }
+.story h2 em { font-style: normal; color: var(--orange); }
+.story p { margin-top: 18px; max-width: 46ch; color: var(--ink-soft); }
+.regulars { margin-top: 32px; }
+.regulars ul { list-style: none; padding: 0; margin: 12px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.regulars li { border: 1.5px solid var(--ink); border-radius: 999px; padding: 8px 16px; font-family: var(--display); font-size: 1.05rem; }
+.rating { margin-top: 22px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: .95rem; }
+.rating b { font-family: var(--display); font-size: 1.6rem; }
+
+/* ---------- Reservation (newsletter / trade) ---------- */
+.book { background: var(--orange); color: var(--cream); }
+.book .wrap { display: grid; gap: 32px; padding-block: clamp(56px, 6vw, 100px); }
+@media (min-width: 980px) { .book .wrap { grid-template-columns: 1fr 1fr; align-items: center; gap: 64px; } }
+.book h2 { font-size: clamp(2.6rem, 1.4rem + 4vw, 5.2rem); }
+.book p { color: rgba(250,249,245,.85); margin-top: 16px; max-width: 42ch; }
+.res { background: var(--paper); color: var(--ink); padding: 28px 24px; display: grid; gap: 14px; transform: rotate(-1deg); box-shadow: 0 24px 40px -24px rgba(0,0,0,.5); }
+.res .tno { display: flex; justify-content: space-between; border-bottom: 1.5px dashed var(--line); padding-bottom: 10px; }
+.res label { font-size: .82rem; display: grid; gap: 6px; }
+.res input, .res select { height: 48px; border: 0; border-bottom: 1.5px solid var(--ink); background: transparent; font: inherit; font-size: 1.05rem; padding: 0 2px; border-radius: 0; color: var(--ink); width: 100%; }
+.res input:focus, .res select:focus { outline: none; border-bottom-color: var(--orange); }
+.res .row { display: grid; gap: 14px; }
+@media (min-width: 560px) { .res .row { grid-template-columns: 1fr 1fr; } }
+.res .msg { font-size: .85rem; color: var(--ink-soft); min-height: 1.3em; }
+
+footer { background: var(--green); color: rgba(250,249,245,.75); }
+footer .wrap { padding-block: 40px calc(32px + env(safe-area-inset-bottom,0px)); display: flex; flex-wrap: wrap; gap: 20px 40px; justify-content: space-between; align-items: center; font-size: .9rem; }
+footer .wm { font-size: 1.4rem; color: var(--cream); }
+footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--cream); }
+
+/* ---------- Docket (basket) ---------- */
+.docket {
+  position: fixed; right: max(16px, env(safe-area-inset-right,0px)); bottom: calc(16px + env(safe-area-inset-bottom,0px)); z-index: 60;
+  width: min(330px, calc(100vw - 32px)); display: flex; flex-direction: column; align-items: stretch;
+}
+.docket-tab {
+  align-self: flex-end; display: inline-flex; align-items: center; gap: 10px; background: var(--ink); color: var(--cream);
+  border: 0; border-radius: 999px; padding: 12px 18px; box-shadow: 0 14px 30px -12px rgba(0,0,0,.45);
+}
+.docket-tab .n { background: var(--orange); border-radius: 999px; min-width: 24px; height: 24px; display: grid; place-items: center; font-size: .8rem; font-variant-numeric: tabular-nums; }
+.docket-tab.bump { animation: bump .5s var(--ease); }
+@keyframes bump { 40% { transform: scale(1.08) rotate(-2deg); } }
+.paper {
+  order: -1; margin-bottom: 10px; background: var(--paper); color: var(--ink); padding: 22px 20px 26px;
+  font-variant-numeric: tabular-nums; box-shadow: 0 24px 40px -20px rgba(0,0,0,.45);
+  max-height: min(70vh, 560px); overflow: auto;
+  transform-origin: 100% 100%; animation: print .45s var(--ease);
+  -webkit-mask: radial-gradient(circle 6px at 50% 0, transparent 98%, #000) 0 0/16px 100% repeat-x;
+          mask: radial-gradient(circle 6px at 50% 0, transparent 98%, #000) 0 0/16px 100% repeat-x;
+}
+@keyframes print { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+.paper h3 { font-size: 1.4rem; text-align: center; }
+.paper .meta { text-align: center; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); margin: 4px 0 12px; }
+.paper .ln { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; padding: 8px 0; border-top: 1.5px dashed var(--line); align-items: center; font-size: .92rem; }
+.paper .ln .q { display: inline-flex; align-items: center; gap: 4px; }
+.paper .ln .q button { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--line); background: none; line-height: 1; padding: 0; }
+.paper .ln.new { animation: lineIn .6s var(--ease); }
+@keyframes lineIn { from { background: var(--mint); } }
+.paper .tot { border-top: 2px solid var(--ink); margin-top: 6px; padding-top: 10px; display: grid; gap: 4px; }
+.paper .tot div { display: flex; justify-content: space-between; }
+.paper .tot .g { font-family: var(--display); font-size: 1.35rem; }
+.paper .sub { display: flex; gap: 10px; align-items: center; margin-top: 12px; font-size: .88rem; }
+.paper .sub input { accent-color: var(--green); width: 18px; height: 18px; }
+.paper .send { width: 100%; margin-top: 14px; justify-content: center; border-radius: 8px; }
+.paper .empty { text-align: center; color: var(--ink-soft); font-size: .92rem; padding: 6px 0 2px; }
+.toast { position: fixed; left: 50%; top: calc(80px + env(safe-area-inset-top,0px)); transform: translate(-50%, -20px); opacity: 0; visibility: hidden; background: var(--ink); color: var(--cream); padding: 10px 18px; border-radius: 999px; font-size: .9rem; z-index: 80; transition: all .35s var(--ease); max-width: calc(100% - 32px); text-align: center; }
+.toast.show { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="wm" href="#top" aria-label="Regency Foods home">REGENCY F<span class="oo" aria-hidden="true"></span>DS</a>
+    <nav aria-label="Main"><a href="#pass">Categories</a><a href="#specials">Specials</a><a href="#service">Delivery</a><a href="#story">Our story</a><a href="#book">Trade accounts</a></nav>
+    <span class="call mono">Est. 1995 · London</span>
+  </div>
+  <div class="rail" aria-hidden="true"></div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="kicker mono"><span class="live" aria-hidden="true"></span>Taking orders now</p>
+      <h1>Tomorrow starts in</h1>
+      <div class="clock" id="clock" role="timer" aria-live="off" aria-label="Time until tomorrow">
+        <div class="unit"><div class="digits"><span class="d" data-i="0">0</span><span class="d" data-i="1">0</span></div><span class="lab">hrs</span></div>
+        <span class="colon" aria-hidden="true">:</span>
+        <div class="unit"><div class="digits"><span class="d" data-i="2">0</span><span class="d" data-i="3">0</span></div><span class="lab">min</span></div>
+        <span class="colon" aria-hidden="true">:</span>
+        <div class="unit"><div class="digits"><span class="d" data-i="4">0</span><span class="d" data-i="5">0</span></div><span class="lab">sec</span></div>
+      </div>
+      <p class="lead">Order today and it is at your kitchen door tomorrow. Premium ingredients and everyday essentials for restaurants, hotels, pubs and home cooks across the UK.</p>
+      <div class="ctas"><a class="btn btn-g" href="#specials">Start an order →</a><a class="btn" href="#book">Open a trade account</a></div>
+    </div>
+
+    <article class="ticket hero-ticket" aria-label="About Regency Foods">
+      <div class="tno mono"><span>Order no. 1995</span><span id="today">Today</span></div>
+      <p class="mono" style="color:var(--ink-soft)">Covers</p>
+      <p class="big">1,000+ venues</p>
+      <ul>
+        <li><b>1×</b>Next-day delivery, nationwide</li>
+        <li><b>1×</b>North London hub</li>
+        <li><b>4.9</b>Rated Excellent on Trustpilot</li>
+        <li><b>29</b>Years supplying kitchens</li>
+      </ul>
+      <img src="assets/img/hero-stack.jpg" alt="A Regency Foods box stacked with pantry staples and drinks">
+      <span class="stamp" aria-hidden="true">Served<br>since 1995</span>
+    </article>
+  </div>
+</section>
+
+<section class="pass" id="pass">
+  <div class="rail" aria-hidden="true"></div>
+  <div class="wrap pass-head">
+    <h2>On the pass today</h2>
+    <p>Every category is a ticket. Pull one down to see what is in stock, from fresh cuts to the store cupboard.</p>
+    <div class="arrows"><button type="button" id="prev" aria-label="Previous tickets">←</button><button type="button" id="next" aria-label="Next tickets">→</button></div>
+  </div>
+  <div class="rail-row">
+    <div class="tickets" id="tickets">
+      <a class="ticket" href="#specials"><div class="tno mono"><span>Ticket 01</span><span>Fresh</span></div><div class="ph"><img src="assets/img/cat-meat.jpg" alt="Grilled chicken, prawns and a burger"></div><h3>Meat &amp; Seafood</h3><ul><li><b>—</b>Fresh &amp; frozen cuts</li><li><b>—</b>Prawns and fish</li></ul><div class="fire"><span>Shop</span><span>→</span></div></a>
+      <a class="ticket" href="#specials"><div class="tno mono"><span>Ticket 02</span><span>Pantry</span></div><div class="ph"><img src="assets/img/bag-pecan.jpg" alt="Regency Foods pecan nuts bag" style="object-fit:cover;object-position:center 40%"></div><h3>Nuts &amp; Seeds</h3><ul><li><b>—</b>Packed by the kilo</li><li><b>—</b>For baking &amp; snacking</li></ul><div class="fire"><span>Shop</span><span>→</span></div></a>
+      <a class="ticket" href="#specials"><div class="tno mono"><span>Ticket 03</span><span>Frozen</span></div><div class="ph"><img src="assets/img/cat-frozen.jpg" alt="Frozen pizza, waffles and ice cream"></div><h3>Frozen Foods</h3><ul><li><b>—</b>Pizza, waffles, desserts</li><li><b>—</b>Kept cold to your door</li></ul><div class="fire"><span>Shop</span><span>→</span></div></a>
+      <a class="ticket" href="#specials"><div class="tno mono"><span>Ticket 04</span><span>Bar</span></div><div class="ph"><img src="assets/img/cat-drinks.jpg" alt="Juices, vinegar and canned soft drinks"></div><h3>Soft Drinks</h3><ul><li><b>—</b>Juices &amp; sodas</li><li><b>—</b>Kombucha &amp; vinegars</li></ul><div class="fire"><span>Shop</span><span>→</span></div></a>
+      <a class="ticket" href="#specials"><div class="tno mono"><span>Ticket 05</span><span>Bar</span></div><div class="ph"><img src="assets/img/cat-wine.jpg" alt="Bottles of white wine"></div><h3>Alcohol &amp; Spirits</h3><ul><li><b>—</b>Wines by the case</li><li><b>—</b>Spirits for the back bar</li></ul><div class="fire"><span>Shop</span><span>→</span></div></a>
+      <a class="ticket" href="#specials"><div class="tno mono"><span>Ticket 06</span><span>Pantry</span></div><div class="ph"><img src="assets/img/choice.jpg" alt="Snacks, sweets and sodas"></div><h3>Snacks &amp; Sweets</h3><ul><li><b>—</b>Everyday range</li><li><b>—</b>Better value by the case</li></ul><div class="fire"><span>Shop</span><span>→</span></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="specials" id="specials">
+  <div class="wrap board-grid">
+    <div class="board-intro">
+      <p class="mono" style="color:var(--orange)">Today's specials</p>
+      <h2 style="margin-top:12px">Nuts, by the kilo.</h2>
+      <p>Mildly roasted, raw or salted, packed in our own bags and ready for the pastry section or the bar snack bowl. Hover a line to see the bag; tap + to add it to your docket.</p>
+      <span class="note">Subscribe &amp; save 10% on every repeat order</span>
+    </div>
+    <ul class="menu" id="menu"></ul>
+  </div>
+</section>
+
+<section class="service" id="service">
+  <div class="wrap">
+    <div>
+      <p class="mono" style="color:var(--green)">Service</p>
+      <h2 style="margin-top:12px">Ordered today. Served tomorrow.</h2>
+      <ol class="calls">
+        <li><span class="mono">Order in</span><div><b>You place the order</b><span>Online, from a single bag to a full weekly restock.</span></div></li>
+        <li><span class="mono">Prep</span><div><b>Picked &amp; packed</b><span>Checked at our North London hub.</span></div></li>
+        <li><span class="mono">Service</span><div><b>On your doorstep tomorrow</b><span>Fast, next-day delivery nationwide, so you are never left waiting.</span></div></li>
+      </ol>
+    </div>
+    <img src="assets/img/van.jpg" alt="Yellow Regency Foods delivery van">
+  </div>
+</section>
+
+<section class="story" id="story">
+  <div class="wrap story-grid">
+    <figure>
+      <img src="assets/img/kitchen.jpg" alt="Chefs working in a busy restaurant kitchen">
+      <figcaption>Designed for busy kitchens</figcaption>
+    </figure>
+    <div>
+      <p class="mono" style="color:var(--orange)">Since 1995</p>
+      <h2 style="margin-top:12px">Founded by a restaurateur. <em>We speak kitchen.</em></h2>
+      <p>We understand the importance of quality, efficiency and reliability in every kitchen, because we ran one. Today Regency Foods delivers high-quality products at competitive prices to restaurants, hotels, pubs and more.</p>
+      <div class="regulars">
+        <p class="mono" style="color:var(--ink-soft)">Some of our regulars</p>
+        <ul><li>Balans</li><li>Park Chinois</li><li>Meta</li><li>Lush</li><li>Smoky Boys</li></ul>
+      </div>
+      <p class="rating"><b>4.9</b> Excellent on Trustpilot · trusted by 1,000+ venues</p>
+    </div>
+  </div>
+</section>
+
+<section class="book" id="book">
+  <div class="wrap">
+    <div>
+      <p class="mono">For restaurants, hotels &amp; pubs</p>
+      <h2 style="margin-top:12px">Book a table at the trade counter.</h2>
+      <p>Open a trade account for wholesale pricing and next-day delivery from our North London hub. Or just leave your email for new arrivals and offers.</p>
+    </div>
+    <form class="res" id="res" novalidate>
+      <div class="tno mono"><span>Reservation</span><span>Trade account</span></div>
+      <div class="row">
+        <label for="rName">Name<input id="rName" autocomplete="name" required></label>
+        <label for="rBiz">Business<input id="rBiz" autocomplete="organization" required></label>
+      </div>
+      <label for="rEmail">Work email<input id="rEmail" type="email" autocomplete="email" required></label>
+      <label for="rType">Venue<select id="rType"><option>Restaurant</option><option>Hotel</option><option>Pub or bar</option><option>Caterer</option><option>Café</option><option>Other</option></select></label>
+      <button class="btn btn-g" type="submit" style="justify-content:center;border-radius:8px">Request my account →</button>
+      <p class="msg" id="rMsg" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="wm">REGENCY F<span class="oo" aria-hidden="true"></span>DS</span>
+    <nav aria-label="Footer"><a href="#service">Shipping &amp; returns</a><a href="#book">Contact us</a><a href="#book">FAQ</a><a href="#book">Privacy</a><a href="#book">Terms</a></nav>
+    <span>© <span class="yr">2026</span> Regency Foods</span>
+  </div>
+</footer>
+
+<div class="floater" id="floater" aria-hidden="true"><img alt=""><span class="lbl"></span></div>
+
+<aside class="docket" aria-label="Your docket">
+  <div class="paper" id="paper" hidden></div>
+  <button class="docket-tab" id="docketTab" type="button" aria-expanded="false" aria-controls="paper">Your docket <span class="n" id="count">0</span></button>
+</aside>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function () {
+  var P = [
+    { id: "pecans", name: "Pecan Nuts", note: "Mildly roasted · 1kg", label: "Pecan nuts", price: 16.45, img: "assets/img/cut-pecan.png", flag: "Bestseller" },
+    { id: "pistachios", name: "Pistachios", note: "Roasted & salted · 1kg", label: "Pistachios", price: 19.50, was: 21.50, img: "assets/img/cut-green.png", flag: "Offer" },
+    { id: "almonds", name: "Almonds", note: "Whole, natural · 1kg", label: "Almonds", price: 12.95, img: "assets/img/cut-yellow.png" },
+    { id: "cashews", name: "Cashew Nuts", note: "Whole, raw · 1kg", label: "Cashews", price: 15.20, img: "assets/img/cut-salmon.png" },
+    { id: "walnuts", name: "Walnut Halves", note: "Light halves · 1kg", label: "Walnuts", price: 13.75, was: 14.95, img: "assets/img/cut-forest.png", dark: true, flag: "Offer" }
+  ];
+  var by = {}; P.forEach(function (p) { by[p.id] = p; });
+  var gbp = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" });
+  var $ = function (s) { return document.querySelector(s); };
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  /* Countdown to local midnight */
+  var digits = document.querySelectorAll("#clock .d"), last = "";
+  function tick() {
+    var n = new Date(), m = new Date(n); m.setHours(24, 0, 0, 0);
+    var s = Math.max(0, Math.floor((m - n) / 1000));
+    var str = String(Math.floor(s / 3600)).padStart(2, "0") + String(Math.floor(s / 60) % 60).padStart(2, "0") + String(s % 60).padStart(2, "0");
+    if (str !== last) { for (var i = 0; i < 6; i++) if (str[i] !== last[i]) digits[i].textContent = str[i]; last = str; }
+    $("#clock").setAttribute("aria-label", "Tomorrow starts in " + +str.slice(0,2) + " hours " + +str.slice(2,4) + " minutes");
+  }
+  tick(); setInterval(tick, 1000);
+  $("#today").textContent = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+  document.querySelectorAll(".yr").forEach(function (e) { e.textContent = new Date().getFullYear(); });
+
+  /* Ticket rail drag + arrows */
+  var tk = $("#tickets"), down = false, sx = 0, sl = 0, moved = false;
+  tk.addEventListener("pointerdown", function (e) { if (e.pointerType !== "mouse") return; down = true; moved = false; sx = e.clientX; sl = tk.scrollLeft; });
+  window.addEventListener("pointermove", function (e) { if (!down) return; var dx = e.clientX - sx; if (Math.abs(dx) > 5) { moved = true; tk.classList.add("drag"); } tk.scrollLeft = sl - dx; });
+  window.addEventListener("pointerup", function () { down = false; tk.classList.remove("drag"); });
+  tk.addEventListener("click", function (e) { if (moved) { e.preventDefault(); moved = false; } }, true);
+  tk.addEventListener("dragstart", function (e) { e.preventDefault(); });
+  $("#prev").onclick = function () { tk.scrollBy({ left: -320, behavior: "smooth" }); };
+  $("#next").onclick = function () { tk.scrollBy({ left: 320, behavior: "smooth" }); };
+
+  /* Menu board */
+  var menu = $("#menu");
+  menu.innerHTML = P.map(function (p) {
+    return '<li data-id="' + p.id + '"><img class="thumb" src="' + p.img + '" alt="">' +
+      '<span class="nm">' + esc(p.name) + (p.flag ? '<span class="flag">' + p.flag + '</span>' : '') + '<small>' + esc(p.note) + '</small></span>' +
+      '<span class="lead-dots" aria-hidden="true"></span>' +
+      '<span class="pr">' + (p.was ? '<s>' + gbp.format(p.was) + '</s>' : '') + gbp.format(p.price) + '</span>' +
+      '<button class="add" type="button" data-add="' + p.id + '" aria-label="Add ' + esc(p.name) + ' to docket">+</button></li>';
+  }).join("");
+
+  var fl = $("#floater"), flImg = fl.querySelector("img"), flLbl = fl.querySelector(".lbl");
+  P.forEach(function (p) { var i = new Image(); i.src = p.img; });
+  if (matchMedia("(hover: hover) and (min-width: 761px)").matches) {
+    menu.addEventListener("pointermove", function (e) {
+      var li = e.target.closest("li"); if (!li) return;
+      var p = by[li.dataset.id];
+      if (flImg.dataset.id !== p.id) { flImg.src = p.img; flImg.dataset.id = p.id; flLbl.textContent = p.label; flLbl.classList.toggle("dk", !!p.dark); }
+      fl.style.left = (e.clientX + 150) + "px"; fl.style.top = e.clientY + "px"; fl.classList.add("on");
+    });
+    menu.addEventListener("pointerleave", function () { fl.classList.remove("on"); });
+  }
+
+  /* Docket */
+  var basket = {}, sub = false, open = false, lastAdded = null;
+  try { basket = JSON.parse(localStorage.getItem("rf-docket") || "{}"); } catch (e) {}
+  Object.keys(basket).forEach(function (k) { if (!by[k]) delete basket[k]; });
+  var paper = $("#paper"), tab = $("#docketTab");
+  function save() { try { localStorage.setItem("rf-docket", JSON.stringify(basket)); } catch (e) {} }
+  function count() { return Object.keys(basket).reduce(function (a, k) { return a + basket[k]; }, 0); }
+  function render() {
+    $("#count").textContent = count();
+    var ids = Object.keys(basket), subtotal = 0;
+    var lines = ids.map(function (id) {
+      var p = by[id], q = basket[id]; subtotal += p.price * q;
+      return '<div class="ln' + (id === lastAdded ? ' new' : '') + '"><span class="q"><button type="button" data-dec="' + id + '" aria-label="Remove one">−</button>' + q + '×<button type="button" data-add="' + id + '" aria-label="Add one">+</button></span><span>' + esc(p.name) + '</span><span>' + gbp.format(p.price * q) + '</span></div>';
+    }).join("");
+    var off = sub ? subtotal * 0.1 : 0;
+    paper.innerHTML = '<h3>Regency Foods</h3><p class="meta">Docket · ' + new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) + '</p>' +
+      (ids.length ? lines +
+        '<div class="tot"><div><span>Subtotal</span><span>' + gbp.format(subtotal) + '</span></div>' +
+        (sub ? '<div style="color:var(--leaf)"><span>Subscribe &amp; save</span><span>−' + gbp.format(off) + '</span></div>' : '') +
+        '<div><span>Delivery</span><span>Tomorrow</span></div><div class="g"><span>Total</span><span>' + gbp.format(subtotal - off) + '</span></div></div>' +
+        '<label class="sub"><input type="checkbox" id="subBox"' + (sub ? ' checked' : '') + '> Subscribe &amp; save 10%</label>' +
+        '<button class="btn btn-o send" type="button" id="send">Send order →</button>'
+      : '<p class="empty">Nothing on the docket yet. Add a special to start an order.</p>');
+    lastAdded = null;
+  }
+  function setOpen(v) { open = v; paper.hidden = !v; tab.setAttribute("aria-expanded", String(v)); if (v) { paper.style.animation = "none"; void paper.offsetWidth; paper.style.animation = ""; } }
+  tab.onclick = function () { setOpen(!open); };
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest("[data-add]"), d = e.target.closest("[data-dec]");
+    if (a) { var id = a.dataset.add; basket[id] = (basket[id] || 0) + 1; lastAdded = id; save(); render(); if (!open) setOpen(true); tab.classList.remove("bump"); void tab.offsetWidth; tab.classList.add("bump"); }
+    if (d) { var k = d.dataset.dec; basket[k]--; if (basket[k] <= 0) delete basket[k]; save(); render(); }
+    if (e.target.id === "send") toast("Order sent to the kitchen. (Checkout is not connected yet.)");
+  });
+  paper.addEventListener("change", function (e) { if (e.target.id === "subBox") { sub = e.target.checked; render(); } });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && open) setOpen(false); });
+  render();
+
+  var tt; function toast(m) { var t = $("#toast"); t.textContent = m; t.classList.add("show"); clearTimeout(tt); tt = setTimeout(function () { t.classList.remove("show"); }, 2800); }
+
+  $("#res").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var ok = $("#rName").value.trim() && $("#rBiz").value.trim() && /^\S+@\S+\.\S+$/.test($("#rEmail").value);
+    $("#rMsg").textContent = ok ? "Table booked. We will be in touch about your trade account." : "Add your name, business and a valid work email.";
+    if (ok) this.reset();
+  });
+})();
+</script>
+</body>
+</html>

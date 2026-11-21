@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Regency Foods</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Regency Foods: premium quality goods for professional kitchens and home cooks since 1995. Meat and seafood, frozen, drinks, alcohol and spirits, nuts and seeds, snacks and store cupboard, delivered next day from our North London hub.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ============ Announcement with the small live timer ============ -->
+<div class="announce" role="note">
+  <div class="wrap">
+    <span><b>Order today, delivered tomorrow</b></span>
+    <span class="timer-chip" aria-live="off"><span class="dot" aria-hidden="true"></span>Tomorrow starts in <span class="t" data-timer>00:00:00</span></span>
+  </div>
+</div>
+
+<!-- ============ Header ============ -->
+<header class="header" id="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Regency Foods, est. 1995 — home">
+      <span class="logo logo--h" aria-hidden="true"></span>
+      <span class="logo logo--s" aria-hidden="true"></span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#shop">Shop</a>
+      <a href="#range">Our range</a>
+      <a href="#delivery">Delivery</a>
+      <a href="#trade">Trade</a>
+      <a href="#story">Our story</a>
+    </nav>
+    <div class="actions">
+      <a class="btn trade" href="#apply">Open a trade account</a>
+      <button class="docket-btn" type="button" data-open-docket aria-label="Your docket, 0 items">Docket <span class="n" data-count>0</span></button>
+      <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="mnav" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="mnav" id="mnav" aria-label="Mobile" hidden>
+    <div class="wrap">
+      <a href="#shop">Shop by category <span aria-hidden="true">→</span></a>
+      <a href="#range">Our range <span aria-hidden="true">→</span></a>
+      <a href="#delivery">Delivery <span aria-hidden="true">→</span></a>
+      <a href="#trade">Trade <span aria-hidden="true">→</span></a>
+      <a href="#story">Our story <span aria-hidden="true">→</span></a>
+      <a class="btn btn--green" href="#apply">Open a trade account</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+<!-- ============ Hero ============ -->
+<section class="hero" aria-labelledby="heroTitle">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="est" role="img" aria-label="est. 1995"></span>
+      <h1 id="heroTitle">Premium quality goods, at your door tomorrow.</h1>
+      <p class="lead">From everyday essentials to premium ingredients, we supply professional kitchens and home cooks across the UK, next day from our North London hub.</p>
+      <div class="ctas">
+        <a class="btn btn--green" href="#shop">Shop by category <span aria-hidden="true">→</span></a>
+        <a class="btn" href="#trade">Supply my kitchen</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-photo"><img src="assets/img/hero-stack.jpg" alt="A Regency Foods box stacked with pantry staples, sauces, snacks and drinks" width="887" height="857" fetchpriority="high"></div>
+      <div class="hero-rail">
+        <div class="rail" aria-hidden="true"></div>
+        <article class="ticket hero-ticket" aria-label="Today's order">
+          <div class="tno label"><span>Order no. 1995</span><span id="today">Today</span></div>
+          <p class="label" style="color:var(--ink-soft)">Table</p>
+          <p class="big">Your kitchen</p>
+          <ul class="lines">
+            <li><b>1×</b><span>Next-day delivery, UK-wide</span></li>
+            <li><b>6×</b><span>Aisles, one supplier</span></li>
+            <li><b>1,000+</b><span>Venues served</span></li>
+          </ul>
+          <div class="foot"><span class="est est--sm" role="img" aria-label="est. 1995"></span></div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Shop by category: tickets on the pass ============ -->
+<section class="cats" id="shop" aria-labelledby="shopTitle">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="label">Shop</p>
+        <h2 id="shopTitle">Shop by category</h2>
+      </div>
+      <p>One supplier for the whole kitchen. Pick a ticket off the pass to browse the aisle.</p>
+    </div>
+    <div class="pass-row">
+      <div class="rail" aria-hidden="true"></div>
+      <ul class="cat-tickets">
+        <li><a class="ticket cat" href="#shop" data-aisle="Meat &amp; Seafood"><div class="tno label"><span>Ticket 01</span><span>Fresh</span></div><div class="ph"><img src="assets/img/cat-meat.jpg" alt="Grilled chicken, prawns and a burger on orange tiles" loading="lazy"></div><h3>Meat &amp; Seafood</h3><span class="go label">Shop the aisle <span aria-hidden="true">→</span></span></a></li>
+        <li><a class="ticket cat" href="#shop" data-aisle="Frozen Foods"><div class="tno label"><span>Ticket 02</span><span>Frozen</span></div><div class="ph"><img src="assets/img/cat-frozen.jpg" alt="Frozen pizza, waffles and ice cream" loading="lazy"></div><h3>Frozen Foods</h3><span class="go label">Shop the aisle <span aria-hidden="true">→</span></span></a></li>
+        <li><a class="ticket cat" href="#shop" data-aisle="Soft Drinks"><div class="tno label"><span>Ticket 03</span><span>Bar</span></div><div class="ph"><img src="assets/img/cat-drinks.jpg" alt="Juices, vinegar and canned soft drinks" loading="lazy"></div><h3>Soft Drinks</h3><span class="go label">Shop the aisle <span aria-hidden="true">→</span></span></a></li>
+      </ul>
+    </div>
+    <div class="pass-row">
+      <div class="rail" aria-hidden="true"></div>
+      <ul class="cat-tickets">
+        <li><a class="ticket cat" href="#shop" data-aisle="Alcohol &amp; Spirits"><div class="tno label"><span>Ticket 04</span><span>Bar</span></div><div class="ph"><img src="assets/img/cat-wine.jpg" alt="Bottles of white wine with a glass" loading="lazy"></div><h3>Alcohol &amp; Spirits</h3><span class="go label">Shop the aisle <span aria-hidden="true">→</span></span></a></li>
+        <li><a class="ticket cat" href="#range"><div class="tno label"><span>Ticket 05</span><span>Pantry</span></div><div class="ph"><img src="assets/img/hero-set.jpg" alt="Regency Foods Almond, Pecan and Pistachio packs" loading="lazy" style="object-position:50% 35%"></div><h3>Nuts &amp; Seeds</h3><span class="go label">See our range <span aria-hidden="true">→</span></span></a></li>
+        <li><a class="ticket cat" href="#shop" data-aisle="Snacks &amp; Store Cupboard"><div class="tno label"><span>Ticket 06</span><span>Pantry</span></div><div class="ph"><img src="assets/img/choice.jpg" alt="Snacks, sweets, sodas and spreads" loading="lazy"></div><h3>Snacks &amp; Store Cupboard</h3><span class="go label">Shop the aisle <span aria-hidden="true">→</span></span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Our own range: the shelf ============ -->
+<section class="shop" id="range" aria-labelledby="rangeTitle">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="label">Our own range</p>
+        <h2 id="rangeTitle">New look. Same nuts.</h2>
+      </div>
+      <p>Our own-label nuts in 1 kg resealable pouches. Take one off the shelf to turn it over and read the back.</p>
+    </div>
+    <div class="shelf" id="shelf"><!-- rendered by app.js --></div>
+    <p class="shelf-notes"><span>Resealable pack</span><span>Net wt 1 kg / 2.2 lb</span><span>Subscribe &amp; save 10%</span></p>
+  </div>
+</section>
+
+<!-- ============ Delivery: the van + three tickets ============ -->
+<section class="delivery" id="delivery" aria-labelledby="delTitle">
+  <div class="wrap">
+    <div class="del-grid">
+      <div class="del-copy">
+        <p class="label">Next-day delivery</p>
+        <h2 id="delTitle">Need it tomorrow? Consider it done.</h2>
+        <p>Our North London hub ensures fast, next-day delivery nationwide, so you're never left waiting.</p>
+        <p class="timer-line"><span class="dot" aria-hidden="true"></span>Tomorrow starts in <span class="t" data-timer>00:00:00</span></p>
+      </div>
+      <div class="van"><img src="assets/img/van.jpg" alt="Yellow Regency Foods delivery van" loading="lazy"></div>
+    </div>
+    <div class="pass-row how">
+      <div class="rail" aria-hidden="true"></div>
+      <ol class="tickets">
+        <li class="ticket"><div class="tno label"><span>Ticket 01</span><span class="when">Today</span></div><h3>Order called</h3><p>Shop online or through your trade account, from a single bag to a full weekly restock.</p></li>
+        <li class="ticket"><div class="tno label"><span>Ticket 02</span><span class="when">Tonight</span></div><h3>Picked &amp; packed</h3><p>Your order is checked and packed at our North London hub.</p></li>
+        <li class="ticket"><div class="tno label"><span>Ticket 03</span><span class="when">Tomorrow</span></div><h3>At your door</h3><p>Delivered next day, so your kitchen is never left waiting.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Trade ============ -->
+<section class="trade" id="trade" aria-labelledby="tradeTitle">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="label">Trade</p>
+        <h2 id="tradeTitle">Supplying kitchens since 1995.</h2>
+      </div>
+      <p>Founded by a former restaurateur, we understand what chefs need: not just good products, but consistent service and support behind the scenes.</p>
+    </div>
+    <div class="stats">
+      <div><b>1995</b><span>Founded</span></div>
+      <div><b>UK-wide</b><span>Next-day delivery</span></div>
+      <div><b>N. London</b><span>Distribution hub</span></div>
+      <div><b>B2B + B2C</b><span>Markets served</span></div>
+    </div>
+    <div class="trade-grid">
+      <div>
+        <ul class="perks">
+          <li><b>An account manager on your side</b><span>We work closely with you to keep orders smooth, stock consistent and kitchens running.</span></li>
+          <li><b>More choice, better value</b><span>An ever-growing range at competitive prices, so you can stock what your kitchen needs without stretching your budget.</span></li>
+          <li><b>Built for the fusion kitchen</b><span>Flavour, flexibility and fast turnaround, so you can create modern menus without compromise.</span></li>
+        </ul>
+        <div class="clients">
+          <p>Trusted by 1,000+ venues, including</p>
+          <ul><li>Balans</li><li>Park Chinois</li><li>Meta</li><li>Lush</li><li>Smoky Boys</li></ul>
+        </div>
+      </div>
+      <div class="form-rail" id="apply">
+        <div class="rail" aria-hidden="true"></div>
+        <form class="ticket form-ticket" id="tradeForm" novalidate aria-labelledby="tfTitle">
+          <div class="tno label"><span>New account</span><span>Trade</span></div>
+          <h3 id="tfTitle">Open a trade account</h3>
+          <p class="note">Tell us about your kitchen. An account manager will be in touch with pricing.</p>
+          <div class="two">
+            <div class="field"><label for="tfName">Your name</label><input id="tfName" autocomplete="name" required></div>
+            <div class="field"><label for="tfBiz">Business</label><input id="tfBiz" autocomplete="organization" required></div>
+          </div>
+          <div class="two">
+            <div class="field"><label for="tfEmail">Work email</label><input id="tfEmail" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="tfPhone">Phone <span class="opt">(optional)</span></label><input id="tfPhone" type="tel" autocomplete="tel"></div>
+          </div>
+          <div class="field"><label for="tfType">Type of business</label>
+            <select id="tfType"><option>Restaurant</option><option>Hotel</option><option>Pub or bar</option><option>Caterer</option><option>Café</option><option>Retailer</option><option>Other</option></select>
+          </div>
+          <div class="field"><label for="tfMsg">What do you need? <span class="opt">(optional)</span></label><textarea id="tfMsg" placeholder="For example: meat, frozen and dry goods for a 60-cover restaurant"></textarea></div>
+          <p class="err" id="tfErr" aria-live="polite"></p>
+          <button class="btn btn--green" type="submit">Send to the pass <span aria-hidden="true">→</span></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Story ============ -->
+<section class="story" id="story" aria-labelledby="storyTitle">
+  <div class="wrap">
+    <div class="story-grid">
+      <div>
+        <p class="label">Our story</p>
+        <h2 id="storyTitle">Thirty years on, the same promise.</h2>
+      </div>
+      <div>
+        <p class="big">Regency Foods started in 1995 with a simple goal: to deliver high-quality ingredients, reliably and quickly, to professional kitchens.</p>
+        <div class="cols">
+          <div>
+            <p>Founded by a former restaurateur, we understand what chefs need: not just good products, but consistent service and support behind the scenes.</p>
+            <p>Today, we supply restaurants, hotels, pubs and caterers across the UK, with next-day delivery from our North London hub.</p>
+          </div>
+          <div>
+            <p>We've grown with the industry, expanding our range and embracing the rise of fusion cuisine. Our focus is on flavour, flexibility and fast turnaround.</p>
+            <p>Now the same promise comes home: a bold, generous range for the pantry as well as the pass.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="story-photos">
+      <figure><img src="assets/img/kitchen.jpg" alt="Chefs at work in a busy restaurant kitchen" loading="lazy"><figcaption>Designed for busy kitchens.</figcaption></figure>
+      <figure><img src="assets/img/quality.jpg" alt="Roasted vegetables, greens and radish in a bowl beside fresh peaches" loading="lazy"><figcaption>Quality promise: on time, every time.</figcaption></figure>
+    </div>
+    <div class="vmp">
+      <div><h3>Vision</h3><p>To lead the UK wholesale food sector in delivering diverse, high-quality ingredients, with a specialty in fusion food, that inspire innovation and elevate culinary standards.</p></div>
+      <div><h3>Mission</h3><p>To provide chefs and food businesses with fast, reliable access to premium ingredients and tailored support, blending tradition and modernity in every product we deliver.</p></div>
+      <div><h3>How we work</h3><p>Generous, dependable and quietly playful. Professional in what we promise; joyful in how we show it. A trade supplier with the warmth of a family kitchen.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Newsletter ============ -->
+<section class="news" id="news" aria-labelledby="newsTitle">
+  <div class="wrap">
+    <h2 id="newsTitle">Get the latest.</h2>
+    <div>
+      <p>Sign up to discover the finest selection of quality foods, stay up to date with our newest arrivals, and enjoy exclusive offers.</p>
+      <form id="newsForm" novalidate>
+        <label class="sr" for="newsEmail">Email address</label>
+        <div class="inline"><input id="newsEmail" type="email" placeholder="Your email address" autocomplete="email" required><button class="btn btn--green" type="submit">Subscribe</button></div>
+        <p class="msg" id="newsMsg" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ Footer ============ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div><span class="logo logo--s" role="img" aria-label="Regency Foods"></span><p class="tag">From Our Kitchen to Yours</p></div>
+      <div><h4>Shop</h4><ul><li><a href="#shop">Meat &amp; Seafood</a></li><li><a href="#shop">Frozen Foods</a></li><li><a href="#shop">Soft Drinks</a></li><li><a href="#shop">Alcohol &amp; Spirits</a></li><li><a href="#range">Nuts &amp; Seeds</a></li><li><a href="#shop">Snacks &amp; Store Cupboard</a></li></ul></div>
+      <div><h4>Trade</h4><ul><li><a href="#apply">Open a trade account</a></li><li><a href="#delivery">Delivery</a></li><li><a href="#story">Our story</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li>North London, United Kingdom</li><li>regencyfoods.com</li><li>@regencyfoods</li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© <span data-year>2026</span> Regency Foods. All rights reserved.</span><span>Shipping &amp; returns · Privacy · Terms · FAQ</span></div>
+  </div>
+</footer>
+
+<!-- ============ Docket ============ -->
+<aside class="docket" aria-label="Your docket">
+  <div class="paper" id="paper" hidden></div>
+  <button class="docket-tab hidden-empty" id="docketTab" type="button" aria-expanded="false" aria-controls="paper">Your docket <span class="n" data-count>0</span></button>
+</aside>
+
+<dialog class="pd" id="pd" aria-labelledby="pdName"></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
