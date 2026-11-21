@@ -1,1 +1,22 @@
-<div class="rf rf-chrome"><footer class="footer fv fv-line"><div class="wrap"><div class="fv-line-row"><span class="logo logo--s" role="img" aria-label="Regency Foods"></span><nav aria-label="Footer"><a href="/category/">Shop</a><a href="/shop-all/">Our range</a><a href="/shipping-returns/">Delivery</a><a href="/contact-us/">Trade accounts</a><a href="/about-us/">Our story</a></nav><p>North London, United Kingdom<br>regencyfoods.com · @regencyfoods</p></div><div class="fv-bottom"><span>© Regency Foods. All rights reserved.</span><span class="fv-legal"><a href="/">Shipping &amp; returns</a><a href="/">Privacy</a><a href="/">Terms</a><a href="/">FAQ</a></span></div></div></footer></div><script>(function(){var b=document.getElementById('menuBtn'),n=document.getElementById('mnav');if(!b||!n)return;b.addEventListener('click',function(){var o=n.hasAttribute('hidden');if(o){n.removeAttribute('hidden')}else{n.setAttribute('hidden','')}b.setAttribute('aria-expanded',o?'true':'false');});})();</script>
+<div class="rf rf-chrome"><footer class="footer fv fv-line"><div class="wrap"><div class="fv-line-row"><span class="logo logo--s" role="img" aria-label="Regency Foods"></span><nav aria-label="Footer"><a href="/category/">Shop</a><a href="/shop-all/">Our range</a><a href="/shipping-returns/">Delivery</a><a href="/contact-us/">Trade accounts</a><a href="/about-us/">Our story</a></nav><p>North London, United Kingdom<br>regencyfoods.com · @regencyfoods</p></div><div class="fv-bottom"><span>© Regency Foods. All rights reserved.</span><span class="fv-legal"><a href="/">Shipping &amp; returns</a><a href="/">Privacy</a><a href="/">Terms</a><a href="/">FAQ</a></span></div></div></footer></div><script>(function(){var b=document.getElementById('menuBtn'),n=document.getElementById('mnav');if(!b||!n)return;b.addEventListener('click',function(){var o=n.hasAttribute('hidden');if(o){n.removeAttribute('hidden')}else{n.setAttribute('hidden','')}b.setAttribute('aria-expanded',o?'true':'false');});})();</script><script>(function(){var b=document.body;if(!b)return;
+var c=b.className||'';
+if(/pages-home|pages-product/.test(c))return;
+var host=document.querySelector('body > div.body')||document.querySelector('div.body');if(!host)return;
+var h=host.querySelector('.page-heading,h1.page-title,.supermarket-pageTitle h1,h1');
+var title=h?(h.textContent||'').trim():'';
+if(!title){var t=(document.title||'').split('|')[0].trim();title=t;}
+if(!title)return;
+var eyebrow='Regency Foods';
+if(/pages-category|pages-brand/.test(c))eyebrow='The range';
+else if(/pages-search/.test(c))eyebrow='Search';
+else if(/pages-cart|pages-checkout/.test(c))eyebrow='Your basket';
+else if(/pages-account|pages-login/.test(c))eyebrow='Your account';
+var cr=host.querySelector('.breadcrumbs,.breadcrumb-row ul,ul.breadcrumb');
+var crh='';
+if(cr){var as=cr.querySelectorAll('a');var out=[];
+for(var i=0;i<as.length;i++){var tx=(as[i].textContent||'').trim();if(tx)out.push('<a href="'+as[i].getAttribute('href')+'">'+tx+'</a>');}
+if(out.length)crh='<p class="rf-ph-crumbs">'+out.join('')+'</p>';}
+var d=document.createElement('div');d.className='rf-pagehead';
+d.innerHTML='<div class="wrap"><p class="rf-ph-eyebrow">'+eyebrow+'</p><h1>'+title.replace(/[<>]/g,'')+'</h1>'+crh+'</div>';
+host.insertBefore(d,host.firstChild);
+b.className=c+' rf-hashead';})();</script>

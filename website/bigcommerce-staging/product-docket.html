@@ -1,0 +1,159 @@
+---
+product:
+    videos:
+        limit: 100
+    reviews:
+        limit: {{theme_settings.productpage_reviews_count}}
+    related_products:
+        limit: 6
+    similar_by_views:
+        limit: {{theme_settings.productpage_similar_by_views_count}}
+shop_by_brand:
+    limit: {{theme_settings.sidebar_shop_by_brand}}
+blog:
+    recent_posts:
+        limit: {{theme_settings.homepage_blog_posts_count}}
+---
+{{#partial "hero"}}
+<style>.rf.rf-pp{background:var(--cream);color:var(--black);padding-bottom:clamp(40px,6vw,96px);font-family:var(--body)}
+.rf .pp-crumbs{display:flex;flex-wrap:wrap;gap:8px;padding:22px 0 10px;font-size:.88rem;color:var(--ink-soft)}
+.rf .pp-crumbs a{color:inherit;text-decoration:none}
+.rf .pp-crumbs a:hover{color:var(--orange)}
+.rf .pp-crumbs a::after{content:"\203A";margin-left:8px;opacity:.45}
+.rf .pp-crumbs [aria-current]{color:var(--black)}
+.rf .pp-top{display:grid;gap:26px;padding:6px 0 clamp(36px,5vw,72px)}
+@media(min-width:900px){.rf .pp-top{grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);gap:clamp(34px,4.5vw,76px);align-items:start}}
+.rf .pp-stage{position:relative;background:var(--offwhite);border:1px solid var(--line);border-radius:26px;padding:clamp(26px,3.5vw,54px) clamp(18px,2.5vw,38px) clamp(18px,2.5vw,30px);display:grid;justify-items:center;gap:18px;min-height:min(72vh,620px);align-content:center}
+@media(min-width:900px){.rf .pp-stage{position:sticky;top:22px}}
+.rf .pp-pack{width:min(460px,92%);display:grid;place-items:center}
+.rf .pp-pack img{width:100%;height:auto;display:block}
+.rf .pp-views{display:flex;gap:6px;background:var(--cream);padding:5px;border-radius:var(--pill);flex-wrap:wrap;justify-content:center}
+.rf .pp-views[hidden]{display:none}
+.rf .pp-views button{border:0;background:none;border-radius:var(--pill);padding:9px 17px;font-family:var(--body);font-weight:700;font-size:.85rem;color:var(--black);cursor:pointer}
+.rf .pp-views button[aria-pressed=true]{background:var(--green);color:var(--cream)}
+.rf .pp-info{display:grid;gap:16px;align-content:start;padding-top:4px}
+.rf .pp-eyebrow{margin:0;font-family:var(--display);font-weight:700;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--orange)}
+.rf .pp-info h1{margin:0;font-family:var(--display);font-weight:700;font-size:clamp(2.2rem,1.3rem + 2.6vw,4rem);line-height:1;letter-spacing:-.02em}
+.rf .pp-sku{margin:-6px 0 0;font-size:.85rem;color:var(--ink-soft)}
+.rf .pp-pricerow{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;padding:4px 0 2px;border-bottom:1px solid var(--line);padding-bottom:18px}
+.rf .pp-stock{display:inline-flex;align-items:center;gap:8px;font-size:.9rem;color:var(--ink-soft)}
+.rf .pp-stock .dot{width:9px;height:9px;border-radius:50%;background:var(--bright)}
+.rf .pp-ship{list-style:none;margin:6px 0 0;padding:18px 0 0;border-top:1px solid var(--line);display:grid;gap:10px;font-size:.95rem;color:var(--ink-soft)}
+.rf .pp-ship li{position:relative;padding-left:22px}
+.rf .pp-ship li::before{content:"";position:absolute;left:0;top:.55em;width:9px;height:9px;border-radius:50%;background:var(--yellow)}
+.rf .pp-ship b{color:var(--black)}
+/* the detail */
+.rf .pp-detail{display:grid;gap:22px;padding:clamp(34px,4.5vw,70px) 0;border-top:1px solid var(--line)}
+@media(min-width:900px){.rf .pp-detail{grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);gap:clamp(34px,5vw,90px)}}
+.rf .pp-detail-head h2{margin:0;font-family:var(--display);font-weight:700;font-size:clamp(1.8rem,1.2rem + 1.8vw,2.9rem);line-height:1.02;letter-spacing:-.02em}
+.rf .pp-detail-head p{margin:10px 0 0;color:var(--ink-soft);max-width:28ch}
+.rf .pp-about{color:var(--ink-soft);font-size:1.05rem;line-height:1.62;max-width:64ch}
+.rf .pp-about p{margin:0 0 12px}
+.rf .pp-about h1,.rf .pp-about h2,.rf .pp-about h3,.rf .pp-about h4{font-family:var(--display);font-weight:700;color:var(--black);margin:22px 0 8px;font-size:1.25rem}
+.rf .pp-about ul,.rf .pp-about ol{margin:0 0 14px;padding-left:20px}
+.rf .pp-about img{max-width:100%;height:auto;border-radius:14px}
+.rf .pp-about table{width:100%;border-collapse:collapse}
+.rf .pp-about td,.rf .pp-about th{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left}
+.rf .pp-spec{margin:26px 0 0;padding:0;display:grid;gap:0;border-top:1px solid var(--line)}
+.rf .pp-spec div{display:grid;grid-template-columns:minmax(120px,30%) 1fr;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+.rf .pp-spec dt{margin:0;font-family:var(--display);font-weight:700;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.rf .pp-spec dd{margin:0;color:var(--black);font-size:.98rem}
+.rf .pp-spec dd a{color:var(--orange)}
+/* goes with it */
+.rf .pp-more{padding:clamp(30px,4vw,60px) 0 0;border-top:1px solid var(--line)}
+.rf .pp-more-head{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:22px}
+.rf .pp-more-head h2{margin:0;font-family:var(--display);font-weight:700;font-size:clamp(1.7rem,1.2rem + 1.5vw,2.6rem);letter-spacing:-.02em}
+.rf .pp-grid{list-style:none;margin:0;padding:0;display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
+/* trade */
+.rf .pp-trade{margin-top:clamp(36px,5vw,76px);background:var(--green);color:var(--cream);border-radius:26px;padding:clamp(30px,4vw,62px)}
+.rf .pp-trade *{color:var(--cream)}
+.rf .pp-trade h2{margin:0;font-family:var(--display);font-weight:700;font-size:clamp(1.8rem,1.2rem + 1.8vw,2.9rem);letter-spacing:-.02em;line-height:1.02}
+.rf .pp-trade p{margin:12px 0 22px;max-width:52ch;opacity:.9}
+.rf .pp-trade .btn--cream{background:var(--cream);border-color:var(--cream)}
+.rf .pp-trade .btn--cream,.rf .pp-trade .btn--cream *{color:var(--green)}
+/* the theme's own cart form, wearing the redesign */
+.rf .pp-info .form--addToCart{display:grid;gap:16px;margin:0;padding:0;border:0}
+.rf .pp-info .form-field{margin:0 0 4px}
+.rf .pp-info .form-label,.rf .pp-info .form-label span{font-family:var(--display);font-weight:700;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px;display:block}
+.rf .pp-info .form-label .form-label-text,.rf .pp-info .form-option-variant{letter-spacing:0;text-transform:none}
+.rf .pp-info .papathemes-productView-optionsGrid{display:grid;gap:14px}
+.rf .pp-info .productView-qtyAddWrapper{display:flex;gap:12px;flex-wrap:wrap;align-items:stretch;margin:4px 0 0}
+.rf .pp-info .form-field--increments{margin:0}
+.rf .pp-info .form-increment{display:inline-flex;align-items:center;border:1.5px solid var(--black);border-radius:var(--pill);background:var(--white);overflow:hidden;height:56px}
+.rf .pp-info .form-increment .button,.rf .pp-info .form-increment button{width:46px;height:54px;border:0;background:transparent;color:var(--black);border-radius:0;min-width:0;min-height:0;padding:0;display:grid;place-items:center}
+.rf .pp-info .form-increment .button:hover{background:var(--cream);color:var(--black)}
+.rf .pp-info .form-increment svg{width:16px;height:16px;fill:currentColor}
+.rf .pp-info .form-increment .form-input--incrementTotal{width:52px;height:54px;border:0;background:transparent;text-align:center;font-family:var(--body);font-weight:700;font-size:1rem;padding:0;min-height:0}
+.rf .pp-info .form-action{flex:1 1 230px;margin:0;max-width:none}
+.rf .pp-info .form-action .button,.rf .pp-info #form-action-addToCart{width:100%;height:56px;min-height:56px;border-radius:var(--pill);background:var(--green);border:2px solid var(--green);color:var(--cream);font-family:var(--display);font-weight:700;font-size:1.02rem;letter-spacing:.01em;text-transform:none}
+.rf .pp-info .form-action .button:hover,.rf .pp-info #form-action-addToCart:hover{background:var(--black);border-color:var(--black);color:var(--cream)}
+.rf .pp-info .form-select,.rf .pp-info .form-input,.rf .pp-info select,.rf .pp-info textarea{border:1.5px solid var(--line);border-radius:14px;min-height:52px;background:var(--white);font-family:var(--body);font-size:1rem;padding:0 16px;width:100%}
+.rf .pp-info textarea{padding:14px 16px}
+.rf .pp-info .form-radio + label,.rf .pp-info .form-option{border-radius:var(--pill)}
+.rf .pp-info .productView-price,.rf .pp-info .productView-title,.rf .pp-info .productView-brand,.rf .pp-info .productView-rating{display:none}
+.rf .pp-info .alertBox{border-radius:14px;font-size:.92rem}
+.rf .pp-pricerow .price,.rf .pp-pricerow .productView-price{display:block}
+.rf .pp-pricerow .price{font-family:var(--display);font-weight:700;font-size:clamp(2rem,1.5rem + 1.4vw,2.9rem);line-height:1;color:var(--orange)}
+.rf .pp-pricerow .price-section--withoutTax .price,.rf .pp-pricerow .price--withoutTax{color:var(--orange)}
+.rf .pp-pricerow .price-section--minor,.rf .pp-pricerow .price-section--minor .price{font-size:.9rem;color:var(--ink-soft);font-family:var(--body);font-weight:400}
+.rf .pp-pricerow .price--rrp,.rf .pp-pricerow .price--non-sale{font-size:1.1rem;color:var(--ink-soft);text-decoration:line-through}
+.rf .pp-pricerow .productView-price > div{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}</style>
+<div class="rf rf-pp"><div class="wrap">
+<nav class="pp-crumbs" aria-label="Breadcrumb">{{#each breadcrumbs}}{{#if url}}<a href="{{url}}">{{name}}</a>{{else}}<span aria-current="page">{{name}}</span>{{/if}}{{/each}}</nav>
+<div class="pp-top productView">
+<div class="pp-stage">
+<div class="pp-pack">{{#each product.images}}<img class="pp-face" data-view="{{@index}}" src="{{getImage this "1280x1280"}}" alt="{{alt}}" {{#unless @first}}hidden{{/unless}}>{{/each}}</div>
+<div class="pp-views" role="group" aria-label="Views" hidden></div>
+</div>
+<div class="pp-info">
+{{#if product.brand.name}}<p class="pp-eyebrow">{{product.brand.name}}</p>{{/if}}
+<h1>{{product.title}}</h1>
+{{#if product.sku}}<p class="pp-sku">Code {{product.sku}}</p>{{/if}}
+<div class="pp-pricerow">{{> components/products/price price=product.price}}{{#if product.stock_level}}<span class="pp-stock"><span class="dot"></span>{{product.stock_level}} in stock</span>{{else}}<span class="pp-stock"><span class="dot"></span>In stock</span>{{/if}}</div>
+<!--RF_FORM-->
+<ul class="pp-ship">
+<li><b>Next-day delivery</b> on orders placed before 4pm, Monday to Thursday.</li>
+<li><b>Trade pricing</b> once your account is open &mdash; wholesale rates across the range.</li>
+<li><b>Multi-temperature fleet</b>, so ambient, chilled and frozen travel together.</li>
+</ul>
+</div>
+</div>
+<div class="pp-detail">
+<div class="pp-detail-head"><h2>The detail</h2><p>Everything on the label, and what it means for your kitchen.</p></div>
+<div class="pp-detail-body">
+{{#if product.description}}<div class="pp-about">{{{product.description}}}</div>{{else}}<div class="pp-about"><p>Specification sheets for this line are with our buying team. Call the office on the number in the footer and we will send them over.</p></div>{{/if}}
+<dl class="pp-spec">
+{{#if product.brand.name}}<div><dt>Brand</dt><dd><a href="{{product.brand.url}}">{{product.brand.name}}</a></dd></div>{{/if}}
+{{#if product.sku}}<div><dt>Product code</dt><dd>{{product.sku}}</dd></div>{{/if}}
+{{#if product.weight}}<div><dt>Weight</dt><dd>{{product.weight}}</dd></div>{{/if}}
+{{#each product.custom_fields}}<div><dt>{{name}}</dt><dd>{{value}}</dd></div>{{/each}}
+<div><dt>Delivery</dt><dd>Next working day, UK mainland</dd></div>
+</dl>
+</div>
+</div>
+{{#if product.related_products}}
+<section class="pp-more">
+<div class="pp-more-head"><h2>Goes with it</h2><a class="btn btn--line" href="/shop-all/">All products</a></div>
+<ul class="pp-grid">{{#each product.related_products}}<li class="rfp-card"><a class="rfp-link" href="{{url}}"><span class="rfp-img"><img src="{{getImage this.image "500x500"}}" alt="{{name}}" loading="lazy"></span><b>{{name}}</b><span class="rfp-price">{{this.price.without_tax.formatted}}</span></a></li>{{/each}}</ul>
+</section>
+{{/if}}
+<section class="pp-trade">
+<div class="pp-trade-copy"><h2>Open a trade account</h2><p>Restaurants, delis, caterers and shops across London buy from us on account. One number to call, one van, one invoice.</p><a class="btn btn--cream" href="/contact-us/">Talk to the office</a></div>
+</section>
+</div></div>
+<script>(function(){var st=document.querySelector('.rf-pp .pp-stage');if(!st)return;
+var faces=[].slice.call(st.querySelectorAll('.pp-face')),row=st.querySelector('.pp-views');
+if(faces.length<2){return;}
+var names=['Front','Back','Side','Detail','Label'];
+row.hidden=false;
+faces.forEach(function(f,i){var b=document.createElement('button');b.type='button';
+b.textContent=names[i]||('View '+(i+1));b.setAttribute('aria-pressed',i?'false':'true');
+b.addEventListener('click',function(){faces.forEach(function(g,j){g.hidden=(j!==i);});
+row.querySelectorAll('button').forEach(function(x,j){x.setAttribute('aria-pressed',j===i?'true':'false');});});
+row.appendChild(b);});})();</script>
+{{/partial}}
+{{#and theme_settings.instantload is_ajax}}
+    {{> layout/instantload-base}}
+{{else}}
+    {{> layout/base}}
+{{/and}}
