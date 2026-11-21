@@ -16,6 +16,8 @@ blog:
 ---
 {{#partial "hero"}}
 <style>.rf.rf-pp{background:var(--cream);color:var(--black);padding-bottom:clamp(40px,6vw,96px);font-family:var(--body)}
+.rf .pp-note{margin:16px 0 0;padding:14px 18px;background:var(--yellow);border-radius:14px;font-size:.95rem;color:var(--black)}
+.rf .pp-regions:empty{display:none}
 .rf .pp-crumbs{display:flex;flex-wrap:wrap;gap:8px;padding:22px 0 10px;font-size:.88rem;color:var(--ink-soft)}
 .rf .pp-crumbs a{color:inherit;text-decoration:none}
 .rf .pp-crumbs a:hover{color:var(--orange)}
@@ -98,7 +100,8 @@ blog:
 .rf .pp-pricerow .price-section--minor,.rf .pp-pricerow .price-section--minor .price{font-size:.9rem;color:var(--ink-soft);font-family:var(--body);font-weight:400}
 .rf .pp-pricerow .price--rrp,.rf .pp-pricerow .price--non-sale{font-size:1.1rem;color:var(--ink-soft);text-decoration:line-through}
 .rf .pp-pricerow .productView-price > div{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}</style>
-<div class="rf rf-pp"><div class="wrap">
+<div itemscope class="productView-scope rf rf-pp"><div class="wrap">
+{{#each product.shipping_messages}}<div class="pp-note">{{message}}</div>{{/each}}
 <nav class="pp-crumbs" aria-label="Breadcrumb">{{#each breadcrumbs}}{{#if url}}<a href="{{url}}">{{name}}</a>{{else}}<span aria-current="page">{{name}}</span>{{/if}}{{/each}}</nav>
 <div class="pp-top productView">
 <div class="pp-stage">
@@ -140,7 +143,9 @@ blog:
 <section class="pp-trade">
 <div class="pp-trade-copy"><h2>Open a trade account</h2><p>Restaurants, delis, caterers and shops across London buy from us on account. One number to call, one van, one invoice.</p><a class="btn btn--cream" href="/contact-us/">Talk to the office</a></div>
 </section>
+<div class="pp-regions">{{{region name="product_below_content--global"}}}{{{region name="product_below_content"}}}</div>
 </div></div>
+{{> components/products/schema}}
 <script>(function(){var st=document.querySelector('.rf-pp .pp-stage');if(!st)return;
 var faces=[].slice.call(st.querySelectorAll('.pp-face')),row=st.querySelector('.pp-views');
 if(faces.length<2){return;}
