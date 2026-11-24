@@ -31,8 +31,8 @@ blog:
 .rf .pp-top > .pp-info{order:2}
 @media(min-width:900px){.rf .pp-top > .pp-stage{grid-area:1/1!important}.rf .pp-top > .pp-info{grid-area:1/2!important}}
 .rf .pp-buy{display:block!important;float:none!important;width:auto!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important;background:none!important}
-.rf .pp-stage{position:relative;background:var(--offwhite);border:1px solid var(--line);border-radius:26px;padding:clamp(26px,3.5vw,54px) clamp(18px,2.5vw,38px) clamp(18px,2.5vw,30px);display:grid;justify-items:center;gap:18px;min-height:min(72vh,620px);align-content:center}
-@media(min-width:900px){.rf .pp-stage{position:sticky;top:22px}}
+.rf .pp-stage{position:relative;background:var(--offwhite);border:1px solid var(--line);border-radius:26px;padding:clamp(26px,3.5vw,54px) clamp(18px,2.5vw,38px) clamp(18px,2.5vw,30px);display:grid;justify-items:center;gap:18px;align-content:center}
+@media(min-width:900px){.rf .pp-stage{position:sticky;top:22px;min-height:min(72vh,620px)}}
 .rf .pp-pack{width:min(460px,92%);display:grid;place-items:center}
 .rf .pp-pack img{width:100%;height:auto;display:block}
 .rf .pp-views{display:flex;gap:6px;background:var(--cream);padding:5px;border-radius:var(--pill);flex-wrap:wrap;justify-content:center}
@@ -54,6 +54,7 @@ blog:
 /* the detail */
 .rf .pp-detail{display:grid;gap:22px;padding:clamp(34px,4.5vw,70px) 0;border-top:1px solid var(--line)}
 @media(min-width:900px){.rf .pp-detail{grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);gap:clamp(34px,5vw,90px)}}
+@media(min-width:900px){.rf .pp-detail-head{position:sticky;top:22px}}
 .rf .pp-detail-head h2{margin:0;font-family:var(--display);font-weight:700;font-size:clamp(1.8rem,1.2rem + 1.8vw,2.9rem);line-height:1.02;letter-spacing:-.02em}
 .rf .pp-detail-head p{margin:10px 0 0;color:var(--ink-soft);max-width:28ch}
 .rf .pp-about{color:var(--ink-soft);font-size:1.05rem;line-height:1.62;max-width:64ch}
@@ -74,7 +75,13 @@ blog:
 .rf .pp-more-head h2{margin:0;font-family:var(--display);font-weight:700;font-size:clamp(1.7rem,1.2rem + 1.5vw,2.6rem);letter-spacing:-.02em}
 .rf .pp-grid{list-style:none;margin:0;padding:0;display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
 /* trade */
-.rf .pp-trade{margin-top:clamp(36px,5vw,76px);background:var(--green);color:var(--cream);border-radius:26px;padding:clamp(30px,4vw,62px)}
+.rf .pp-trade{margin-top:clamp(36px,5vw,76px);background:var(--green);color:var(--cream);border-radius:26px;padding:clamp(30px,4vw,62px);display:grid;gap:34px}
+@media(min-width:860px){.rf .pp-trade{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(40px,6vw,96px);align-items:center}}
+.rf .pp-trade-facts{margin:0;padding:0;display:grid;gap:0}
+.rf .pp-trade-facts div{display:grid;gap:4px;padding:16px 0;border-top:1px solid rgba(248,243,227,.22)}
+.rf .pp-trade-facts div:last-child{border-bottom:1px solid rgba(248,243,227,.22)}
+.rf .pp-trade-facts dt{margin:0;font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,1.1rem + 1.1vw,2.1rem);line-height:1;color:var(--yellow)!important}
+.rf .pp-trade-facts dd{margin:0;font-size:.95rem;opacity:.85}
 .rf .pp-trade *{color:var(--cream)}
 .rf .pp-trade h2{margin:0;font-family:var(--display);font-weight:700;font-size:clamp(1.8rem,1.2rem + 1.8vw,2.9rem);letter-spacing:-.02em;line-height:1.02}
 .rf .pp-trade p{margin:12px 0 22px;max-width:52ch;opacity:.9}
@@ -112,7 +119,7 @@ blog:
 <nav class="pp-crumbs" aria-label="Breadcrumb">{{#each breadcrumbs}}{{#if url}}<a href="{{url}}">{{name}}</a>{{else}}<span aria-current="page">{{name}}</span>{{/if}}{{/each}}</nav>
 <div class="pp-top">
 <div class="pp-stage">
-<div class="pp-pack">{{#each product.images}}<img class="pp-face" data-view="{{@index}}" src="{{getImage this "1280x1280"}}" alt="{{alt}}" {{#unless @first}}hidden{{/unless}}>{{/each}}</div>
+<div class="pp-pack">{{#each product.images}}<img class="pp-face" data-view="{{@index}}" src="{{getImage this "1280x1280"}}" alt="{{#if alt}}{{alt}}{{else}}{{../product.title}}{{/if}}" {{#unless @first}}hidden{{/unless}}>{{else}}<img class="pp-face" data-view="0" src="{{getImage product.main_image "1280x1280"}}" alt="{{product.title}}">{{/each}}</div>
 <div class="pp-views" role="group" aria-label="Views" hidden></div>
 </div>
 <div class="pp-info">
@@ -151,6 +158,11 @@ blog:
 {{/if}}
 <section class="pp-trade">
 <div class="pp-trade-copy"><h2>Open a trade account</h2><p>Restaurants, delis, caterers and shops across London buy from us on account. One number to call, one van, one invoice.</p><a class="btn btn--cream" href="/contact-us/">Talk to the office</a></div>
+<dl class="pp-trade-facts">
+<div><dt>1,000+</dt><dd>venues, restaurants and caterers served</dd></div>
+<div><dt>Since 1995</dt><dd>family-run, out of North London</dd></div>
+<div><dt>Next day</dt><dd>ambient, chilled and frozen on one van</dd></div>
+</dl>
 </section>
 <div class="pp-regions">{{{region name="product_below_content--global"}}}{{{region name="product_below_content"}}}</div>
 </div></div>
